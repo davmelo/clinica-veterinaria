@@ -4,8 +4,8 @@
 
 * **David Fernando de Melo** - david.fmelo@ufrpe.br
 * **Edilson José da Silva Junior** - edilson.silvajunior@ufrpe.br
-*  **Giovanna Costa da Silva** - giovanna.costa@ufrpe.br
-* **Lucas Pontes França Diniz** - lucas.pontesfranca@ufrpe.br
+* **Giovanna Costa da Silva** - giovanna.costa@ufrpe.br
+* **Lucas Pontes França Diniz Lima** - lucas.pontesfranca@ufrpe.br
 * **Miguel Monteiro Alves Paes** - miguel.alves@ufrpe.br
 
 ## Descrição
