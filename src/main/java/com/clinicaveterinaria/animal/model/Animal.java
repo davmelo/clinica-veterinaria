@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Animal {
+    private Cliente tutor;
     private String nome;
     private String especie;
     private String raca;
@@ -16,15 +17,29 @@ public class Animal {
     private ArrayList<Vacina> vacinas;
 
     public Animal(String nome, String especie, String raca, LocalDate dataNascimento, double peso, String identificacao, Cliente tutor) {
-        if(tutor == null) {
-            throw new IllegalArgumentException("");
-        }
+        this.setTutor(tutor);
         this.setNome(nome);
         this.setEspecie(especie);
         this.setRaca(raca);
         this.setDataNascimento(dataNascimento);
         this.setPeso(peso);
+        this.setIdentificacao(identificacao);
         this.vacinas = new ArrayList<>();
+    }
+
+    public Cliente getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Cliente tutor) {
+        if (tutor == null) {
+            throw new IllegalArgumentException("");
+        }
+        this.tutor = tutor;
+    }
+
+    public ArrayList<Vacina> getVacinas() {
+        return vacinas;
     }
 
     public String getNome() {
@@ -64,6 +79,9 @@ public class Animal {
     }
 
     public void setPeso(double peso) {
+        if (peso < 0.1) {
+            throw new IllegalArgumentException("");
+        }
         this.peso = peso;
     }
 
