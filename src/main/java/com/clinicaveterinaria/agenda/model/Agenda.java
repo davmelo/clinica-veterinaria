@@ -30,5 +30,7 @@ public class Agenda {
         return false;
     }
 
-    public void adiconarAgendamento() {}
+    public void adicionarAgendamento(Agendamento agendamento) {
+        this.agendamentos.add(agendamento);
+    }
 }

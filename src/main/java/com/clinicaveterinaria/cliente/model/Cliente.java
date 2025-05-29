@@ -7,26 +7,32 @@ import java.util.ArrayList;
 
 public class Cliente {
     private String nome;
+    private String cpf;
     private String telefone;
     private String email;
     private String endereco;
     private ArrayList<Animal> animais;
 
-    public Cliente(String nome, String telefone, String email, String endereco) {
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.endereco = endereco;
+    public Cliente(String nome, String cpf, String telefone, String email, String endereco) {
+        this.setNome(nome);
+        this.setCpf(cpf);
+        this.setTelefone(telefone);
+        this.setEmail(email);
+        this.setEndereco(endereco);
         this.animais = new ArrayList<>();
     }
 
-    public boolean adicionarAnimal(String nome, String especie, String raca, LocalDate dataNascimento, double peso, String identificacao) {
+    public void adicionarAnimal(String nome, String especie, String raca, LocalDate dataNascimento, double peso, String identificacao) {
         Animal animal = new Animal(nome, especie, raca, dataNascimento, peso, identificacao, this);
-        if(animal == null) {
-            this.animais.add(animal);
-            return true;
-        }
-        return false;
+        this.animais.add(animal);
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -63,5 +69,21 @@ public class Cliente {
 
     public ArrayList<Animal> getAnimais() {
         return animais;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean retorno = false;
+        if (obj instanceof Cliente clienteAux) {
+            if (this.cpf.equals(clienteAux.getCpf())) retorno = true;
+            }
+        return retorno;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Nome: %s\tCPF: %s\nEmail: %s\tTelefone: %s\tNº pets: %d",
+                this.nome, this.cpf, this.email, this.telefone, this.animais.size());
+
     }
 }

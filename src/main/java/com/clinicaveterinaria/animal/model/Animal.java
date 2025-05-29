@@ -4,6 +4,7 @@ import com.clinicaveterinaria.cliente.model.Cliente;
 import com.clinicaveterinaria.procedimento.model.Vacina;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class Animal {
@@ -40,6 +41,13 @@ public class Animal {
 
     public ArrayList<Vacina> getVacinas() {
         return vacinas;
+    }
+
+    public void adiconarVacina(Vacina vacina) {
+        if (vacina == null) {
+            throw new IllegalArgumentException("");
+        }
+        this.vacinas.add(vacina);
     }
 
     public String getNome() {
@@ -92,4 +100,26 @@ public class Animal {
     public void setIdentificacao(String identificacao) {
         this.identificacao = identificacao;
     }
+
+    public int getIdade() {
+        return Period.between(this.dataNascimento, LocalDate.now()).getYears();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean retorno = false;
+        if (obj instanceof Animal animalAux) {
+            if (this.tutor.equals(animalAux.tutor) && this.nome.equals(animalAux.getNome())) {
+                retorno = true;
+            }
+        }
+        return retorno;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Nome: %s\tIdade: %d\nRaça: %s\tEspécie: %s",
+                this.nome, this.getIdade(), this.raca, this.especie);
+    }
+
 }
