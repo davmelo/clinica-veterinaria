@@ -3,7 +3,7 @@
 ## Equipe
 
 * **David Fernando de Melo** - david.fmelo@ufrpe.br
-* **Edilson José da Silva Junior** - edilson.silvajunior@ufrpe.br
+* **Edilson José da Silva Junior** - edilsonjunior101@gmail.com
 * **Giovanna Costa da Silva** - giovanna.costa@ufrpe.br
 * **Lucas Pontes França Diniz Lima** - lucaspontesdiniz@gmail.com
 * **Miguel Monteiro Alves Paes** - miguel.alves@ufrpe.br
