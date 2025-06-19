@@ -6,7 +6,7 @@ import com.clinicaveterinaria.negocio.entidades.Agendamento;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositorioAgendamentosArray implements IRepositorioAgendamento {
+public class RepositorioAgendamentosArray implements IRepositorioAgendamentos {
 
     private static RepositorioAgendamentosArray instance;
     private List<Agendamento> agendamentos;
@@ -15,7 +15,7 @@ public class RepositorioAgendamentosArray implements IRepositorioAgendamento {
         this.agendamentos = new ArrayList<>();
     }
 
-    public static IRepositorioAgendamento getInstance() {
+    public static IRepositorioAgendamentos getInstance() {
         if (instance == null) {
             instance = new RepositorioAgendamentosArray();
         }
@@ -56,5 +56,4 @@ public class RepositorioAgendamentosArray implements IRepositorioAgendamento {
             }
         }
     }
-}
 }

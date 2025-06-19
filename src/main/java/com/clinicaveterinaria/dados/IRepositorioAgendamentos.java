@@ -2,10 +2,10 @@ package com.clinicaveterinaria.dados;
 
 import com.clinicaveterinaria.negocio.entidades.Agendamento;
 
-public interface IRepositorioAgendamento {
+public interface IRepositorioAgendamentos {
     void salvar(Agendamento novoAgendamento);
 
-    Agendamento buscarPorId(Long id);
+    Agendamento buscar(Long id);
 
     void atualizar(Long id, Agendamento novoAgendamento);
 
