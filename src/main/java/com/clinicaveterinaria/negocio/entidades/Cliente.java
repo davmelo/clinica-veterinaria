@@ -14,10 +14,15 @@ import lombok.EqualsAndHashCode;
 @ToString
 @EqualsAndHashCode(of = {"cpf", "email"})
 public class Cliente {
+    private Long id;
     private String nome;
     private String sobrenome;
     private String cpf;
     private String telefone;
     private String email;
     private String endereco;
+
+    //public void adicionarAnimal(Animal animal);
+
+    //public void removerAnimal(String nomeAnimal);
 }

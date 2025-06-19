@@ -14,14 +14,15 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"crmv", "email"})
 public class Veterinario {
     private Long id;
     private String nome;
     private String sobrenome;
-    private ArrayList<String> especialidades;
-    private String telefone;
     private String crmv;
+    private String telefone;
+    private String email;
+    private ArrayList<String> especialidades;
     private Agenda agenda;
 
     public void adicionarEspecialidade(String especialidade) {

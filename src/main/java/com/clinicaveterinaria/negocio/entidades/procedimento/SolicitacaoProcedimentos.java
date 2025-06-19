@@ -18,12 +18,12 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = {"id"})
-public class SolicitacaoProcedimento {
+public class SolicitacaoProcedimentos {
     private Long id;
     private String nomeVetSolicitante;
     private String crmvVetSolicitante;
     private Animal animal;
-    private List<Procedimento> procedimentosSolicitados;
+    private List<ProcedimentoAgendado> procedimentos;
     private LocalDate dataSolicitacao;
     private String observacao;
 }

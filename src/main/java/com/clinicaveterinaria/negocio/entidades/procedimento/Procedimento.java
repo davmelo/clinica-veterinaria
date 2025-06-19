@@ -12,8 +12,8 @@ import lombok.EqualsAndHashCode;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode(of = {"id"})
-public class Procedimento {
+@EqualsAndHashCode(of = {"nomeProcedimento"})
+public abstract class Procedimento {
     protected Long id;
     protected ProcedimentoTipo tipoProcedimento;
     protected String nomeProcedimento;

@@ -1,6 +1,6 @@
 package com.clinicaveterinaria.negocio.entidades;
 
-import com.clinicaveterinaria.negocio.entidades.procedimento.SolicitacaoProcedimento;
+import com.clinicaveterinaria.negocio.entidades.procedimento.SolicitacaoProcedimentos;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,6 @@ import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Setter
 @Getter
@@ -22,17 +21,16 @@ public class Agendamento {
     private Cliente cliente;
     private Animal animal;
     private Veterinario veterinario;
-    private LocalDateTime data;
+    private LocalDateTime dataAgendamento;
     private String obsevacao;
-    // SOLICITAÇÃO DE PROCEDIMENTOS?
-    // REFERÊNCIA PARA AGENDA?
+    private SolicitacaoProcedimentos procedimentosSolicitados;
     private AgendamentoStatus status;
 
-    public void remarcarConsulta(LocalDateTime novaData, String motivoRemarcacao) {
-        this.setData(novaData);
+    public void remarcar(LocalDateTime novaData, String motivoRemarcacao) {
+        this.setDataAgendamento(novaData);
     }
 
-    public void cancelarConsulta(String motivoCancelamento) {
+    public void cancelar(String motivoCancelamento) {
         this.setObsevacao(motivoCancelamento);
         this.setStatus(AgendamentoStatus.CANCELADO);
     }

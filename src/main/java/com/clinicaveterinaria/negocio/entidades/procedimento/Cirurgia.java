@@ -14,6 +14,7 @@ import lombok.EqualsAndHashCode;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 public class Cirurgia extends ProcedimentoRealizado {
+    private String parteCorpo;
     private boolean necessidadeInternacao;
-    private int diasInternado;
+    private String observacao;
 }

@@ -18,8 +18,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class ProcedimentoRealizado extends Procedimento{
-    protected LocalDate dataDeRealizacao;
+public abstract class ProcedimentoRealizado extends Procedimento {
     protected Veterinario veterinario;
     protected Animal animal;
+    protected LocalDate dataDeRealizacao;
+
+    protected void setDataRealizacao(LocalDate data) {
+        this.dataDeRealizacao = data;
+    };
 }

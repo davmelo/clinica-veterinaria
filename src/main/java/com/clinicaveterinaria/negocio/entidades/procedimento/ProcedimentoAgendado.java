@@ -10,10 +10,8 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
 public class ProcedimentoAgendado extends Procedimento{
-    private LocalDateTime dataAgendamento;
+
 }
