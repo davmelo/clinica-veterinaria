@@ -22,7 +22,5 @@ public class Cliente {
     private String email;
     private String endereco;
 
-    //public void adicionarAnimal(Animal animal);
 
-    //public void removerAnimal(String nomeAnimal);
 }
