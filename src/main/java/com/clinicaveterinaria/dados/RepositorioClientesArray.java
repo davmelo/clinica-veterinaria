@@ -22,7 +22,9 @@ public class RepositorioClientesArray implements IRepositorioClientes {
 
     @Override
     public void salvar(Cliente novoCliente) {
-        clientes.add(novoCliente);
+        if (novoCliente != null && novoCliente.getCpf() != null){
+            clientes.add(novoCliente);
+        }
     }
 
     @Override

@@ -23,7 +23,9 @@ public class Veterinario {
     private String telefone;
     private String email;
     private ArrayList<String> especialidades;
-    private Agenda agenda;
+    //private Agenda agenda;
+
+    private DisponibilidadeAgenda disponibilidadeAgenda;
 
     public void adicionarEspecialidade(String especialidade) {
         this.especialidades.add(especialidade);

@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = "id")
+
 public class Agendamento {
     private Long id;
     private Cliente cliente;
