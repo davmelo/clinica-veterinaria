@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,13 +27,13 @@ public class Main {
         clienteController.cadastrarCliente(cliente1);
 
         Cliente cliente2 = new Cliente();
-        cliente1.setId(2L);
-        cliente1.setNome("Pedro");
-        cliente1.setSobrenome("Atlas");
-        cliente1.setCpf("12345678999");
-        cliente1.setTelefone("85999-9999");
-        cliente1.setEmail("pedro@email.com");
-        cliente1.setEndereco("Rua B, 123");
+        cliente2.setId(2L);
+        cliente2.setNome("Pedro");
+        cliente2.setSobrenome("Atlas");
+        cliente2.setCpf("12345678999");
+        cliente2.setTelefone("85999-9999");
+        cliente2.setEmail("pedro@email.com");
+        cliente2.setEndereco("Rua B, 123");
         clienteController.cadastrarCliente(cliente2);
 
         // Buscar cliente
@@ -116,6 +117,7 @@ public class Main {
 
         DisponibilidadeAgenda disponibilidade = new DisponibilidadeAgenda();
         disponibilidade.adicionarHorario(DiaSemana.MONDAY, LocalTime.of(10, 0)); // Segunda-feira 10h
+        disponibilidade.adicionarHorario(DiaSemana.MONDAY, LocalTime.of(11, 0)); // Segunda-feira 11h
         vet2.setDisponibilidadeAgenda(disponibilidade);
 
         ControladorAgendamento controladorAgendamento = new ControladorAgendamento();
@@ -137,26 +139,24 @@ public class Main {
         agendamento2.setObsevacao("Consulta ortopédica");
         agendamento2.setStatus(AgendamentoStatus.PENDENTE);
 
-        boolean teste1 = controladorAgendamento.cadastrarAgendamento(agendamento1);
-        if (teste1) {
-            agendamento1.setStatus(AgendamentoStatus.AGENDADO);
-            System.out.println("Agendamento com verificação de disponibilidade realizado com sucesso:\n");
-            System.out.println(agendamento1);
-        } else {
-            System.out.println("Horário indisponível para este veterinário.\n");
-            agendamento1.setStatus(AgendamentoStatus.CANCELADO);
-            System.out.println(agendamento1);
-        }
+        controladorAgendamento.cadastrarAgendamento(agendamento1);
+        System.out.println(agendamento1);
 
-        boolean teste2 = controladorAgendamento.cadastrarAgendamento(agendamento2);
-        if (teste2) {
-            agendamento2.setStatus(AgendamentoStatus.AGENDADO);
-            System.out.println("Agendamento com verificação de disponibilidade realizado com sucesso:\n");
-            System.out.println(agendamento2);
+        System.out.println("------------------");
+
+        controladorAgendamento.cadastrarAgendamento(agendamento2);
+        System.out.println(agendamento2);
+
+        System.out.println("\nTodos os Agendamentos:\n");
+        List<Agendamento> todosAgendamentos = controladorAgendamento.listarTodosAgendamentos();
+        if (todosAgendamentos.isEmpty()) {
+            System.out.println("Nenhum agendamento cadastrado.");
         } else {
-            System.out.println("Horário indisponível para este veterinário.\n");
-            agendamento1.setStatus(AgendamentoStatus.CANCELADO);
-            System.out.println(agendamento2);
+            for (Agendamento agendamento : todosAgendamentos) {
+                System.out.println(agendamento);
+            }
         }
+        System.out.println("---------------------------\n");
+
     }
 }

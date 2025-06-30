@@ -3,6 +3,7 @@ package com.clinicaveterinaria.dados;
 import com.clinicaveterinaria.negocio.entidades.Agendamento;
 import com.clinicaveterinaria.negocio.entidades.AgendamentoStatus;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
@@ -100,6 +101,25 @@ public class RepositorioAgendamentosArray implements IRepositorioAgendamentos {
             }
         }
         return resultado;
+    }
+
+    @Override
+    public Agendamento buscarPorVeterinarioEDataHora(String crmv, LocalDateTime dataHora) {
+        for (Agendamento agendamento : agendamentos) {
+            if (agendamento.getVeterinario() != null && agendamento.getVeterinario().getCrmv().equals(crmv) &&
+                    agendamento.getDataAgendamento() != null && agendamento.getDataAgendamento().equals(dataHora)) {
+                // Apenas agendamentos que não estão cancelados ou concluídos podem ocupar o horário
+                if (agendamento.getStatus() != AgendamentoStatus.CANCELADO && agendamento.getStatus() != AgendamentoStatus.CONCLUIDO) {
+                    return agendamento;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Agendamento> listarTodos() {
+        return new ArrayList<>(agendamentos); // Retorna uma cópia para evitar modificações externas diretas
     }
 
 }

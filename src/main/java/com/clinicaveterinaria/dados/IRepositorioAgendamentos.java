@@ -4,6 +4,7 @@ import com.clinicaveterinaria.negocio.entidades.Agendamento;
 import com.clinicaveterinaria.negocio.entidades.AgendamentoStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IRepositorioAgendamentos {
@@ -22,4 +23,10 @@ public interface IRepositorioAgendamentos {
     List<Agendamento> buscarPorDia(LocalDate data);
 
     List<Agendamento> buscarPorStatus(AgendamentoStatus status);
+
+    //Verificar a disponibilidade
+    Agendamento buscarPorVeterinarioEDataHora(String crmv, LocalDateTime dataHora);
+
+    List<Agendamento> listarTodos();
+
 }

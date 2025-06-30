@@ -4,7 +4,6 @@ import com.clinicaveterinaria.dados.IRepositorioClientes;
 import com.clinicaveterinaria.dados.RepositorioClientesArray;
 import com.clinicaveterinaria.negocio.entidades.Cliente;
 
-import java.util.List;
 
 public class ControladorCliente {
 
