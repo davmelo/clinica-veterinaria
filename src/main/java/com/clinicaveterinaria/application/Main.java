@@ -115,10 +115,25 @@ public class Main {
         vet2.setEspecialidades(new ArrayList<>());
         vet2.adicionarEspecialidade("Ortopedia");
 
-        DisponibilidadeAgenda disponibilidade = new DisponibilidadeAgenda();
-        disponibilidade.adicionarHorario(DiaSemana.MONDAY, LocalTime.of(10, 0)); // Segunda-feira 10h
-        disponibilidade.adicionarHorario(DiaSemana.MONDAY, LocalTime.of(11, 0)); // Segunda-feira 11h
-        vet2.setDisponibilidadeAgenda(disponibilidade);
+        Veterinario vet3 = new Veterinario();
+        vet2.setId(21L);
+        vet2.setNome("Dr. Antonio");
+        vet2.setSobrenome("Neto");
+        vet2.setCrmv("CRMV5337");
+        vet2.setTelefone("94587-9878");
+        vet2.setEmail("antonio@vet.com");
+        vet2.setEspecialidades(new ArrayList<>());
+        vet2.adicionarEspecialidade("Dermatologia");
+
+        DisponibilidadeAgenda disponibilidade1 = new DisponibilidadeAgenda();
+        disponibilidade1.adicionarHorario(DiaSemana.MONDAY, LocalTime.of(10, 0)); // Segunda-feira 10h
+        disponibilidade1.adicionarHorario(DiaSemana.MONDAY, LocalTime.of(11, 0)); // Segunda-feira 11h
+        vet2.setDisponibilidadeAgenda(disponibilidade1);
+
+        DisponibilidadeAgenda disponibilidade2 = new DisponibilidadeAgenda();
+        disponibilidade2.adicionarHorario(DiaSemana.THURSDAY, LocalTime.of(9, 30)); // Quinta-feira 9:30h
+        disponibilidade2.adicionarHorario(DiaSemana.THURSDAY, LocalTime.of(10, 30)); // Quinta-feira 10:30h
+        vet3.setDisponibilidadeAgenda(disponibilidade2);
 
         ControladorAgendamento controladorAgendamento = new ControladorAgendamento();
         Agendamento agendamento1 = new Agendamento();
@@ -135,9 +150,18 @@ public class Main {
         agendamento2.setCliente(cliente2);
         agendamento2.setAnimal(animal2);
         agendamento2.setVeterinario(vet2);
-        agendamento2.setDataAgendamento(LocalDateTime.of(2025, 6, 23, 10, 0)); // Segunda-feira
+        agendamento2.setDataAgendamento(LocalDateTime.of(2025, 6, 23, 1, 0)); // Segunda-feira
         agendamento2.setObsevacao("Consulta ortopédica");
         agendamento2.setStatus(AgendamentoStatus.PENDENTE);
+
+        Agendamento agendamento3= new Agendamento();
+        agendamento3.setId(4L);
+        agendamento3.setCliente(cliente2);
+        agendamento3.setAnimal(animal2);
+        agendamento3.setVeterinario(vet3);
+        agendamento3.setDataAgendamento(LocalDateTime.of(2025, 6, 23, 10, 0)); // Quinta-feira mudar dia 26
+        agendamento3.setObsevacao("Consulta Dermatologica"); //Vai dar erro porque o médico não tem agendamento para essa data
+        agendamento3.setStatus(AgendamentoStatus.PENDENTE);
 
         controladorAgendamento.cadastrarAgendamento(agendamento1);
         System.out.println(agendamento1);
@@ -146,6 +170,11 @@ public class Main {
 
         controladorAgendamento.cadastrarAgendamento(agendamento2);
         System.out.println(agendamento2);
+
+        System.out.println("------------------");
+
+        controladorAgendamento.cadastrarAgendamento(agendamento3);
+        System.out.println(agendamento3);
 
         System.out.println("\nTodos os Agendamentos:\n");
         List<Agendamento> todosAgendamentos = controladorAgendamento.listarTodosAgendamentos();
