@@ -168,7 +168,7 @@ public class Main {
         agendamento3.setCliente(cliente2);
         agendamento3.setAnimal(animal2);
         agendamento3.setVeterinario(vet3);
-        agendamento3.setDataAgendamento(LocalDateTime.of(2025, 6, 26, 16, 0)); // Quinta-feir
+        agendamento3.setDataAgendamento(LocalDateTime.of(2025, 6, 26, 16, 0)); // Quinta-feira
         agendamento3.setObsevacao("Consulta Dermatologica");
         agendamento3.setStatus(AgendamentoStatus.PENDENTE);
 
