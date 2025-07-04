@@ -32,7 +32,7 @@
       </Label>
       <ImageView fitHeight="217.0" fitWidth="196.0" layoutX="84.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../Desktop/telas_javaFX/WhatsApp%20Image%202025-07-03%20at%203.06.33%20PM.jpeg" />
+            <Image url="@images/miaumiau.jpg" />
          </image>
       </ImageView>
       <Label layoutX="128.0" layoutY="244.0" text="AUMIAU SAUDE">
