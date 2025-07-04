@@ -30,10 +30,9 @@
             <Font name="Franklin Gothic Medium" size="20.0" />
          </font>
       </Label>
-      <ImageView fitHeight="217.0" fitWidth="196.0" layoutX="84.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/miaumiau.jpg" />
-         </image>
+      <ImageView fitHeight="217.0" fitWidth="196.0" layoutX="84.0" layoutY="70.0" pickOnBounds="true"
+                 preserveRatio="true">
+         <Image url="@images/miaumiau.jpg"/>
       </ImageView>
       <Label layoutX="128.0" layoutY="244.0" text="AUMIAU SAUDE">
          <font>
