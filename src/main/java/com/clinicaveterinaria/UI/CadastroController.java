@@ -26,83 +26,45 @@ public class CadastroController {
     private PasswordField passwordField;
 
     @FXML
-    private Button createAccountButton;
-
-    @FXML
-    private Hyperlink loginLink;
-
-    @FXML
     private Label errorLabel;
 
     @FXML
     private Label successLabel;
 
-    // Email validation pattern
+    // Validação Email
     private static final Pattern EMAIL_PATTERN =
             Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
 
-    // CRMV validation pattern (Format: XX 00000)
+    // validação CRMV (Formato: XX 00000)
     private static final Pattern CRMV_PATTERN =
             Pattern.compile("^[A-Z]{2}\\s\\d{5}$");
 
-
-    private void setupFieldValidation() {
-        // Email field validation
-        emailField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-            if (!isNowFocused && !emailField.getText().isEmpty()) {
-                if (!isValidEmail(emailField.getText())) {
-                    emailField.setStyle("-fx-border-color: red;");
-                } else {
-                    emailField.setStyle("");
-                }
-            }
-        });
-
-        // CRMV field validation
-        crmvField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-            if (!isNowFocused && !crmvField.getText().isEmpty()) {
-                if (!isValidCRMV(crmvField.getText())) {
-                    crmvField.setStyle("-fx-border-color: red;");
-                } else {
-                    crmvField.setStyle("");
-                }
-            }
-        });
-    }
-
     @FXML
     private void handleCreateAccount(ActionEvent event) {
-        // Clear previous messages
         hideMessages();
 
-        // Get field values
         String name = nameField.getText().trim();
         String crmv = crmvField.getText().trim();
         String email = emailField.getText().trim();
         String password = passwordField.getText();
 
-        // Validate input
         if (!validateInput(name, crmv, email, password)) {
             return;
         }
 
-        // Check if user already exists
         if (userExists(email)) {
             showError("Este email já está cadastrado.");
             return;
         }
 
-        // Create user account
         if (createUser(name, crmv, email, password)) {
-            showSuccess("Conta criada com sucesso!");
+            showSuccess();
 
-            // Wait a moment and then redirect to login
+            // redirecionamento - Login
             new Thread(() -> {
                 try {
                     Thread.sleep(2000); // Wait 2 seconds
-                    javafx.application.Platform.runLater(() -> {
-                        handleBackToLogin(event);
-                    });
+                    javafx.application.Platform.runLater(() -> handleBackToLogin(event));
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -190,24 +152,19 @@ public class CadastroController {
     }
 
     private boolean userExists(String email) {
-        // Mock check - replace with actual database query
-        // This would typically check if the email already exists in your database
+        // Ver se o Email já existe na database
         return false;
     }
 
     private boolean createUser(String name, String crmv, String email, String password) {
-        // Mock user creation - replace with actual database insertion
-        // This is where you would:
-        // 1. Hash the password
-        // 2. Insert user into database
-        // 3. Handle any database errors
+        // Substituir com dados do prejeto
+        // Inserir usuário na database
 
         try {
-            // Simulate database operation
             Thread.sleep(500);
 
-            // For now, just return true to simulate successful creation
-            // In reality, you would return the result of your database operation
+            // Por enquanto só retornma true pra simular o sucesso da criação de conta
+
             return true;
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -221,8 +178,8 @@ public class CadastroController {
         successLabel.setVisible(false);
     }
 
-    private void showSuccess(String message) {
-        successLabel.setText(message);
+    private void showSuccess() {
+        successLabel.setText("Conta criada com sucesso!");
         successLabel.setVisible(true);
         errorLabel.setVisible(false);
     }
@@ -230,18 +187,5 @@ public class CadastroController {
     private void hideMessages() {
         errorLabel.setVisible(false);
         successLabel.setVisible(false);
-    }
-
-    // Method to clear all fields
-    public void clearFields() {
-        nameField.clear();
-        crmvField.clear();
-        emailField.clear();
-        passwordField.clear();
-        hideMessages();
-
-        // Reset field styles
-        emailField.setStyle("");
-        crmvField.setStyle("");
     }
 }

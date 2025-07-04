@@ -19,12 +19,6 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    private Button loginButton;
-
-    @FXML
-    private Hyperlink registerLink;
-
-    @FXML
     private Label errorLabel;
 
     @FXML
@@ -39,10 +33,10 @@ public class LoginController {
             return;
         }
 
-        // Here you would typically validate against your database
-        // For now, I'll create a simple mock authentication
+        // adicionar futuras validações
+        // Altenticação (Exemplo)
         if (authenticateUser(username, password)) {
-            // Determine user type and redirect accordingly
+            // Determinar o tipo de user
             String userType = getUserType(username);
             redirectToMainScreen(event, userType);
         } else {
@@ -53,7 +47,7 @@ public class LoginController {
     @FXML
     private void handleRegister(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/clinicaveterinaria/UI/cadastro_tela.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cadastro_tela.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -96,22 +90,15 @@ public class LoginController {
 
             // determinar para qual tela o usuário será redirecionado dependnedo do tipo
             if ("VETERINARIO".equals(userType)) {
-                fxmlPath = "/com/clinicaveterinaria/UI/tela_principal_veterinario.fxml";
+                fxmlPath = "tela_principal_veterinario.fxml";
                 windowTitle = "Sistema Veterinário - AUMIAU SAUDE";
             } else {
-                fxmlPath = "/com/clinicaveterinaria/UI/tela_principal_atendente.fxml";
+                fxmlPath = "tela_principal_atendente.fxml";
                 windowTitle = "Sistema Atendente - AUMIAU SAUDE";
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
-            // usar o controller para passar informação do usuario (se necessário)
-            // Object controller = loader.getController();
-            // if (controller instanceof MainScreenController) {
-            //     ((MainScreenController) controller).setUserInfo(username, userType);
-            // }
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -127,12 +114,5 @@ public class LoginController {
     private void showError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
-    }
-
-    // limpar os formulários
-    public void clearFields() {
-        usernameField.clear();
-        passwordField.clear();
-        errorLabel.setVisible(false);
     }
 }

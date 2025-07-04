@@ -10,8 +10,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/clinicaveterinaria/UI/login_tela.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tela_principal_atendente.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setTitle("AuMiau Saúde!");
         stage.setScene(scene);
         stage.show();
