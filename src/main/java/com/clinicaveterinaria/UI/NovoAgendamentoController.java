@@ -10,27 +10,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AgendamentosController {
+public class NovoAgendamentoController {
 
-    public void handleVoltar(ActionEvent event) {
+    public void handleCancelar(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("tela_principal_atendente.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Sistema Clínica Veterinária - Menu Principal");
-            stage.show();
-
-        } catch (IOException e) {
-            showErrorAlert();
-            e.printStackTrace();
-        }
-    }
-
-    public void handleNovoAgendamento(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("novo_agendamento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("gestao_agendamentos.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

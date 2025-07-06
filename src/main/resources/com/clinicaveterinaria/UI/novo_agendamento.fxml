@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.NovoAgendamentoController">
+    <top>
+        <VBox spacing="10.0" styleClass="header-section">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <Label styleClass="title" text="Novo Agendamento">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <VBox spacing="25.0">
+                <padding>
+                    <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+                </padding>
+
+                <!-- Cliente Section -->
+                <VBox spacing="10.0" styleClass="section">
+                    <Label styleClass="section-title" text="Cliente">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                    </Label>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <TextField fx:id="txtClienteSearch" prefWidth="300.0" promptText="Digite o nome ou telefone do cliente" />
+                        <Button fx:id="btnBuscarCliente" text="Buscar" />
+                        <Button fx:id="btnNovoCliente" text="Novo Cliente" />
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <VBox spacing="5.0">
+                            <Label text="Nome:" />
+                            <TextField fx:id="txtClienteNome" editable="false" prefWidth="200.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Telefone:" />
+                            <TextField fx:id="txtClienteTelefone" editable="false" prefWidth="150.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Email:" />
+                            <TextField fx:id="txtClienteEmail" editable="false" prefWidth="200.0" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Animal Section -->
+                <VBox spacing="10.0" styleClass="section">
+                    <Label styleClass="section-title" text="Animal">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                    </Label>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <ComboBox fx:id="cmbAnimal" prefWidth="300.0" promptText="Selecione o animal" />
+                        <Button fx:id="btnNovoAnimal" text="Novo Animal" />
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <VBox spacing="5.0">
+                            <Label text="Nome:" />
+                            <TextField fx:id="txtAnimalNome" editable="false" prefWidth="150.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Espécie:" />
+                            <TextField fx:id="txtAnimalEspecie" editable="false" prefWidth="100.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Raça:" />
+                            <TextField fx:id="txtAnimalRaca" editable="false" prefWidth="150.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Idade:" />
+                            <TextField fx:id="txtAnimalIdade" editable="false" prefWidth="80.0" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Agendamento Details Section -->
+                <VBox spacing="10.0" styleClass="section">
+                    <Label styleClass="section-title" text="Detalhes do Agendamento">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                    </Label>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <VBox spacing="5.0">
+                            <Label text="Data:" />
+                            <DatePicker fx:id="datePicker" prefWidth="150.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Horário:" />
+                            <ComboBox fx:id="cmbHorario" prefWidth="120.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Veterinário:" />
+                            <ComboBox fx:id="cmbVeterinario" prefWidth="200.0" />
+                        </VBox>
+                    </HBox>
+
+                    <VBox spacing="5.0">
+                        <Label text="Tipo de Procedimento:" />
+                        <ComboBox fx:id="cmbTipoProcedimento" prefWidth="300.0" />
+                    </VBox>
+
+                    <VBox spacing="5.0">
+                        <Label text="Observações:" />
+                        <TextArea fx:id="txtObservacoes" prefRowCount="3" promptText="Descreva o motivo da consulta ou observações importantes..." wrapText="true" />
+                    </VBox>
+                </VBox>
+
+                <!-- Status Section -->
+                <VBox spacing="10.0" styleClass="section">
+                    <Label styleClass="section-title" text="Status">
+                        <font>
+                            <Font name="System Bold" size="16.0" />
+                        </font>
+                    </Label>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <VBox spacing="5.0">
+                            <Label text="Status do Agendamento:" />
+                            <ComboBox fx:id="cmbStatus" prefWidth="150.0" />
+                        </VBox>
+                        <VBox spacing="5.0">
+                            <Label text="Prioridade:" />
+                            <ComboBox fx:id="cmbPrioridade" prefWidth="120.0" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="15.0" styleClass="button-bar">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <Button fx:id="btnCancelar" onAction="#handleCancelar" prefWidth="100.0" text="Cancelar" />
+            <Button fx:id="btnSalvar" prefWidth="100.0" styleClass="primary-button" text="Salvar" />
+        </HBox>
+    </bottom>
+</BorderPane>

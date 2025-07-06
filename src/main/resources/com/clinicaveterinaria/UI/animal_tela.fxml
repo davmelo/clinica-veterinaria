@@ -94,8 +94,6 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </padding>
-            <Button fx:id="novoAnimalButton" mnemonicParsing="false" text="Novo Animal"/>
-            <Button fx:id="excluirAnimalButton" mnemonicParsing="false" text="Excluir Animal"/>
         </HBox>
     </bottom>
 </BorderPane>
