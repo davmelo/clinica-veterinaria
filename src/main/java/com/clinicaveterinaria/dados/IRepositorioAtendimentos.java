@@ -1,0 +1,13 @@
+package com.clinicaveterinaria.dados;
+
+import com.clinicaveterinaria.negocio.entidades.Atendimento;
+
+public interface IRepositorioAtendimentos {
+    void salvar(Atendimento atendimento);
+
+    Atendimento buscar(Long id);
+
+    void atualizar(Long id, Atendimento novoAtendimento);
+
+    void remover(Long id);
+}
