@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" layoutY="56.0" prefHeight="63.0" prefWidth="900.0">
+         <children>
+            <Label text="CRIAR NOVA">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Label>
+            <Label prefHeight="29.0" prefWidth="80.0" text="CONTA">
+               <font>
+                  <Font name="Arial Black" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="328.0" layoutY="128.0" prefHeight="221.0" prefWidth="245.0" spacing="5.0">
+         <children>
+            <Label text="NOME:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField promptText="Nome" />
+            <Label text="CRMV:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="211.0" promptText="XX 00000">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </TextField>
+            <Label text="TELEFONE:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="211.0" promptText="(00) 0000-0000" />
+            <Label text="EMAIL:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="211.0" promptText="Email" />
+            <Label text="SENHA:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <PasswordField prefHeight="25.0" prefWidth="211.0" promptText="•••••••••" />
+            <Label text="ESPECIALIDADE:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="25.0" prefWidth="211.0" promptText="Especialidade" />
+         </children>
+      </VBox>
+      <Button layoutX="401.0" layoutY="456.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="98.0" style="-fx-background-color: #000000;" text="CRIAR CONTA" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Label layoutX="389.0" layoutY="505.0" text="Já possui uma conta?">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Hyperlink layoutX="429.0" layoutY="515.0" text="Entrar">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</AnchorPane>

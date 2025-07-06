@@ -30,4 +30,19 @@ public class ClienteController {
             e.printStackTrace();
         }
     }
+
+    public void cadastrarCliente(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cadastrar_cliente.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) voltarButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

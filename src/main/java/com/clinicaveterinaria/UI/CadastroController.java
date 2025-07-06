@@ -77,7 +77,7 @@ public class CadastroController {
     @FXML
     private void handleBackToLogin(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login_tela.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login_tela_atualizada.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
