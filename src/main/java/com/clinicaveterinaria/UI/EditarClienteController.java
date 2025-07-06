@@ -10,15 +10,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AnimalController {
+public class EditarClienteController {
 
     @FXML
-    private Button voltarButton;
+    public Button voltarButton;
 
-    @FXML
-    private void handleVoltar(ActionEvent event) {
+    public void voltarTelaCliente(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("atendente_tela.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cliente_tela.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) voltarButton.getScene().getWindow();

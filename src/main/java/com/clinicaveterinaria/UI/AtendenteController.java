@@ -19,7 +19,7 @@ public class AtendenteController {
     private void handleAgendamentos(ActionEvent event) {
         try {
             // futura tela de Agendamentos
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("gestao_agendamentos.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("agendamentos_gestao.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

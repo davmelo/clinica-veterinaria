@@ -14,7 +14,7 @@ public class AgendamentosController {
 
     public void handleVoltar(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("tela_principal_atendente.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("atendente_tela.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

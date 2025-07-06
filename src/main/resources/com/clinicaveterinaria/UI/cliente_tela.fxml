@@ -28,7 +28,7 @@
                 </font>
             </Label>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-            <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#handleVoltar"
+            <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#voltarAtendente"
                     text="Voltar" minWidth="80.0" prefWidth="80.0" prefHeight="35.0"/>
         </HBox>
     </top>
@@ -87,8 +87,8 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </padding>
-            <Button fx:id="criarClienteButton" mnemonicParsing="false" text="Criar Novo Cliente"/>
-            <Button fx:id="editarClienteButton" mnemonicParsing="false" text="Editar Cliente"/>
+            <Button fx:id="criarClienteButton" onAction="#cadastrarCliente" mnemonicParsing="false" text="Criar Novo Cliente"/>
+            <Button fx:id="editarClienteButton" onAction="#editarCliente" mnemonicParsing="false" text="Editar Cliente"/>
         </HBox>
     </bottom>
 </BorderPane>

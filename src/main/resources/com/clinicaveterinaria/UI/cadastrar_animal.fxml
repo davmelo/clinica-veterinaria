@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.CadastrarAnimalController">
+   <AnchorPane layoutX="-4.0" layoutY="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="914.0">
+      <HBox layoutX="4.0" layoutY="7.0" prefHeight="56.0" prefWidth="906.0" spacing="630.0">
+         <padding>
+            <Insets left="10.0" top="10.0" />
+         </padding>
+         <Label text="Cadastrar Animal">
+            <font>
+               <Font name="Arial Black" size="20.0" />
+            </font>
+         </Label>
+         <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#voltarCadCliente" style="-fx-background-color: #000000;" text="voltar" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Button>
+      </HBox>
+      <VBox alignment="CENTER_LEFT" layoutX="321.0" layoutY="165.0" prefHeight="252.0" prefWidth="273.0" spacing="5.0">
+         <Label text="NOME:" />
+         <TextField prefHeight="25.0" prefWidth="205.0" promptText="Nome" />
+         <Label text="ESPECIE:" />
+         <TextField prefHeight="25.0" prefWidth="215.0" promptText="Especie" />
+         <Label text="RAÇA:" />
+         <TextField prefHeight="25.0" prefWidth="215.0" promptText="Raça" />
+         <Label text="IDADE:" />
+         <DatePicker prefHeight="25.0" prefWidth="275.0" promptText="00/00/0000" />
+         <Label text="PESO:" />
+         <TextField prefHeight="25.0" prefWidth="215.0" promptText="Peso" />
+         <HBox alignment="CENTER" prefHeight="47.0" prefWidth="900.0" spacing="20.0" />
+      </VBox>
+      <HBox alignment="CENTER" layoutX="1.0" layoutY="425.0" prefHeight="100.0" prefWidth="914.0">
+         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="71.0" style="-fx-background-color: #000000;" text="Cadastrar" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Button>
+      </HBox>
+   </AnchorPane>
+</AnchorPane>

@@ -13,15 +13,50 @@ import java.io.IOException;
 public class ClienteController {
 
     @FXML
+    private Button criarClienteButton;
+
+    @FXML
+    private Button editarClienteButton;
+
+    @FXML
     private Button voltarButton;
 
     @FXML
-    private void handleVoltar(ActionEvent event) {
+    private void voltarAtendente(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("tela_principal_atendente.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("atendente_tela.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) voltarButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cadastrarCliente(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cadastrar_cliente.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) criarClienteButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editarCliente(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("editar_cliente.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) editarClienteButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

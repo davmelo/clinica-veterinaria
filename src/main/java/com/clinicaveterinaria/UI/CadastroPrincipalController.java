@@ -12,9 +12,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class CadastroController {
+public class CadastroPrincipalController {
+
     @FXML
-    private TextField nameField;
+    private TextField telefoneField;
+
+    @FXML
+    private TextField nomeField;
 
     @FXML
     private TextField crmvField;
@@ -23,7 +27,10 @@ public class CadastroController {
     private TextField emailField;
 
     @FXML
-    private PasswordField passwordField;
+    private PasswordField senhaField;
+
+    @FXML
+    private TextField especialidadeField;
 
     @FXML
     private Label errorLabel;
@@ -31,24 +38,44 @@ public class CadastroController {
     @FXML
     private Label successLabel;
 
-    // Validação Email
+    // Validação Email - Padrão mais flexível
     private static final Pattern EMAIL_PATTERN =
-            Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+            Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
-    // validação CRMV (Formato: XX 00000)
+    // Validação CRMV - Mais flexível para aceitar diferentes formatos
     private static final Pattern CRMV_PATTERN =
-            Pattern.compile("^[A-Z]{2}\\s\\d{5}$");
+            Pattern.compile("^[A-Z]{2}\\s*\\d{4,5}$");
+
+    // Validação telefone - Mais flexível para aceitar diferentes formatos
+    private static final Pattern TELEFONE_PATTERN =
+            Pattern.compile("^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$");
+
+    private boolean isValidTelefone(String telefone) {
+        // Remove todos os caracteres não numéricos para validar
+        String numeroLimpo = telefone.replaceAll("[^0-9]", "");
+        // Verifica se tem 10 ou 11 dígitos (com ou sem 9º dígito)
+        return numeroLimpo.length() == 10 || numeroLimpo.length() == 11;
+    }
 
     @FXML
-    private void handleCreateAccount(ActionEvent event) {
+    private void criarConta(ActionEvent event) {
         hideMessages();
 
-        String name = nameField.getText().trim();
+        String name = nomeField.getText().trim();
         String crmv = crmvField.getText().trim();
         String email = emailField.getText().trim();
-        String password = passwordField.getText();
+        String password = senhaField.getText();
+        String especialidade = especialidadeField.getText().trim();
+        String telefone = telefoneField.getText().trim();
 
-        if (!validateInput(name, crmv, email, password)) {
+        // Debug - Remova estas linhas após testar
+        System.out.println("Nome: '" + name + "'");
+        System.out.println("CRMV: '" + crmv + "'");
+        System.out.println("Email: '" + email + "'");
+        System.out.println("Telefone: '" + telefone + "'");
+        System.out.println("Especialidade: '" + especialidade + "'");
+
+        if (!validateInput(name, crmv, telefone, email, password, especialidade)) {
             return;
         }
 
@@ -57,14 +84,14 @@ public class CadastroController {
             return;
         }
 
-        if (createUser(name, crmv, email, password)) {
+        if (createUser(name, crmv, telefone, email, password, especialidade)) {
             showSuccess();
 
             // redirecionamento - Login
             new Thread(() -> {
                 try {
                     Thread.sleep(2000); // Wait 2 seconds
-                    javafx.application.Platform.runLater(() -> handleBackToLogin(event));
+                    javafx.application.Platform.runLater(() -> voltarLogin(event));
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -75,7 +102,7 @@ public class CadastroController {
     }
 
     @FXML
-    private void handleBackToLogin(ActionEvent event) {
+    private void voltarLogin(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login_tela.fxml"));
             Parent root = loader.load();
@@ -91,16 +118,16 @@ public class CadastroController {
         }
     }
 
-    private boolean validateInput(String name, String crmv, String email, String password) {
+    private boolean validateInput(String name, String crmv, String telefone, String email, String password, String especialidade) {
         if (name.isEmpty()) {
             showError("Nome é obrigatório.");
-            nameField.requestFocus();
+            nomeField.requestFocus();
             return false;
         }
 
         if (name.length() < 3) {
             showError("Nome deve ter pelo menos 3 caracteres.");
-            nameField.requestFocus();
+            nomeField.requestFocus();
             return false;
         }
 
@@ -111,8 +138,20 @@ public class CadastroController {
         }
 
         if (!isValidCRMV(crmv)) {
-            showError("CRMV deve estar no formato: XX 00000");
+            showError("CRMV deve estar no formato: XX 00000 ou XX00000");
             crmvField.requestFocus();
+            return false;
+        }
+
+        if (telefone.isEmpty()) {
+            showError("Telefone é obrigatório.");
+            telefoneField.requestFocus();
+            return false;
+        }
+
+        if (!isValidTelefone(telefone)) {
+            showError("Formato de telefone inválido. Use (00) 00000-0000 ou (00) 0000-0000.");
+            telefoneField.requestFocus();
             return false;
         }
 
@@ -130,13 +169,19 @@ public class CadastroController {
 
         if (password.isEmpty()) {
             showError("Senha é obrigatória.");
-            passwordField.requestFocus();
+            senhaField.requestFocus();
             return false;
         }
 
         if (password.length() < 6) {
             showError("Senha deve ter pelo menos 6 caracteres.");
-            passwordField.requestFocus();
+            senhaField.requestFocus();
+            return false;
+        }
+
+        if (especialidade.isEmpty()) {
+            showError("Especialidade é obrigatória.");
+            especialidadeField.requestFocus();
             return false;
         }
 
@@ -148,7 +193,12 @@ public class CadastroController {
     }
 
     private boolean isValidCRMV(String crmv) {
-        return CRMV_PATTERN.matcher(crmv.toUpperCase()).matches();
+        // Converte para maiúscula e remove espaços extras
+        String crmvFormatado = crmv.toUpperCase().replaceAll("\\s+", " ");
+
+        // Verifica se segue o padrão XX 00000 ou XX00000
+        return CRMV_PATTERN.matcher(crmvFormatado).matches() ||
+                crmvFormatado.matches("^[A-Z]{2}\\d{4,5}$");
     }
 
     private boolean userExists(String email) {
@@ -156,14 +206,20 @@ public class CadastroController {
         return false;
     }
 
-    private boolean createUser(String name, String crmv, String email, String password) {
-        // Substituir com dados do prejeto
+    private boolean createUser(String name, String crmv, String telefone, String email, String password, String especialidade) {
+        // Substituir com dados do projeto
         // Inserir usuário na database
 
         try {
             Thread.sleep(500);
 
-            // Por enquanto só retornma true pra simular o sucesso da criação de conta
+            // Por enquanto só retorna true pra simular o sucesso da criação de conta
+            System.out.println("Usuário criado com sucesso!");
+            System.out.println("Nome: " + name);
+            System.out.println("CRMV: " + crmv);
+            System.out.println("Email: " + email);
+            System.out.println("Telefone: " + telefone);
+            System.out.println("Especialidade: " + especialidade);
 
             return true;
         } catch (InterruptedException e) {

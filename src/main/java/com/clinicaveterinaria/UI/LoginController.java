@@ -12,19 +12,26 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-    @FXML
-    private TextField usernameField;
 
     @FXML
-    private PasswordField passwordField;
+    public Button loginButton;
+
+    @FXML
+    private TextField userField;
+
+    @FXML
+    private PasswordField senhaField;
+
+    @FXML
+    private Hyperlink cadastroLink;
 
     @FXML
     private Label errorLabel;
 
     @FXML
-    private void handleLogin(ActionEvent event) {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText();
+    private void login(ActionEvent event) {
+        String username = userField.getText().trim();
+        String password = senhaField.getText();
 
         errorLabel.setVisible(false);
 
@@ -45,9 +52,9 @@ public class LoginController {
     }
 
     @FXML
-    private void handleRegister(ActionEvent event) {
+    private void cadastro(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("cadastro_tela.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cadastro_principal_tela.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -63,7 +70,6 @@ public class LoginController {
 
     private boolean authenticateUser(String username, String password) {
         // verificação de credenciais
-
         // (demonstrativo)
         if ("veterinario@aumiau.com".equals(username) && "vet123".equals(password)) {
             return true;
@@ -90,10 +96,10 @@ public class LoginController {
 
             // determinar para qual tela o usuário será redirecionado dependnedo do tipo
             if ("VETERINARIO".equals(userType)) {
-                fxmlPath = "tela_principal_veterinario.fxml";
+                fxmlPath = "veterinario_tela.fxml";
                 windowTitle = "Sistema Veterinário - AUMIAU SAUDE";
             } else {
-                fxmlPath = "tela_principal_atendente.fxml";
+                fxmlPath = "atendente_tela.fxml";
                 windowTitle = "Sistema Atendente - AUMIAU SAUDE";
             }
 
@@ -114,5 +120,9 @@ public class LoginController {
     private void showError(String message) {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
+    }
+
+    public void entrar(ActionEvent actionEvent) {
+
     }
 }
