@@ -87,7 +87,7 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </padding>
-            <Button fx:id="criarClienteButton" mnemonicParsing="false" text="Criar Novo Cliente"/>
+            <Button fx:id="criarClienteButton" mnemonicParsing="false" text="Criar Novo Cliente" onAction="#cadastrarCliente"/>
             <Button fx:id="excluirClienteButton" mnemonicParsing="false" text="Excluir Cliente"/>
         </HBox>
     </bottom>

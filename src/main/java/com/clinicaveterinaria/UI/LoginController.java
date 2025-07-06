@@ -115,4 +115,8 @@ public class LoginController {
         errorLabel.setText(message);
         errorLabel.setVisible(true);
     }
+
+    public void entrar(ActionEvent actionEvent) {
+
+    }
 }
