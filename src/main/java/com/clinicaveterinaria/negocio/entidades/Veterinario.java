@@ -25,6 +25,15 @@ public class Veterinario {
     private ArrayList<String> especialidades;
     //private Agenda agenda;
 
+    public Veterinario(Long id, String nome, String sobrenome, String crmv, String email, String telefone) {
+        this.id = id;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.crmv = crmv;
+        this.email = email;
+        this.telefone = telefone;
+    }
+
     private DisponibilidadeAgenda disponibilidadeAgenda;
 
     public void adicionarEspecialidade(String especialidade) {

@@ -2,16 +2,25 @@ package com.clinicaveterinaria.negocio;
 
 import com.clinicaveterinaria.dados.IRepositorioAnimais;
 import com.clinicaveterinaria.dados.RepositorioAnimaisArray;
+import com.clinicaveterinaria.dados.RepositorioClientesArray;
 import com.clinicaveterinaria.negocio.entidades.Animal;
 
 import java.util.List;
 
 public class ControladorAnimal {
 
+    private static ControladorAnimal instance;
     final private IRepositorioAnimais repositorio;
 
-    public ControladorAnimal() {
+    private ControladorAnimal() {
         this.repositorio = RepositorioAnimaisArray.getInstance();
+    }
+
+    public static ControladorAnimal getInstance() {
+        if (instance == null) {
+            instance = new ControladorAnimal();
+        }
+        return instance;
     }
 
     public void cadastrarAnimal(Animal animal) {

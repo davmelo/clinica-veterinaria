@@ -1,15 +1,24 @@
 package com.clinicaveterinaria.negocio;
 
 import com.clinicaveterinaria.dados.IRepositorioVeterinarios;
+import com.clinicaveterinaria.dados.RepositorioClientesArray;
 import com.clinicaveterinaria.dados.RepositorioVeterinariosArray;
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
 
 public class ControladorVeterinario {
 
+    private static ControladorVeterinario instance;
     final private IRepositorioVeterinarios repositorio;
 
-    public ControladorVeterinario() {
+    private ControladorVeterinario() {
         this.repositorio = RepositorioVeterinariosArray.getInstance();
+    }
+
+    public static ControladorVeterinario getInstance() {
+        if (instance == null) {
+            instance = new ControladorVeterinario();
+        }
+        return instance;
     }
 
     public void cadastrarVeterinario(Veterinario veterinario) {

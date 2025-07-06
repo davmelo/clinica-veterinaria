@@ -7,10 +7,18 @@ import com.clinicaveterinaria.negocio.entidades.Cliente;
 
 public class ControladorCliente {
 
+    private static ControladorCliente instance;
     final private IRepositorioClientes repositorio;
 
-    public ControladorCliente() {
+    private ControladorCliente() {
         this.repositorio = RepositorioClientesArray.getInstance();
+    }
+
+    public static ControladorCliente getInstance() {
+        if (instance == null) {
+            instance = new ControladorCliente();
+        }
+        return instance;
     }
 
     public void cadastrarCliente(Cliente cliente) {
