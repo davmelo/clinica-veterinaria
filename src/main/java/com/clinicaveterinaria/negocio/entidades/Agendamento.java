@@ -1,5 +1,6 @@
 package com.clinicaveterinaria.negocio.entidades;
 
+import com.clinicaveterinaria.dtos.AgendamentoRespostaDTO;
 import com.clinicaveterinaria.negocio.entidades.procedimento.SolicitacaoProcedimentos;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,5 +34,9 @@ public class Agendamento {
     public void cancelar(String motivoCancelamento) {
         this.setObsevacao(motivoCancelamento);
         this.setStatus(AgendamentoStatus.CANCELADO);
+    }
+
+    public AgendamentoRespostaDTO paraDTO() {
+        return new AgendamentoRespostaDTO(cliente.getNome(), animal.getNome(), veterinario.getNome(), dataAgendamento, status);
     }
 }

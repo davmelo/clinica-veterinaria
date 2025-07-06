@@ -1,5 +1,6 @@
 package com.clinicaveterinaria.negocio.entidades;
 
+import com.clinicaveterinaria.dtos.VeterinarioRespostaDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,9 @@ public class Veterinario {
 
     public void adicionarEspecialidade(String especialidade) {
         this.especialidades.add(especialidade);
+    }
+
+    public VeterinarioRespostaDTO paraDTO() {
+        return new VeterinarioRespostaDTO(nome, sobrenome, crmv, telefone, email);
     }
 }
