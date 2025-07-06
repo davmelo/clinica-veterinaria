@@ -5,17 +5,16 @@ import com.clinicaveterinaria.negocio.entidades.procedimento.SolicitacaoProcedim
 
 import java.time.LocalDateTime;
 
-public record AgendamentoDTO(
+public record AgendamentoRequisicaoDTO(
         Long id,
-        Long clienteId,
+        String clienteCPF,
         Long animalId,
-        Long veterinarioId,
+        String veterinarioCRMV,
         LocalDateTime dataAgendamento,
         String observacao,
-        Long procedimentosSolicitadosId,
         AgendamentoStatus status
 ) {
-    public Agendamento paraEntidade(Cliente cliente, Animal animal, Veterinario veterinario, SolicitacaoProcedimentos procedimentos) {
+    public Agendamento paraEntidade(Cliente cliente, Animal animal, Veterinario veterinario) {
         return new Agendamento(
                 id,
                 cliente,
@@ -23,7 +22,6 @@ public record AgendamentoDTO(
                 veterinario,
                 dataAgendamento,
                 observacao,
-                procedimentos,
                 status
         );
     }

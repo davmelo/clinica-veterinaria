@@ -27,6 +27,16 @@ public class Agendamento {
     private SolicitacaoProcedimentos procedimentosSolicitados;
     private AgendamentoStatus status;
 
+    public Agendamento(Long id, Cliente cliente, Animal animal, Veterinario veterinario, LocalDateTime dataAgendamento, String obsevacao, AgendamentoStatus status) {
+        this.id = id;
+        this.cliente = cliente;
+        this.animal = animal;
+        this.veterinario = veterinario;
+        this.dataAgendamento = dataAgendamento;
+        this.obsevacao = obsevacao;
+        this.status = status;
+    }
+
     public void remarcar(LocalDateTime novaData, String motivoRemarcacao) {
         this.setDataAgendamento(novaData);
     }
