@@ -42,11 +42,24 @@ public class ServidorClinica {
         return buscaInternaCliente(cpf).paraDTO();
     };
 
+    public void atualizarCliente(ClienteRequisicaoDTO clienteDTO){
+        Cliente cliente = clienteDTO.paraEntidade();
+        controladorCliente.atualizarCliente(cliente.getCpf(), cliente);
+    }
+    
+    public void removerCliente(String cpf){
+        controladorCliente.removerCliente(cpf);
+    }
+    
 //    public void atualizarCliente(String cpf);
 //    public void removerCliente();
 
     public void cadastrarAnimal(AnimalRequisicaoDTO animalDTO) {
         Cliente cliente = buscaInternaCliente(animalDTO.tutorCPF());
+        if (cliente == null) {
+            System.err.println("Erro: Tutor com CPF " + animalDTO.tutorCPF() + " não encontrado para cadastrar o animal.");
+            return;
+            }
         Animal animal =  new Animal(
                 animalDTO.id(), cliente,
                 animalDTO.nome(), animalDTO.especie(),
@@ -84,11 +97,26 @@ public class ServidorClinica {
         return buscaInternaVeterinario(crmv).paraDTO();
     }
 
+
     public void adiconarDispoAgenda(String crmv, DispoAgendaRequisicaoDTO agendaDTO) {
         Veterinario veterinario = buscaInternaVeterinario(crmv);
-        DisponibilidadeAgenda agenda = agendaDTO.paraEntidade();
-        veterinario.setDisponibilidadeAgenda(agenda);
+        if (veterinario != null) {
+            if (veterinario.getDisponibilidadeAgenda() == null) {
+                veterinario.setDisponibilidadeAgenda(new DisponibilidadeAgenda());
+            }
+            veterinario.getDisponibilidadeAgenda().adicionarHorario(agendaDTO.dia(), agendaDTO.horario());
+            controladorVeterinario.atualizarVeterinario(veterinario.getCrmv(), veterinario);
+            System.out.println("Disponibilidade adicionada para " + veterinario.getNome() + " em " + agendaDTO.dia() + " às " + agendaDTO.horario());
+        } else {
+            System.err.println("Erro: Veterinário com CRMV " + crmv + " não encontrado para adicionar disponibilidade.");
+        }
     }
+
+//    public void adiconarDispoAgenda(String crmv, DispoAgendaRequisicaoDTO agendaDTO) {
+//        Veterinario veterinario = buscaInternaVeterinario(crmv);
+//        DisponibilidadeAgenda agenda = agendaDTO.paraEntidade();
+//        veterinario.setDisponibilidadeAgenda(agenda);
+//    }
 //    public void atualizarVeterinario();
 //    public void removerVeterinario();
 
@@ -96,7 +124,8 @@ public class ServidorClinica {
         Cliente cliente = controladorCliente.buscarClientePorCpf(agendamentoDTO.clienteCPF());
         Animal animal = controladorAnimal.buscarAnimalPorId(agendamentoDTO.animalId());
         Veterinario veterinario = controladorVeterinario.buscarVeterinarioPorCrmv(agendamentoDTO.veterinarioCRMV());
-        System.out.println(veterinario.getDisponibilidadeAgenda());
+        System.out.println("|Agenda de " + veterinario.getNome() + "| \n" + veterinario.getDisponibilidadeAgenda());
+
         Agendamento agendamento = new Agendamento(
                 agendamentoDTO.id(), cliente,
                 animal, veterinario,
@@ -124,8 +153,8 @@ public class ServidorClinica {
         controladorAtendimento.cadastrarAtendimento(atendimento);
     }
 
-    private Atendimento buscaInternaAtendimento(Long atendiemntoID) {
-        return controladorAtendimento.buscarAtendimento(atendiemntoID);
+    private Atendimento buscaInternaAtendimento(Long atendimentoID) {
+        return controladorAtendimento.buscarAtendimento(atendimentoID);
     }
 
     public AtendimentoRespostaDTO buscarAtendimento(Long atendimentoID) {
