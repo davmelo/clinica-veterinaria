@@ -42,6 +42,7 @@ public class ControladorAgendamento {
             }
             repositorio.salvar(agendamento);
             agendamento.setStatus(AgendamentoStatus.AGENDADO);
+            System.out.println("Agendamento realizado com sucesso!\n" + "Dados: Id Agendamento: " + agendamento.getId() + " Nome: " + agendamento.getCliente().getNome() + " Animal: " + agendamento.getAnimal().getNome() + " Horário: " + agendamento.getDataAgendamento() + "\n");
             return true;
         } else {
             System.out.println("Horário indisponível para este veterinário (Ocorreu conflito de agenda ou indisponibilidade no horário de trabalho).");
