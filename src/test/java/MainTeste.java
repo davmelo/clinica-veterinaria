@@ -184,21 +184,29 @@ public class MainTeste {
                 LocalTime.of(14, 0)
         );
 
-//        DispoAgendaRequisicaoDTO dispoJuliana2 = new DispoAgendaRequisicaoDTO(
-//                DiaSemana.MONDAY,
-//                LocalTime.of(15, 0)
-//        );
+        DispoAgendaRequisicaoDTO dispoJuliana2 = new DispoAgendaRequisicaoDTO(
+                DiaSemana.MONDAY,
+                LocalTime.of(15, 30)
+        );
 
         clinica.adiconarDispoAgenda("CRMV-12345", dispoJuliana1);
-//        clinica.adiconarDispoAgenda("CRMV-12345", dispoJuliana2);
+        clinica.adiconarDispoAgenda("CRMV-12345", dispoJuliana2);
 
-        AgendamentoRequisicaoDTO agendamento = new AgendamentoRequisicaoDTO(
+        AgendamentoRequisicaoDTO agendamento1 = new AgendamentoRequisicaoDTO(
                 1L, "12345678900", 1L, "CRMV-12345",
                 LocalDateTime.of(2025, 7, 7, 14, 0),
                 "Consulta de rotina",
-                AgendamentoStatus.AGENDADO
+                AgendamentoStatus.PENDENTE
         );
-        clinica.cadastrarAgendamento(agendamento);
+        clinica.cadastrarAgendamento(agendamento1);
+
+        AgendamentoRequisicaoDTO agendamento6 = new AgendamentoRequisicaoDTO(
+                2L, "12345678900", 1L, "CRMV-12345",
+                LocalDateTime.of(2025, 7, 7, 14, 0),
+                "Urgência",
+                AgendamentoStatus.PENDENTE
+        );
+        clinica.cadastrarAgendamento(agendamento6);
 
         // 5. Criando atendimento a partir do agendamento
         AtendimentoRequisicaoDTO atendimento = new AtendimentoRequisicaoDTO(
