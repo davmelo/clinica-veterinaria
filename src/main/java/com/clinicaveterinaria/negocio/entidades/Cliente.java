@@ -1,5 +1,6 @@
 package com.clinicaveterinaria.negocio.entidades;
 
+import com.clinicaveterinaria.dtos.ClienteRespostaDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,7 @@ public class Cliente {
     private String email;
     private String endereco;
 
-
+    public ClienteRespostaDTO paraDTO() {
+        return new ClienteRespostaDTO(nome, sobrenome, cpf, telefone, email, endereco);
+    }
 }

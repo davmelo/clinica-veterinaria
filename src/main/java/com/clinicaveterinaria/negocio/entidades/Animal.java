@@ -1,5 +1,6 @@
 package com.clinicaveterinaria.negocio.entidades;
 
+import com.clinicaveterinaria.dtos.AnimalRespostaDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,9 @@ public class Animal {
             return 0;
         }
         return Period.between(this.dataNascimento, LocalDate.now()).getYears();
+    }
+
+    public AnimalRespostaDTO paraDTO() {
+        return new AnimalRespostaDTO(tutor.getNome(), nome, especie, raca, getIdade(), peso, identificacao);
     }
 }

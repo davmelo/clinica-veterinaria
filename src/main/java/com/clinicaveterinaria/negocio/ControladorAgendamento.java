@@ -2,6 +2,7 @@ package com.clinicaveterinaria.negocio;
 
 import com.clinicaveterinaria.dados.IRepositorioAgendamentos;
 import com.clinicaveterinaria.dados.RepositorioAgendamentosArray;
+import com.clinicaveterinaria.dados.RepositorioClientesArray;
 import com.clinicaveterinaria.negocio.entidades.Agendamento;
 import com.clinicaveterinaria.negocio.entidades.AgendamentoStatus; // Importe AgendamentoStatus
 import com.clinicaveterinaria.negocio.entidades.DiaSemana;
@@ -13,10 +14,18 @@ import java.util.List;
 
 public class ControladorAgendamento {
 
-    private final IRepositorioAgendamentos repositorio;
+    private static ControladorAgendamento instance;
+    final private IRepositorioAgendamentos repositorio;
 
-    public ControladorAgendamento() {
+    private ControladorAgendamento() {
         this.repositorio = RepositorioAgendamentosArray.getInstance();
+    }
+
+    public static ControladorAgendamento getInstance() {
+        if (instance == null) {
+            instance = new ControladorAgendamento();
+        }
+        return instance;
     }
 
     public boolean cadastrarAgendamento(Agendamento agendamento) {

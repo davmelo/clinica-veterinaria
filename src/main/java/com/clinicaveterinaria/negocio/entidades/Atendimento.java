@@ -1,5 +1,6 @@
 package com.clinicaveterinaria.negocio.entidades;
 
+import com.clinicaveterinaria.dtos.AtendimentoRespostaDTO;
 import com.clinicaveterinaria.negocio.entidades.procedimento.ProcedimentoRealizado;
 
 import lombok.Getter;
@@ -23,4 +24,18 @@ public class Atendimento {
     private Agendamento agendamento;
     private List<ProcedimentoRealizado> procedimentosRealizados;
     private LocalDateTime dataRealizacao;
+
+    public Atendimento(Long id, Agendamento agendamento, LocalDateTime dataRealizacao) {
+        this.id = id;
+        this.agendamento = agendamento;
+        this.dataRealizacao = dataRealizacao;
+    }
+
+    public AtendimentoRespostaDTO paraDTO() {
+        return new AtendimentoRespostaDTO(
+                agendamento.getCliente().getNome(),
+                agendamento.getAnimal().getNome(),
+                agendamento.getVeterinario().getNome(),
+                dataRealizacao);
+    }
 }
