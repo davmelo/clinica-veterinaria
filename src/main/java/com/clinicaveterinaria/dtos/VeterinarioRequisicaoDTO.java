@@ -1,10 +1,11 @@
 package com.clinicaveterinaria.dtos;
 
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
+import java.util.ArrayList; //Testar depois modificar
 
-public record VeterinarioRequisicaoDTO(Long id, String nome, String sobrenome, String crmv, String email, String telefone) {
+public record VeterinarioRequisicaoDTO(Long id, String nome, String sobrenome, String crmv, String email, String telefone, ArrayList<String> especialidades) {
 
     public Veterinario paraEntidade() {
-        return new Veterinario(id, nome, sobrenome, crmv, email, telefone);
+        return new Veterinario(id, nome, sobrenome, crmv, email, telefone, especialidades, null);
     }
 }

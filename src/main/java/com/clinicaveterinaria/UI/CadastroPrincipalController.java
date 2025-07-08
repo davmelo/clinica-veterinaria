@@ -1,5 +1,11 @@
 package com.clinicaveterinaria.UI;
 
+import com.clinicaveterinaria.dtos.VeterinarioRequisicaoDTO; // Para criar o DTO de veterinário
+import com.clinicaveterinaria.negocio.ServidorClinica; // Para acessar a camada de negócio
+import javafx.application.Platform; // Para garantir que o redirecionamento ocorra na Thread de UI
+import java.util.ArrayList; // Para a lista de especialidades
+import java.util.Arrays; // Adicionar este import para usar Arrays.asList()
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +44,8 @@ public class CadastroPrincipalController {
     @FXML
     private Label successLabel;
 
+    private ServidorClinica clinica = ServidorClinica.getInstance();
+
     // Validação Email - Padrão mais flexível
     private static final Pattern EMAIL_PATTERN =
             Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
@@ -64,7 +72,7 @@ public class CadastroPrincipalController {
         String name = nomeField.getText().trim();
         String crmv = crmvField.getText().trim();
         String email = emailField.getText().trim();
-        String password = senhaField.getText();
+        String password = senhaField.getText(); //Apenas para simulação de UI
         String especialidade = especialidadeField.getText().trim();
         String telefone = telefoneField.getText().trim();
 
@@ -79,25 +87,33 @@ public class CadastroPrincipalController {
             return;
         }
 
-        if (userExists(email)) {
-            showError("Este email já está cadastrado.");
-            return;
-        }
+        try {
+            // Verifica se o CRMV já existe antes de tentar cadastrar
+            if (clinica.buscarVeterinario(crmv) != null) {
+                showError("Um veterinário com este CRMV já está cadastrado.");
+                crmvField.requestFocus();
+                return;
+            }
 
-        if (createUser(name, crmv, telefone, email, password, especialidade)) {
-            showSuccess();
+            if (createUserAndVeterinario(name, crmv, telefone, email, especialidade)) { // 'password' removido
+                showSuccess();
 
-            // redirecionamento - Login
-            new Thread(() -> {
-                try {
-                    Thread.sleep(2000); // Wait 2 seconds
-                    javafx.application.Platform.runLater(() -> voltarLogin(event));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }).start();
-        } else {
-            showError("Erro ao criar conta. Tente novamente.");
+                // Redirecionamento para a tela de Login após 2 segundos
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(2000);
+                        Platform.runLater(() -> voltarLogin(event));
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        showError("Operação interrompida.");
+                    }
+                }).start();
+            } else {
+                showError("Erro ao criar conta. Tente novamente.");
+            }
+        } catch (Exception e) {
+            showError("Ocorreu um erro inesperado: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -124,7 +140,6 @@ public class CadastroPrincipalController {
             nomeField.requestFocus();
             return false;
         }
-
         if (name.length() < 3) {
             showError("Nome deve ter pelo menos 3 caracteres.");
             nomeField.requestFocus();
@@ -136,9 +151,8 @@ public class CadastroPrincipalController {
             crmvField.requestFocus();
             return false;
         }
-
         if (!isValidCRMV(crmv)) {
-            showError("CRMV deve estar no formato: XX 00000 ou XX00000");
+            showError("CRMV deve estar no formato: XX 00000 ou XX00000.");
             crmvField.requestFocus();
             return false;
         }
@@ -148,9 +162,8 @@ public class CadastroPrincipalController {
             telefoneField.requestFocus();
             return false;
         }
-
         if (!isValidTelefone(telefone)) {
-            showError("Formato de telefone inválido. Use (00) 00000-0000 ou (00) 0000-0000.");
+            showError("Formato de telefone inválido. Ex: (00) 00000-0000 ou 00900000000.");
             telefoneField.requestFocus();
             return false;
         }
@@ -160,7 +173,6 @@ public class CadastroPrincipalController {
             emailField.requestFocus();
             return false;
         }
-
         if (!isValidEmail(email)) {
             showError("Email inválido.");
             emailField.requestFocus();
@@ -172,7 +184,6 @@ public class CadastroPrincipalController {
             senhaField.requestFocus();
             return false;
         }
-
         if (password.length() < 6) {
             showError("Senha deve ter pelo menos 6 caracteres.");
             senhaField.requestFocus();
@@ -194,37 +205,33 @@ public class CadastroPrincipalController {
 
     private boolean isValidCRMV(String crmv) {
         // Converte para maiúscula e remove espaços extras
-        String crmvFormatado = crmv.toUpperCase().replaceAll("\\s+", " ");
-
-        // Verifica se segue o padrão XX 00000 ou XX00000
-        return CRMV_PATTERN.matcher(crmvFormatado).matches() ||
-                crmvFormatado.matches("^[A-Z]{2}\\d{4,5}$");
+        String crmvFormatado = crmv.toUpperCase().replaceAll("\\s+", ""); // Remover TODOS os espaços para CRMV_PATTERN
+        return CRMV_PATTERN.matcher(crmvFormatado).matches();
     }
 
-    private boolean userExists(String email) {
-        // Ver se o Email já existe na database
-        return false;
-    }
-
-    private boolean createUser(String name, String crmv, String telefone, String email, String password, String especialidade) {
-        // Substituir com dados do projeto
-        // Inserir usuário na database
-
+    private boolean createUserAndVeterinario(String name, String crmv, String telefone, String email, String especialidade) {
         try {
-            Thread.sleep(500);
+            VeterinarioRequisicaoDTO veterinarioDTO = new VeterinarioRequisicaoDTO(
+                    null, // ID será gerado
+                    name,
+                    "Sobrenome Padrão", // Adicionar um campo de sobrenome na UI
+                    crmv,
+                    email,
+                    telefone,
+                    new ArrayList<>(Arrays.asList(especialidade))
+            );
 
-            // Por enquanto só retorna true pra simular o sucesso da criação de conta
-            System.out.println("Usuário criado com sucesso!");
-            System.out.println("Nome: " + name);
-            System.out.println("CRMV: " + crmv);
-            System.out.println("Email: " + email);
-            System.out.println("Telefone: " + telefone);
-            System.out.println("Especialidade: " + especialidade);
+            clinica.cadastrarVeterinario(veterinarioDTO);
+
+            //Essa linha só vai aparecer se o cadastro for bem-sucedido.
+            System.out.println("Veterinário cadastrado via UI com sucesso! Nome: " + name + ", CRMV: " + crmv + ", Especialidade: " + especialidade);
 
             return true;
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return false;
+        } catch (Exception e) {
+            // Captura qualquer exceção que venha do ServidorClinica, como por exemplo CRMV já existe
+            System.err.println("Erro ao cadastrar veterinário: " + e.getMessage());
+            e.printStackTrace();
+            return false; // Retorna falso em caso de erro
         }
     }
 

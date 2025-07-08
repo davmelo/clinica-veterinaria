@@ -4,9 +4,13 @@ import com.clinicaveterinaria.dados.IRepositorioAgendamentos;
 import com.clinicaveterinaria.dados.RepositorioAgendamentosArray;
 import com.clinicaveterinaria.dados.RepositorioClientesArray;
 import com.clinicaveterinaria.negocio.entidades.Agendamento;
-import com.clinicaveterinaria.negocio.entidades.AgendamentoStatus; // Importe AgendamentoStatus
+import com.clinicaveterinaria.negocio.entidades.AgendamentoStatus;
 import com.clinicaveterinaria.negocio.entidades.DiaSemana;
 import com.clinicaveterinaria.negocio.entidades.DisponibilidadeAgenda;
+import com.clinicaveterinaria.dtos.AgendamentoRequisicaoDTO;
+import com.clinicaveterinaria.negocio.entidades.Animal;
+import com.clinicaveterinaria.negocio.entidades.Cliente;
+import com.clinicaveterinaria.negocio.entidades.Veterinario;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,9 +20,15 @@ public class ControladorAgendamento {
 
     private static ControladorAgendamento instance;
     final private IRepositorioAgendamentos repositorio;
+    private final ControladorCliente controladorCliente;
+    private final ControladorAnimal controladorAnimal;
+    private final ControladorVeterinario controladorVeterinario;
 
     private ControladorAgendamento() {
         this.repositorio = RepositorioAgendamentosArray.getInstance();
+        this.controladorCliente = ControladorCliente.getInstance();
+        this.controladorAnimal = ControladorAnimal.getInstance();
+        this.controladorVeterinario = ControladorVeterinario.getInstance();
     }
 
     public static ControladorAgendamento getInstance() {
@@ -28,24 +38,41 @@ public class ControladorAgendamento {
         return instance;
     }
 
-    public boolean cadastrarAgendamento(Agendamento agendamento) {
-        if (agendamento == null || agendamento.getVeterinario() == null || agendamento.getDataAgendamento() == null) {
-            System.out.println("Dados de agendamento incompletos.");
+    public boolean cadastrarAgendamento(AgendamentoRequisicaoDTO agendamentoDTO) {
+        Cliente cliente = controladorCliente.buscarClientePorCpf(agendamentoDTO.clienteCPF());
+        Animal animal = controladorAnimal.buscarAnimalPorId(agendamentoDTO.animalId());
+        Veterinario veterinario = controladorVeterinario.buscarVeterinarioPorCrmv(agendamentoDTO.veterinarioCRMV());
+
+        if (cliente == null) {
+            System.err.println("Erro (ControladorAgendamento): Cliente com CPF " + agendamentoDTO.clienteCPF() + " não encontrado.");
+            return false;
+        }
+        if (animal == null) {
+            System.err.println("Erro (ControladorAgendamento): Animal com ID " + agendamentoDTO.animalId() + " não encontrado.");
+            return false;
+        }
+        if (veterinario == null) {
+            System.err.println("Erro (ControladorAgendamento): Veterinário com CRMV " + agendamentoDTO.veterinarioCRMV() + " não encontrado.");
+            return false;
+        }
+
+        Agendamento agendamento = agendamentoDTO.paraEntidade(cliente, animal, veterinario);
+
+        if (agendamento.getVeterinario() == null || agendamento.getDataAgendamento() == null) {
+            System.err.println("Erro (ControladorAgendamento): Agendamento ou dados essenciais (Veterinário ou Data/Hora) são nulos.");
             return false;
         }
 
         if (verificarDisponibilidade(agendamento)) {
-            // Verificar se já existe um agendamento com o mesmo ID (Vai ser necessário atualizar)
-            if (repositorio.buscar(agendamento.getId()) != null) {
-                System.out.println("Agendamento com este ID já existe, você precisará atualizar.");
+            // Verifica se já existe um agendamento com o mesmo ID (para o caso de atualização)
+            if (agendamento.getId() != null && repositorio.buscar(agendamento.getId()) != null) {
+                System.err.println("Erro (ControladorAgendamento): Agendamento com ID " + agendamento.getId() + " já existe. Considere atualizar.");
                 return false;
             }
             repositorio.salvar(agendamento);
-            agendamento.setStatus(AgendamentoStatus.AGENDADO);
-            System.out.println("Agendamento realizado com sucesso!\n" + "Dados: Id Agendamento: " + agendamento.getId() + " Nome: " + agendamento.getCliente().getNome() + " Animal: " + agendamento.getAnimal().getNome() + " Horário: " + agendamento.getDataAgendamento() + "\n");
+            System.out.println("Agendamento salvo no repositório: ID " + agendamento.getId());
             return true;
         } else {
-            System.out.println("Horário indisponível para este veterinário (Ocorreu conflito de agenda ou indisponibilidade no horário de trabalho).");
             agendamento.setStatus(AgendamentoStatus.CANCELADO);
             return false;
         }
@@ -55,21 +82,41 @@ public class ControladorAgendamento {
         return repositorio.buscar(id);
     }
 
-    public void atualizarAgendamento(Long id, Agendamento novoAgendamento) {
-        // Para a atualizar o agendamento temos que garantir que ele não será igual a outros agendamentos existentes
+    public void atualizarAgendamento(Long id, AgendamentoRequisicaoDTO novoAgendamentoDTO) {
         Agendamento agendamentoExistente = repositorio.buscar(id);
-        if (agendamentoExistente != null && agendamentoExistente.getDataAgendamento().equals(novoAgendamento.getDataAgendamento())) {
-            // Se a data/hora não mudou, apenas atualiza
-            repositorio.atualizar(id, novoAgendamento);
-        } else {
-            // Se a data/hora mudou, verifica a disponibilidade para a nova data/hora
-            if (verificarDisponibilidade(novoAgendamento)) {
-                repositorio.atualizar(id, novoAgendamento);
-            } else {
-                System.out.println("Não foi possível atualizar, novo horário indisponível para este veterinário.");
-                agendamentoExistente.setStatus(AgendamentoStatus.CANCELADO); //analisar
+        if (agendamentoExistente == null) {
+            System.err.println("Erro (ControladorAgendamento): Agendamento com ID " + id + " não encontrado para atualização.");
+            return;
+        }
+
+        Cliente cliente = controladorCliente.buscarClientePorCpf(novoAgendamentoDTO.clienteCPF());
+        Animal animal = controladorAnimal.buscarAnimalPorId(novoAgendamentoDTO.animalId());
+        Veterinario veterinario = controladorVeterinario.buscarVeterinarioPorCrmv(novoAgendamentoDTO.veterinarioCRMV());
+
+        if (cliente == null || animal == null || veterinario == null) {
+            System.err.println("Erro (ControladorAgendamento): Dados de cliente, animal ou veterinário ausentes para a atualização do agendamento.");
+            return;
+        }
+        Agendamento agendamentoParaVerificar = novoAgendamentoDTO.paraEntidade(cliente, animal, veterinario);
+        agendamentoParaVerificar.setId(id);
+
+        // Se a data/hora mudou, verifica a disponibilidade para a nova data/hora
+        if (!agendamentoExistente.getDataAgendamento().equals(agendamentoParaVerificar.getDataAgendamento())) {
+            if (!verificarDisponibilidade(agendamentoParaVerificar)) {
+                System.err.println("Não foi possível atualizar: Novo horário indisponível para este veterinário.");
+                return;
             }
         }
+
+        agendamentoExistente.setCliente(cliente);
+        agendamentoExistente.setAnimal(animal);
+        agendamentoExistente.setVeterinario(veterinario);
+        agendamentoExistente.setDataAgendamento(agendamentoParaVerificar.getDataAgendamento());
+        agendamentoExistente.setObsevacao(agendamentoParaVerificar.getObsevacao()); // Cuidado com 'obsevacao'
+        agendamentoExistente.setStatus(agendamentoParaVerificar.getStatus());
+
+        repositorio.atualizar(id, agendamentoExistente);
+        System.out.println("Agendamento ID " + id + " atualizado.");
     }
 
     public void cancelarAgendamento(Long id, String motivo) {
@@ -79,7 +126,7 @@ public class ControladorAgendamento {
             repositorio.atualizar(id, agendamento);
             System.out.println("Agendamento " + id + " cancelado.");
         } else {
-            System.out.println("Agendamento com ID " + id + " não encontrado para cancelamento.");
+            System.out.println("Erro (ControladorAgendamento): Agendamento com ID " + id + " não encontrado para cancelamento.");
         }
     }
 
@@ -101,7 +148,7 @@ public class ControladorAgendamento {
                 System.out.println("Não foi possível remarcar: Novo horário indisponível para este veterinário.");
             }
         } else {
-            System.out.println("Agendamento com ID " + id + " não encontrado para remarcação.");
+            System.out.println("Erro (ControladorAgendamento): Agendamento com ID " + id + " não encontrado para remarcação.");
         }
     }
 
@@ -111,7 +158,7 @@ public class ControladorAgendamento {
             repositorio.remover(id);
             System.out.println("Agendamento " + id + " removido.");
         } else {
-            System.out.println("Agendamento com ID " + id + " não encontrado para remover.");
+            System.out.println("Erro (ControladorAgendamento): Agendamento com ID " + id + " não encontrado para remover.");
         }
     }
 
@@ -150,12 +197,10 @@ public class ControladorAgendamento {
                 // É o mesmo agendamento que está sendo atualizado, então não é um conflito
                 return true;
             } else {
-                System.out.println("Já existe um agendamento ativo para este veterinário neste horário: " + agendamento.getDataAgendamento());
+                System.out.println("Err (ControladorAgendamento): Já existe um agendamento ativo para este veterinário neste horário: " + agendamento.getDataAgendamento());
                 return false; // Conflito: horário já ocupado por outro agendamento
             }
         }
-
-
         return true; // Se chegou até aqui, o horário está disponível
     }
 

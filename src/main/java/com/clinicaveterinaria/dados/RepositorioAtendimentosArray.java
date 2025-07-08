@@ -57,4 +57,9 @@ public class RepositorioAtendimentosArray implements IRepositorioAtendimentos {
         }
     }
 
+    @Override
+    public List<Atendimento> listarTodos() {
+        return new ArrayList<>(atendimentos);
+    }
+
 }

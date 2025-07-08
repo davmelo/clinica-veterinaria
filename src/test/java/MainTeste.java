@@ -6,8 +6,9 @@ import com.clinicaveterinaria.negocio.entidades.DiaSemana;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
-public class MainTeste {
+public class    MainTeste {
     public static void main(String[] args) {
         ServidorClinica clinica = ServidorClinica.getInstance();
 
@@ -134,7 +135,8 @@ public class MainTeste {
                 "Mendes",
                 "CRMV-12345",
                 "juliana.mendes@vetclinic.com",
-                "(81) 98888-1111"
+                "(81) 98888-1111",
+                new ArrayList<>()
         );
 
         VeterinarioRequisicaoDTO vet2 = new VeterinarioRequisicaoDTO(
@@ -143,7 +145,8 @@ public class MainTeste {
                 "Silveira",
                 "CRMV-23456",
                 "carlos.silveira@vetclinic.com",
-                "(81) 98888-2222"
+                "(81) 98888-2222",
+                new ArrayList<>()
         );
 
         VeterinarioRequisicaoDTO vet3 = new VeterinarioRequisicaoDTO(
@@ -152,7 +155,8 @@ public class MainTeste {
                 "Souza",
                 "CRMV-34567",
                 "fernanda.souza@vetclinic.com",
-                "(81) 98888-3333"
+                "(81) 98888-3333",
+                new ArrayList<>()
         );
 
         VeterinarioRequisicaoDTO vet4 = new VeterinarioRequisicaoDTO(
@@ -161,7 +165,8 @@ public class MainTeste {
                 "Lima",
                 "CRMV-45678",
                 "rodrigo.lima@vetclinic.com",
-                "(81) 98888-4444"
+                "(81) 98888-4444",
+                new ArrayList<>()
         );
 
         VeterinarioRequisicaoDTO vet5 = new VeterinarioRequisicaoDTO(
@@ -170,7 +175,8 @@ public class MainTeste {
                 "Ferreira",
                 "CRMV-56789",
                 "aline.ferreira@vetclinic.com",
-                "(81) 98888-5555"
+                "(81) 98888-5555",
+                new ArrayList<>()
         );
 
         clinica.cadastrarVeterinario(vet1);
@@ -210,8 +216,7 @@ public class MainTeste {
 
         // 5. Criando atendimento a partir do agendamento
         AtendimentoRequisicaoDTO atendimento = new AtendimentoRequisicaoDTO(
-                1L, 1L, LocalDateTime.of(2025, 7, 7, 14, 45)
-        );
+                1L, 1L, LocalDateTime.of(2025, 7, 7, 14, 45),new ArrayList<>());
         clinica.cadastrarAtendimento(atendimento);
 
         clinica.buscarAnimal(1L);
@@ -239,7 +244,7 @@ public class MainTeste {
 
         // 5. Criando atendimento a partir do agendamento
         AtendimentoRequisicaoDTO atendimento2 = new AtendimentoRequisicaoDTO(
-                2L, 2L, LocalDateTime.of(2025, 7, 7, 14, 45)
+                2L, 2L, LocalDateTime.of(2025, 7, 7, 14, 45), new ArrayList<>()
         );
         clinica.cadastrarAtendimento(atendimento2);
 

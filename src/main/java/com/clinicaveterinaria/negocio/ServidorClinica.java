@@ -3,6 +3,9 @@ package com.clinicaveterinaria.negocio;
 import com.clinicaveterinaria.dtos.*;
 import com.clinicaveterinaria.negocio.entidades.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class ServidorClinica {
     private static ServidorClinica instance;
     private final ControladorCliente controladorCliente;
@@ -27,137 +30,85 @@ public class ServidorClinica {
     }
 
     public void cadastrarCliente(ClienteRequisicaoDTO clienteDTO) {
-        Cliente cliente = new Cliente(
-                clienteDTO.id(), clienteDTO.nome(),
-                clienteDTO.sobrenome(), clienteDTO.cpf(),
-                clienteDTO.telefone(), clienteDTO.email(), clienteDTO.endereco());
-        controladorCliente.cadastrarCliente(cliente);
-    };
-
-    private Cliente buscaInternaCliente(String cpf) {
-        return controladorCliente.buscarClientePorCpf(cpf);
+        controladorCliente.cadastrarCliente(clienteDTO);
     }
-
     public ClienteRespostaDTO buscarCliente(String cpf) {
-        return buscaInternaCliente(cpf).paraDTO();
-    };
-
-    public void atualizarCliente(ClienteRequisicaoDTO clienteDTO){
-        Cliente cliente = clienteDTO.paraEntidade();
-        controladorCliente.atualizarCliente(cliente.getCpf(), cliente);
+        Cliente cliente = controladorCliente.buscarClientePorCpf(cpf);
+        return cliente != null ? cliente.paraDTO() : null;
     }
-    
+    public void atualizarCliente(ClienteRequisicaoDTO clienteDTO){
+        controladorCliente.atualizarCliente(clienteDTO);
+    }
     public void removerCliente(String cpf){
         controladorCliente.removerCliente(cpf);
     }
-    
-//    public void atualizarCliente(String cpf);
-//    public void removerCliente();
 
     public void cadastrarAnimal(AnimalRequisicaoDTO animalDTO) {
-        Cliente cliente = buscaInternaCliente(animalDTO.tutorCPF());
-        if (cliente == null) {
-            System.err.println("Erro: Tutor com CPF " + animalDTO.tutorCPF() + " não encontrado para cadastrar o animal.");
-            return;
-            }
-        Animal animal =  new Animal(
-                animalDTO.id(), cliente,
-                animalDTO.nome(), animalDTO.especie(),
-                animalDTO.raca(), animalDTO.dataNascimento(),
-                animalDTO.peso(), animalDTO.identificacao()
-        );
-        controladorAnimal.cadastrarAnimal(animal);
-    };
-
-    private Animal buscaInternaAnimal(Long animalID) {
-        return controladorAnimal.buscarAnimalPorId(animalID);
-    };
-
-    public AnimalRespostaDTO buscarAnimal(Long animalID) {
-        return buscaInternaAnimal(animalID).paraDTO();
+        controladorAnimal.cadastrarAnimal(animalDTO);
     }
-
-//    public void atualizarAnimal();
-//    public void removerAnimal();
+    public AnimalRespostaDTO buscarAnimal(Long animalID) {
+        Animal animal = controladorAnimal.buscarAnimalPorId(animalID);
+        return animal != null ? animal.paraDTO() : null;
+    }
+    public void atualizarAnimal(Long animalID, AnimalRequisicaoDTO animalDTO) {
+        controladorAnimal.atualizarAnimal(animalID, animalDTO);
+    }
+    public void removerAnimal(Long animalID) {
+        controladorAnimal.removerAnimal(animalID);
+    }
 
     public void cadastrarVeterinario(VeterinarioRequisicaoDTO veterinarioDTO) {
-        Veterinario veterinario = new Veterinario(
-                veterinarioDTO.id(), veterinarioDTO.nome(),
-                veterinarioDTO.sobrenome(), veterinarioDTO.crmv(),
-                veterinarioDTO.email(), veterinarioDTO.telefone()
-        );
-        controladorVeterinario.cadastrarVeterinario(veterinario);
-    }
-
-    private Veterinario buscaInternaVeterinario(String crmv) {
-        return controladorVeterinario.buscarVeterinarioPorCrmv(crmv);
+        controladorVeterinario.cadastrarVeterinario(veterinarioDTO);
     }
 
     public VeterinarioRespostaDTO buscarVeterinario(String crmv) {
-        return buscaInternaVeterinario(crmv).paraDTO();
+        Veterinario veterinario = controladorVeterinario.buscarVeterinarioPorCrmv(crmv);
+        return veterinario != null ? veterinario.paraDTO() : null;
     }
-
-
+    public void atualizarVeterinario(String crmv, VeterinarioRequisicaoDTO veterinarioDTO) {
+        controladorVeterinario.atualizarVeterinario(crmv, veterinarioDTO);
+    }
+    public void removerVeterinario(String crmv) {
+        controladorVeterinario.removerVeterinario(crmv);
+    }
     public void adiconarDispoAgenda(String crmv, DispoAgendaRequisicaoDTO agendaDTO) {
-        Veterinario veterinario = buscaInternaVeterinario(crmv);
-        if (veterinario != null) {
-            if (veterinario.getDisponibilidadeAgenda() == null) {
-                veterinario.setDisponibilidadeAgenda(new DisponibilidadeAgenda());
-            }
-            veterinario.getDisponibilidadeAgenda().adicionarHorario(agendaDTO.dia(), agendaDTO.horario());
-            controladorVeterinario.atualizarVeterinario(veterinario.getCrmv(), veterinario);
-            System.out.println("Disponibilidade adicionada para " + veterinario.getNome() + " em " + agendaDTO.dia() + " às " + agendaDTO.horario());
-        } else {
-            System.err.println("Erro: Veterinário com CRMV " + crmv + " não encontrado para adicionar disponibilidade.");
-        }
+        controladorVeterinario.adiconarDispoAgenda(crmv, agendaDTO);
     }
 
-//    public void adiconarDispoAgenda(String crmv, DispoAgendaRequisicaoDTO agendaDTO) {
-//        Veterinario veterinario = buscaInternaVeterinario(crmv);
-//        DisponibilidadeAgenda agenda = agendaDTO.paraEntidade();
-//        veterinario.setDisponibilidadeAgenda(agenda);
-//    }
-//    public void atualizarVeterinario();
-//    public void removerVeterinario();
-
-    public void cadastrarAgendamento(AgendamentoRequisicaoDTO agendamentoDTO) {
-        Cliente cliente = controladorCliente.buscarClientePorCpf(agendamentoDTO.clienteCPF());
-        Animal animal = controladorAnimal.buscarAnimalPorId(agendamentoDTO.animalId());
-        Veterinario veterinario = controladorVeterinario.buscarVeterinarioPorCrmv(agendamentoDTO.veterinarioCRMV());
-        System.out.println("|Agenda de " + veterinario.getNome() + "| \n" + veterinario.getDisponibilidadeAgenda());
-
-        Agendamento agendamento = new Agendamento(
-                agendamentoDTO.id(), cliente,
-                animal, veterinario,
-                agendamentoDTO.dataAgendamento(), agendamentoDTO.observacao(),
-                agendamentoDTO.status()
-        );
-        controladorAgendamento.cadastrarAgendamento(agendamento);
-    }
-
-    private Agendamento buscaInternaAgendamento(Long agendamentoID) {
-        return controladorAgendamento.buscarAgendamentoPorId(agendamentoID);
+    public boolean cadastrarAgendamento(AgendamentoRequisicaoDTO agendamentoDTO) {
+        return controladorAgendamento.cadastrarAgendamento(agendamentoDTO);
     }
 
     public AgendamentoRespostaDTO buscarAgendamento(Long agendamentoID) {
-        return buscaInternaAgendamento(agendamentoID).paraDTO();
+        Agendamento agendamento = controladorAgendamento.buscarAgendamentoPorId(agendamentoID);
+        return agendamento != null ? agendamento.paraDTO() : null;
     }
 
+    public void atualizarAgendamento(Long id, AgendamentoRequisicaoDTO agendamentoDTO) {
+        controladorAgendamento.atualizarAgendamento(id, agendamentoDTO);
+    }
+    public void cancelarAgendamento(Long id, String motivo) {
+        controladorAgendamento.cancelarAgendamento(id, motivo);
+    }
+    public void remarcarAgendamento(Long id, LocalDateTime novaData, String motivo) {
+        controladorAgendamento.remarcarAgendamento(id, novaData, motivo);
+    }
+    public void removerAgendamento(Long id) {
+        controladorAgendamento.removerAgendamento(id);
+    }
+
+    // --- CADASTRO/ATUALIZAÇÃO/REMOÇÃO DE ATENDIMENTO ---
     public void cadastrarAtendimento(AtendimentoRequisicaoDTO atendimentoRequisicaoDTO) {
-        Agendamento agendamento = buscaInternaAgendamento(atendimentoRequisicaoDTO.agendamentoID());
-        Atendimento atendimento = new Atendimento(
-                atendimentoRequisicaoDTO.id(),
-                agendamento,
-                atendimentoRequisicaoDTO.dataRealizacao()
-        );
-        controladorAtendimento.cadastrarAtendimento(atendimento);
+        controladorAtendimento.cadastrarAtendimento(atendimentoRequisicaoDTO);
     }
-
-    private Atendimento buscaInternaAtendimento(Long atendimentoID) {
-        return controladorAtendimento.buscarAtendimento(atendimentoID);
-    }
-
     public AtendimentoRespostaDTO buscarAtendimento(Long atendimentoID) {
-        return buscaInternaAtendimento(atendimentoID).paraDTO();
+        Atendimento atendimento = controladorAtendimento.buscarAtendimento(atendimentoID);
+        return atendimento != null ? atendimento.paraDTO() : null;
+    }
+    public void atualizarAtendimento(Long id, AtendimentoRequisicaoDTO atendimentoDTO) {
+        controladorAtendimento.atualizarAtendimento(id, atendimentoDTO);
+    }
+    public void removerAtendimento(Long id) {
+        controladorAtendimento.removerAtendimento(id);
     }
 }
