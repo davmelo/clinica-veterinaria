@@ -253,4 +253,5 @@ public class    MainTeste {
         System.out.println(clinica.buscarAgendamento(1L));
         System.out.println(clinica.buscarAtendimento(1L));
     }
+    //
 }
