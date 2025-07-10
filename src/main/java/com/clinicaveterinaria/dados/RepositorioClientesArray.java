@@ -51,4 +51,9 @@ public class RepositorioClientesArray implements IRepositorioClientes {
     public void remover(String cpf) {
         clientes.removeIf(cliente -> cliente.getCpf().equals(cpf));
     }
+
+    @Override
+    public List<Cliente> listarTodos() {
+        return new ArrayList<>(clientes); // Retorna uma cópia da lista interna
+    }
 }

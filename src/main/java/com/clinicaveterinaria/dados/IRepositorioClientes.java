@@ -2,6 +2,8 @@ package com.clinicaveterinaria.dados;
 
 import com.clinicaveterinaria.negocio.entidades.Cliente;
 
+import java.util.List;
+
 public interface IRepositorioClientes {
     void salvar(Cliente novoCliente);
 
@@ -10,4 +12,6 @@ public interface IRepositorioClientes {
     void atualizar(String cpf, Cliente novoCliente);
 
     void remover(String cpf);
+
+    List<Cliente> listarTodos();
 }

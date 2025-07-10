@@ -6,46 +6,109 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.CadastrarAnimalController">
-   <AnchorPane layoutX="-4.0" layoutY="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="616.0" prefWidth="914.0">
-      <HBox layoutX="4.0" layoutY="7.0" prefHeight="56.0" prefWidth="906.0" spacing="630.0">
-         <padding>
-            <Insets left="10.0" top="10.0" />
-         </padding>
-         <Label text="Cadastrar Animal">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.CadastrarAnimalController">
+   <HBox prefHeight="56.0" prefWidth="900.0" spacing="620.0"> <padding>
+      <Insets left="10.0" top="10.0" />
+   </padding>
+      <Label text="Cadastrar Animal">
+         <font>
+            <Font name="Arial Black" size="20.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </Label>
+      <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#handleVoltar" prefHeight="28.0" prefWidth="52.0" style="-fx-background-color: #000000;" text="voltar" textFill="WHITE">
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </HBox>
+   <VBox alignment="CENTER" layoutX="0.0" layoutY="56.0" prefHeight="444.0" prefWidth="900.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+      <children>
+         <Label text="Informações do Tutor">
             <font>
-               <Font name="Arial Black" size="20.0" />
+               <Font name="System Bold" size="16.0" />
             </font>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
          </Label>
-         <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#voltarCadCliente" style="-fx-background-color: #000000;" text="voltar" textFill="WHITE">
+         <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
+            <children>
+               <Label text="CPF do Tutor:" />
+               <TextField fx:id="tutorCpfField" prefHeight="25.0" prefWidth="150.0" promptText="CPF do Tutor" />
+               <Button mnemonicParsing="false" onAction="#handleBuscarTutor" style="-fx-background-color: #000000;" text="Buscar Tutor" textFill="WHITE" />
+               <Label fx:id="tutorNomeLabel" text="" textFill="#006600" />
+            </children>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </HBox>
+
+         <Label text="Dados do Animal">
+            <font>
+               <Font name="System Bold" size="16.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </Label>
+         <GridPane hgap="10.0" vgap="10.0" alignment="CENTER">
+            <columnConstraints>
+               <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="120.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="250.0" />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+               <Label text="NOME:" />
+               <TextField fx:id="nomeAnimalField" promptText="Nome do animal" GridPane.columnIndex="1" />
+               <Label text="ESPÉCIE:" GridPane.rowIndex="1" />
+               <TextField fx:id="especieField" promptText="Cachorro, Gato, Pássaro..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <Label text="RAÇA:" GridPane.rowIndex="2" />
+               <TextField fx:id="racaField" promptText="Golden Retriever, Siamês..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <Label text="DATA NASC.:" GridPane.rowIndex="3" />
+               <DatePicker fx:id="dataNascimentoPicker" prefWidth="250.0" promptText="00/00/0000" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               <Label text="PESO (kg):" GridPane.rowIndex="4" />
+               <TextField fx:id="pesoField" promptText="Ex: 5.5" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               <Label text="IDENTIFICAÇÃO:" GridPane.rowIndex="5" />
+               <TextField fx:id="identificacaoField" promptText="Microchip, Coleira, etc." GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            </children>
+            <VBox.margin>
+               <Insets left="50.0" right="50.0" />
+            </VBox.margin>
+         </GridPane>
+         <Label fx:id="messageLabel" text="" textFill="RED">
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </Label>
+      </children>
+   </VBox>
+   <HBox alignment="CENTER" layoutX="0.0" layoutY="500.0" prefHeight="100.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <children>
+         <Button mnemonicParsing="false" onAction="#handleCadastrarAnimal" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Cadastrar" textFill="WHITE">
             <font>
                <Font name="System Bold" size="12.0" />
             </font>
          </Button>
-      </HBox>
-      <VBox alignment="CENTER_LEFT" layoutX="321.0" layoutY="165.0" prefHeight="252.0" prefWidth="273.0" spacing="5.0">
-         <Label text="NOME:" />
-         <TextField prefHeight="25.0" prefWidth="205.0" promptText="Nome" />
-         <Label text="ESPECIE:" />
-         <TextField prefHeight="25.0" prefWidth="215.0" promptText="Especie" />
-         <Label text="RAÇA:" />
-         <TextField prefHeight="25.0" prefWidth="215.0" promptText="Raça" />
-         <Label text="IDADE:" />
-         <DatePicker prefHeight="25.0" prefWidth="275.0" promptText="00/00/0000" />
-         <Label text="PESO:" />
-         <TextField prefHeight="25.0" prefWidth="215.0" promptText="Peso" />
-         <HBox alignment="CENTER" prefHeight="47.0" prefWidth="900.0" spacing="20.0" />
-      </VBox>
-      <HBox alignment="CENTER" layoutX="1.0" layoutY="425.0" prefHeight="100.0" prefWidth="914.0">
-         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="71.0" style="-fx-background-color: #000000;" text="Cadastrar" textFill="WHITE">
-            <font>
-               <Font name="System Bold" size="12.0" />
-            </font>
-         </Button>
-      </HBox>
-   </AnchorPane>
+      </children>
+   </HBox>
 </AnchorPane>

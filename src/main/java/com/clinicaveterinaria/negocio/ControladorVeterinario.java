@@ -1,9 +1,11 @@
 package com.clinicaveterinaria.negocio;
 
 import com.clinicaveterinaria.dados.IRepositorioVeterinarios;
+import com.clinicaveterinaria.dados.RepositorioClientesArray;
 import com.clinicaveterinaria.dados.RepositorioVeterinariosArray;
 import com.clinicaveterinaria.dtos.DispoAgendaRequisicaoDTO;
 import com.clinicaveterinaria.dtos.VeterinarioRequisicaoDTO;
+import com.clinicaveterinaria.negocio.entidades.Cliente;
 import com.clinicaveterinaria.negocio.entidades.DisponibilidadeAgenda;
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
 import java.util.ArrayList;
@@ -152,5 +154,9 @@ public class ControladorVeterinario {
         }
         System.err.println("Erro (ControladorVeterinario): Falha na autenticação para identificador: " + identificador);
         return null;
+    }
+
+    public List<Veterinario> listarTodos() {
+        return ((RepositorioVeterinariosArray) repositorio).listarTodos();
     }
 }

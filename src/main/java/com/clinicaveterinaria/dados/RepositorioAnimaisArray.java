@@ -8,7 +8,7 @@ import java.util.List;
 public class RepositorioAnimaisArray implements IRepositorioAnimais {
 
     private static RepositorioAnimaisArray instance;
-    private List<Animal> animais;
+    private final List<Animal> animais;
 
     private RepositorioAnimaisArray() {
         this.animais = new ArrayList<>();
@@ -51,7 +51,19 @@ public class RepositorioAnimaisArray implements IRepositorioAnimais {
         animais.removeIf(animal -> animal.getId().equals(id));
     }
 
+    @Override
     public List<Animal> listarTodos() {
         return new ArrayList<>(animais);
+    }
+
+    @Override
+    public List<Animal> buscarPorTutorCpf(String cpf) {
+        List<Animal> animaisDoTutor = new ArrayList<>();
+        for (Animal animal : animais) {
+            if (animal.getTutor() != null && animal.getTutor().getCpf().equals(cpf)) {
+                animaisDoTutor.add(animal);
+            }
+        }
+        return animaisDoTutor;
     }
 }

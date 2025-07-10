@@ -40,8 +40,8 @@
             <VBox spacing="10.0">
                 <Label text="ID do Cliente"/>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <TextField fx:id="clientIdField" maxWidth="150.0" prefWidth="150.0"/>
-                    <Button fx:id="buscarButton" mnemonicParsing="false" text="Buscar"/>
+                    <TextField fx:id="idClienteSearchField" maxWidth="150.0" prefWidth="150.0"/>
+                    <Button fx:id="buscarClienteButton" mnemonicParsing="false" text="Buscar" onAction="#handleBuscarCliente"/>
                 </HBox>
             </VBox>
 
@@ -67,18 +67,19 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <Label text="Nome:"/>
-                    <Label fx:id="nomeLabel" text="[Nome]" GridPane.columnIndex="1"/>
+                    <Label fx:id="clienteNomeLabel" text="[Nome]" GridPane.columnIndex="1"/>
                     <Label text="Sobrenome:" GridPane.rowIndex="1"/>
-                    <Label fx:id="sobrenomeLabel" text="[Sobrenome]" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label fx:id="clienteSobrenomeLabel" text="[Sobrenome]" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                     <Label text="CPF:" GridPane.rowIndex="2"/>
-                    <Label fx:id="cpfLabel" text="[CPF]" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    <Label fx:id="clienteCpfLabel" text="[CPF]" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                     <Label text="Telefone:" GridPane.rowIndex="3"/>
-                    <Label fx:id="telefoneLabel" text="[Telefone]" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    <Label fx:id="clienteTelefoneLabel" text="[Telefone]" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                     <Label text="Email:" GridPane.rowIndex="4"/>
-                    <Label fx:id="emailLabel" text="[Email]" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                    <Label fx:id="clienteEmailLabel" text="[Email]" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
                     <Label text="Endereço:" GridPane.rowIndex="5"/>
-                    <Label fx:id="enderecoLabel" text="[Endereço]" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                    <Label fx:id="clienteEnderecoLabel" text="[Endereço]" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                 </GridPane>
+                <Label fx:id="statusMessageLabel" text="" textFill="RED" style="-fx-font-size: 12px; -fx-padding: 5px 0 0 0;" />
             </VBox>
         </VBox>
     </center>

@@ -5,6 +5,7 @@ import com.clinicaveterinaria.negocio.entidades.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServidorClinica {
     private static ServidorClinica instance;
@@ -115,5 +116,17 @@ public class ServidorClinica {
     public VeterinarioRespostaDTO autenticarVeterinario(String login, String senha) {
         Veterinario veterinario = controladorVeterinario.autenticar(login, senha);
         return veterinario != null ? veterinario.paraDTO() : null;
+    }
+
+    public List<Cliente> listarTodosClientes() {
+        return controladorCliente.listarTodos();
+    }
+
+    public List<Animal> listarTodosAnimaisPorTutorCpf(String tutorCpf) {
+        return controladorAnimal.listarTodosAnimaisPorTutorCpf(tutorCpf);
+    }
+
+    public List<Veterinario> listarTodosVeterinarios() {
+        return controladorVeterinario.listarTodos();
     }
 }

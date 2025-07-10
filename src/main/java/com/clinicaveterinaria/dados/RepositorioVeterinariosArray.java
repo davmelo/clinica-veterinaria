@@ -59,4 +59,9 @@ public class RepositorioVeterinariosArray implements IRepositorioVeterinarios {
     public void remover(String crmv) {
         veterinarios.removeIf(vet -> vet.getCrmv().equals(crmv));
     }
+
+    @Override
+    public List<Veterinario> listarTodos() {
+        return new ArrayList<>(veterinarios);
+    }
 }

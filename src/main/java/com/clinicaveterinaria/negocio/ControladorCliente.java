@@ -4,6 +4,7 @@ import com.clinicaveterinaria.dados.IRepositorioClientes;
 import com.clinicaveterinaria.dados.RepositorioClientesArray;
 import com.clinicaveterinaria.dtos.ClienteRequisicaoDTO;
 import com.clinicaveterinaria.negocio.entidades.Cliente;
+import java.util.List;
 
 
 public class ControladorCliente {
@@ -56,6 +57,10 @@ public class ControladorCliente {
         }
         repositorio.remover(cpf);
         System.out.println("Cliente removido do repositório: " + cpf);
+    }
+
+    public List<Cliente> listarTodos() {
+        return ((RepositorioClientesArray) repositorio).listarTodos();
     }
 }
 

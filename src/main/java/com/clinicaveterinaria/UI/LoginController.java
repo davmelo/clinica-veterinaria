@@ -44,6 +44,11 @@ public class LoginController {
             return;
         }
 
+        if ("atendente@aumiau.com".equals(username) && "att123".equals(password)) {
+            redirectToMainScreen(event, "ATENDENTE");
+            return;
+        }
+
         try {
             VeterinarioRespostaDTO veterinarioLogado = clinica.autenticarVeterinario(username, password);
 

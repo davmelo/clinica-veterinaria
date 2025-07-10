@@ -26,7 +26,6 @@
                     <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
                 </padding>
 
-                <!-- Cliente Section -->
                 <VBox spacing="10.0" styleClass="section">
                     <Label styleClass="section-title" text="Cliente">
                         <font>
@@ -35,9 +34,9 @@
                     </Label>
 
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <TextField fx:id="txtClienteSearch" prefWidth="300.0" promptText="Digite o nome ou telefone do cliente" />
-                        <Button fx:id="btnBuscarCliente" text="Buscar" />
-                        <Button fx:id="btnNovoCliente" text="Novo Cliente" />
+                        <TextField fx:id="txtClienteSearch" prefWidth="300.0" promptText="Digite o nome ou telefone do cliente" onAction="#handleClienteSearchAction" />
+                        <Button fx:id="btnBuscarCliente" text="Buscar" onAction="#handleBuscarCliente" />
+                        <Button fx:id="btnNovoCliente" text="Novo Cliente" onAction="#handleNovoCliente" />
                     </HBox>
 
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
@@ -56,7 +55,6 @@
                     </HBox>
                 </VBox>
 
-                <!-- Animal Section -->
                 <VBox spacing="10.0" styleClass="section">
                     <Label styleClass="section-title" text="Animal">
                         <font>
@@ -65,8 +63,8 @@
                     </Label>
 
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <ComboBox fx:id="cmbAnimal" prefWidth="300.0" promptText="Selecione o animal" />
-                        <Button fx:id="btnNovoAnimal" text="Novo Animal" />
+                        <ComboBox fx:id="cmbAnimal" prefWidth="300.0" promptText="Selecione o animal" onAction="#handleAnimalSelected" />
+                        <Button fx:id="btnNovoAnimal" text="Novo Animal" onAction="#handleNovoAnimal" />
                     </HBox>
 
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
@@ -89,7 +87,6 @@
                     </HBox>
                 </VBox>
 
-                <!-- Agendamento Details Section -->
                 <VBox spacing="10.0" styleClass="section">
                     <Label styleClass="section-title" text="Detalhes do Agendamento">
                         <font>
@@ -100,21 +97,21 @@
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <VBox spacing="5.0">
                             <Label text="Data:" />
-                            <DatePicker fx:id="datePicker" prefWidth="150.0" />
+                            <DatePicker fx:id="datePicker" prefWidth="150.0" onAction="#handleDateSelected" />
                         </VBox>
                         <VBox spacing="5.0">
                             <Label text="Horário:" />
-                            <ComboBox fx:id="cmbHorario" prefWidth="120.0" />
+                            <ComboBox fx:id="cmbHorario" prefWidth="120.0" onAction="#handleHorarioSelected" />
                         </VBox>
                         <VBox spacing="5.0">
                             <Label text="Veterinário:" />
-                            <ComboBox fx:id="cmbVeterinario" prefWidth="200.0" />
+                            <ComboBox fx:id="cmbVeterinario" prefWidth="200.0" onAction="#handleVeterinarioSelected" />
                         </VBox>
                     </HBox>
 
                     <VBox spacing="5.0">
                         <Label text="Tipo de Procedimento:" />
-                        <ComboBox fx:id="cmbTipoProcedimento" prefWidth="300.0" />
+                        <ComboBox fx:id="cmbTipoProcedimento" prefWidth="300.0" onAction="#handleTipoProcedimentoSelected" />
                     </VBox>
 
                     <VBox spacing="5.0">
@@ -123,7 +120,6 @@
                     </VBox>
                 </VBox>
 
-                <!-- Status Section -->
                 <VBox spacing="10.0" styleClass="section">
                     <Label styleClass="section-title" text="Status">
                         <font>
@@ -134,14 +130,15 @@
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <VBox spacing="5.0">
                             <Label text="Status do Agendamento:" />
-                            <ComboBox fx:id="cmbStatus" prefWidth="150.0" />
+                            <ComboBox fx:id="cmbStatus" prefWidth="150.0" onAction="#handleStatusSelected" />
                         </VBox>
                         <VBox spacing="5.0">
                             <Label text="Prioridade:" />
-                            <ComboBox fx:id="cmbPrioridade" prefWidth="120.0" />
+                            <ComboBox fx:id="cmbPrioridade" prefWidth="120.0" onAction="#handlePrioridadeSelected" />
                         </VBox>
                     </HBox>
                 </VBox>
+                <Label fx:id="statusMessageLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
             </VBox>
         </ScrollPane>
     </center>
@@ -152,7 +149,7 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <Button fx:id="btnCancelar" onAction="#handleCancelar" prefWidth="100.0" text="Cancelar" />
-            <Button fx:id="btnSalvar" prefWidth="100.0" styleClass="primary-button" text="Salvar" />
+            <Button fx:id="btnSalvar" onAction="#handleAgendar" prefWidth="100.0" styleClass="primary-button" text="Salvar" />
         </HBox>
     </bottom>
 </BorderPane>
