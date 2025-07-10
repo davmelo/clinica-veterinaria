@@ -69,7 +69,7 @@ public class CadastroPrincipalController {
     private void criarConta(ActionEvent event) {
         hideMessages();
 
-        String name = nomeField.getText().trim();
+        String nome = nomeField.getText().trim();
         String crmv = crmvField.getText().trim();
         String email = emailField.getText().trim();
         String password = senhaField.getText(); //Apenas para simulação de UI
@@ -77,25 +77,26 @@ public class CadastroPrincipalController {
         String telefone = telefoneField.getText().trim();
 
         // Debug - Remova estas linhas após testar
-        System.out.println("Nome: '" + name + "'");
+        System.out.println("Nome: '" + nome + "'");
         System.out.println("CRMV: '" + crmv + "'");
         System.out.println("Email: '" + email + "'");
         System.out.println("Telefone: '" + telefone + "'");
         System.out.println("Especialidade: '" + especialidade + "'");
 
-        if (!validateInput(name, crmv, telefone, email, password, especialidade)) {
+        if (!validateInput(nome, crmv, telefone, email, password, especialidade)) {
             return;
         }
 
         try {
-            // Verifica se o CRMV já existe antes de tentar cadastrar
-            if (clinica.buscarVeterinario(crmv) != null) {
+            // Normaliza e verifica se o CRMV já existe antes de tentar cadastrar
+            String crmvNormalizadoParaBusca = crmv.toUpperCase().replaceAll("\\s+", "");
+            if (clinica.buscarVeterinario(crmvNormalizadoParaBusca) != null) {
                 showError("Um veterinário com este CRMV já está cadastrado.");
                 crmvField.requestFocus();
                 return;
             }
 
-            if (createUserAndVeterinario(name, crmv, telefone, email, especialidade)) { // 'password' removido
+            if (createUserAndVeterinario(nome, crmv, email, password, telefone, especialidade)) { //
                 showSuccess();
 
                 // Redirecionamento para a tela de Login após 2 segundos
@@ -209,7 +210,7 @@ public class CadastroPrincipalController {
         return CRMV_PATTERN.matcher(crmvFormatado).matches();
     }
 
-    private boolean createUserAndVeterinario(String name, String crmv, String telefone, String email, String especialidade) {
+    private boolean createUserAndVeterinario(String name, String crmv, String email, String password, String telefone, String especialidade) {
         try {
             VeterinarioRequisicaoDTO veterinarioDTO = new VeterinarioRequisicaoDTO(
                     null, // ID será gerado
@@ -217,6 +218,7 @@ public class CadastroPrincipalController {
                     "Sobrenome Padrão", // Adicionar um campo de sobrenome na UI
                     crmv,
                     email,
+                    password,
                     telefone,
                     new ArrayList<>(Arrays.asList(especialidade))
             );

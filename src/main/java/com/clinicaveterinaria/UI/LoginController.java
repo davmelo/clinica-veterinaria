@@ -1,5 +1,7 @@
 package com.clinicaveterinaria.UI;
 
+import com.clinicaveterinaria.dtos.VeterinarioRespostaDTO;
+import com.clinicaveterinaria.negocio.ServidorClinica;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +30,8 @@ public class LoginController {
     @FXML
     private Label errorLabel;
 
+    private ServidorClinica clinica = ServidorClinica.getInstance();
+
     @FXML
     private void login(ActionEvent event) {
         String username = userField.getText().trim();
@@ -40,14 +44,17 @@ public class LoginController {
             return;
         }
 
-        // adicionar futuras validações
-        // Altenticação (Exemplo)
-        if (authenticateUser(username, password)) {
-            // Determinar o tipo de user
-            String userType = getUserType(username);
-            redirectToMainScreen(event, userType);
-        } else {
-            showError("Usuário ou senha incorretos.");
+        try {
+            VeterinarioRespostaDTO veterinarioLogado = clinica.autenticarVeterinario(username, password);
+
+            if (veterinarioLogado != null) {
+                redirectToMainScreen(event, "VETERINARIO"); // Ou 'ATENDENTE' se você adicionar autenticação para atendentes
+            } else {
+                showError("Usuário ou senha incorretos.");
+            }
+        } catch (Exception e) {
+            showError("Ocorreu um erro ao tentar fazer login: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -66,27 +73,6 @@ public class LoginController {
             e.printStackTrace();
             showError("Erro ao carregar tela de cadastro.");
         }
-    }
-
-    private boolean authenticateUser(String username, String password) {
-        // verificação de credenciais
-        // (demonstrativo)
-        if ("veterinario@aumiau.com".equals(username) && "vet123".equals(password)) {
-            return true;
-        } else if ("atendente@aumiau.com".equals(username) && "att123".equals(password)) {
-            return true;
-        }
-        return false;
-    }
-
-    private String getUserType(String username) {
-        // tipo de usuario (demonstrativo) - substituir deopis
-        if (username.contains("veterinario")) {
-            return "VETERINARIO";
-        } else if (username.contains("atendente")) {
-            return "ATENDENTE";
-        }
-        return "ATENDENTE"; // Default
     }
 
     private void redirectToMainScreen(ActionEvent event, String userType) {

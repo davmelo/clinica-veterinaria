@@ -36,6 +36,16 @@ public class RepositorioVeterinariosArray implements IRepositorioVeterinarios {
     }
 
     @Override
+    public Veterinario buscarPorEmail(String email) {
+        for (Veterinario vet : veterinarios) {
+            if (vet.getEmail() != null && vet.getEmail().equals(email)) {
+                return vet;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void atualizar(String crmv, Veterinario novoVeterinario) {
         for (int i = 0; i < veterinarios.size(); i++) {
             if (veterinarios.get(i).getCrmv().equals(crmv)) {

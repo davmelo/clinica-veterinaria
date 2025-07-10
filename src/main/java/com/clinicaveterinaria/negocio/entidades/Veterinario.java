@@ -23,19 +23,21 @@ public class Veterinario {
     private String crmv;
     private String telefone;
     private String email;
+    private String senha;
     private ArrayList<String> especialidades;
     private DisponibilidadeAgenda disponibilidadeAgenda;
 
-    public Veterinario(Long id, String nome, String sobrenome, String crmv, String email, String telefone) {
-        this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.crmv = crmv;
-        this.email = email;
-        this.telefone = telefone;
-        this.especialidades = (especialidades != null) ? especialidades : new ArrayList<>();
-        this.disponibilidadeAgenda = (disponibilidadeAgenda != null) ? disponibilidadeAgenda : new DisponibilidadeAgenda();
-    }
+//    public Veterinario(Long id, String nome, String sobrenome, String crmv, String email, String senha, String telefone) {
+//        this.id = id;
+//        this.nome = nome;
+//        this.sobrenome = sobrenome;
+//        this.crmv = crmv;
+//        this.email = email;
+//        this.senha = senha;
+//        this.telefone = telefone;
+//        this.especialidades = (especialidades != null) ? especialidades : new ArrayList<>();
+//        this.disponibilidadeAgenda = (disponibilidadeAgenda != null) ? disponibilidadeAgenda : new DisponibilidadeAgenda();
+//    }
 
     public void adicionarEspecialidade(String especialidade) {
         if (this.especialidades == null) {

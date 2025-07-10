@@ -7,6 +7,8 @@ public interface IRepositorioVeterinarios {
 
     Veterinario buscar(String crmv);
 
+    Veterinario buscarPorEmail(String email);
+
     void atualizar(String crmv, Veterinario novoVeterinario);
 
     void remover(String crmv);

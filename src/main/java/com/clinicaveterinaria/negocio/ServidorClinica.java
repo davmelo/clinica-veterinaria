@@ -111,4 +111,9 @@ public class ServidorClinica {
     public void removerAtendimento(Long id) {
         controladorAtendimento.removerAtendimento(id);
     }
+
+    public VeterinarioRespostaDTO autenticarVeterinario(String login, String senha) {
+        Veterinario veterinario = controladorVeterinario.autenticar(login, senha);
+        return veterinario != null ? veterinario.paraDTO() : null;
+    }
 }
