@@ -2,6 +2,8 @@ package com.clinicaveterinaria.UI;
 
 import com.clinicaveterinaria.dtos.VeterinarioRespostaDTO;
 import com.clinicaveterinaria.negocio.ServidorClinica;
+import com.clinicaveterinaria.negocio.entidades.Veterinario;
+import com.clinicaveterinaria.negocio.UsuarioVeterinario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +21,7 @@ public class LoginController {
     public Button loginButton;
 
     @FXML
-    private TextField userField;
+    private TextField userField; // Este é o campo de texto do usuário (identificador/username)
 
     @FXML
     private PasswordField senhaField;
@@ -34,31 +36,41 @@ public class LoginController {
 
     @FXML
     private void login(ActionEvent event) {
-        String username = userField.getText().trim();
-        String password = senhaField.getText();
+        String identificador = userField.getText().trim();
+        String senha = senhaField.getText();
 
+        errorLabel.setText("");
         errorLabel.setVisible(false);
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (identificador.isEmpty() || senha.isEmpty()) {
             showError("Por favor, preencha todos os campos.");
             return;
         }
 
-        if ("atendente@aumiau.com".equals(username) && "att123".equals(password)) {
+        // Login de atendente para testes
+        if ("atendente@aumiau.com".equals(identificador) && "att123".equals(senha)) {
             redirectToMainScreen(event, "ATENDENTE");
             return;
         }
 
         try {
-            VeterinarioRespostaDTO veterinarioLogado = clinica.autenticarVeterinario(username, password);
+            VeterinarioRespostaDTO veterinarioDTO = clinica.autenticarVeterinario(identificador, senha);
 
-            if (veterinarioLogado != null) {
-                redirectToMainScreen(event, "VETERINARIO"); // Ou 'ATENDENTE' se você adicionar autenticação para atendentes
+            if (veterinarioDTO != null) {
+                Veterinario veterinarioAutenticado = clinica.buscarVeterinarioEntidade(veterinarioDTO.crmv());
+
+                if (veterinarioAutenticado != null) {
+                    UsuarioVeterinario.setVeterinarioLogado(veterinarioAutenticado);
+                    redirectToMainScreen(event, "VETERINARIO");
+                } else {
+                    showError("Erro interno: Veterinário não pode ser carregado completamente.");
+                }
+
             } else {
                 showError("Usuário ou senha incorretos.");
             }
         } catch (Exception e) {
-            showError("Ocorreu um erro ao tentar fazer login: " + e.getMessage());
+            showError("Ocorreu um erro durante o login: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -85,13 +97,15 @@ public class LoginController {
             String fxmlPath;
             String windowTitle;
 
-            // determinar para qual tela o usuário será redirecionado dependnedo do tipo
             if ("VETERINARIO".equals(userType)) {
                 fxmlPath = "veterinario_tela.fxml";
                 windowTitle = "Sistema Veterinário - AUMIAU SAUDE";
-            } else {
+            } else if ("ATENDENTE".equals(userType)) {
                 fxmlPath = "atendente_tela.fxml";
                 windowTitle = "Sistema Atendente - AUMIAU SAUDE";
+            } else {
+                fxmlPath = "login_tela.fxml";
+                windowTitle = "Erro de Autenticação";
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));

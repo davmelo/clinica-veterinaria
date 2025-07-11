@@ -6,8 +6,11 @@ import com.clinicaveterinaria.dados.RepositorioVeterinariosArray;
 import com.clinicaveterinaria.dtos.DispoAgendaRequisicaoDTO;
 import com.clinicaveterinaria.dtos.VeterinarioRequisicaoDTO;
 import com.clinicaveterinaria.negocio.entidades.Cliente;
+import com.clinicaveterinaria.negocio.entidades.DiaSemana;
 import com.clinicaveterinaria.negocio.entidades.DisponibilidadeAgenda;
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +59,8 @@ public class ControladorVeterinario {
     }
 
     public Veterinario buscarVeterinarioPorCrmv(String crmv) {
-        return repositorio.buscar(crmv);
+        String crmvNormalizado = crmv.toUpperCase().replaceAll("\\s+", "");
+        return repositorio.buscar(crmvNormalizado);
     }
 
     // Metodo para uso interno
@@ -85,21 +89,25 @@ public class ControladorVeterinario {
 
     // Metodo para uso externo, como ServidorClinica pelo DTO
     public void atualizarVeterinario(String crmv, VeterinarioRequisicaoDTO veterinarioDTO) {
-        Veterinario veterinarioExistente = repositorio.buscar(crmv);
+        String crmvNormalizado = crmv.toUpperCase().replaceAll("\\s+", "");
+        Veterinario veterinarioExistente = repositorio.buscar(crmvNormalizado);
         if (veterinarioExistente == null) {
             System.err.println("Erro (ControladorVeterinario): Veterinário com CRMV " + crmv + " não encontrado para atualização via DTO.");
             return;
         }
+
         String novoEmailNormalizado = veterinarioDTO.email().toLowerCase();
+        String novoCrmvNormalizado = veterinarioDTO.crmv().toUpperCase().replaceAll("\\s+", "");
 
         veterinarioExistente.setNome(veterinarioDTO.nome());
         veterinarioExistente.setSobrenome(veterinarioDTO.sobrenome());
         veterinarioExistente.setEmail(novoEmailNormalizado);
+        veterinarioExistente.setCrmv(novoCrmvNormalizado);
         veterinarioExistente.setTelefone(veterinarioDTO.telefone());
         veterinarioExistente.setEspecialidades(veterinarioDTO.especialidades() != null ? new ArrayList<>(veterinarioDTO.especialidades()) : new ArrayList<>());
 
-        repositorio.atualizar(crmv, veterinarioExistente);
-        System.out.println("Veterinário atualizado no repositório via DTO: " + veterinarioExistente.getNome() + " - CRMV: " + crmv);
+        repositorio.atualizar(crmvNormalizado, veterinarioExistente);
+        System.out.println("Veterinário atualizado no repositório via DTO: " + veterinarioExistente.getNome() + " - CRMV: " + crmvNormalizado);
     }
 
 
@@ -112,7 +120,7 @@ public class ControladorVeterinario {
             return;
         }
         repositorio.remover(crmv);
-        System.out.println("Veterinário removido do repositório: " + crmv);
+        System.out.println("Veterinário removido do repositório: " + crmvNormalizado);
     }
 
     public void adiconarDispoAgenda(String crmv, DispoAgendaRequisicaoDTO agendaDTO) {
@@ -128,7 +136,7 @@ public class ControladorVeterinario {
             this.atualizarVeterinario(veterinario.getCrmv(), veterinario);
             System.out.println("Disponibilidade adicionada para " + veterinario.getNome() + " em " + agendaDTO.dia() + " às " + agendaDTO.horario());
         } else {
-            System.err.println("Erro (ControladorVeterinario): Veterinário com CRMV " + crmv + " não encontrado para adicionar disponibilidade.");
+            System.err.println("Erro (ControladorVeterinario): Veterinário com CRMV " + crmvNormalizado + " não encontrado para adicionar disponibilidade.");
         }
     }
 
@@ -154,6 +162,22 @@ public class ControladorVeterinario {
         }
         System.err.println("Erro (ControladorVeterinario): Falha na autenticação para identificador: " + identificador);
         return null;
+    }
+
+    public void removerDisponibilidade(String crmv, DiaSemana dia, LocalTime horario) {
+        String crmvNormalizado = crmv.toUpperCase().replaceAll("\\s+", "");
+        Veterinario veterinario = this.buscarVeterinarioPorCrmv(crmvNormalizado);
+        if (veterinario != null) {
+            if (veterinario.getDisponibilidadeAgenda() != null) {
+                veterinario.getDisponibilidadeAgenda().removerHorario(dia, horario);
+                this.atualizarVeterinario(veterinario.getCrmv(), veterinario);
+                System.out.println("Disponibilidade removida para " + veterinario.getNome() + " em " + dia + " às " + horario);
+            } else {
+                System.err.println("Erro (ControladorVeterinario): Veterinário " + crmvNormalizado + " não possui agenda.");
+            }
+        } else {
+            System.err.println("Erro (ControladorVeterinario): Veterinário " + crmvNormalizado + " não encontrado para remover disponibilidade.");
+        }
     }
 
     public List<Veterinario> listarTodos() {

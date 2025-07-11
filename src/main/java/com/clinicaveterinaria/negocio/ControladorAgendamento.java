@@ -12,6 +12,7 @@ import com.clinicaveterinaria.negocio.entidades.Animal;
 import com.clinicaveterinaria.negocio.entidades.Cliente;
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -80,6 +81,10 @@ public class ControladorAgendamento {
 
     public Agendamento buscarAgendamentoPorId(Long id) {
         return repositorio.buscar(id);
+    }
+
+    public List<com.clinicaveterinaria.negocio.entidades.Agendamento> buscarAgendamentoPorDia(LocalDate data) {
+        return repositorio.buscarPorDia(data);
     }
 
     public void atualizarAgendamento(Long id, AgendamentoRequisicaoDTO novoAgendamentoDTO) {

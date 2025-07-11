@@ -47,6 +47,6 @@ public class Agendamento {
     }
 
     public AgendamentoRespostaDTO paraDTO() {
-        return new AgendamentoRespostaDTO(cliente.getNome(), animal.getNome(), veterinario.getNome(), dataAgendamento, status);
+        return new AgendamentoRespostaDTO(id, cliente.getNome(), animal.getNome(), veterinario.getNome(), dataAgendamento, status, obsevacao);
     }
 }

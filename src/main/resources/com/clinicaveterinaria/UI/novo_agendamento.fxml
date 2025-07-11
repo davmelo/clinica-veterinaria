@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.NovoAgendamentoController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.NovoAgendamentoController">
     <top>
         <VBox spacing="10.0" styleClass="header-section">
             <padding>
@@ -34,7 +34,7 @@
                     </Label>
 
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <TextField fx:id="txtClienteSearch" prefWidth="300.0" promptText="Digite o nome ou telefone do cliente" onAction="#handleClienteSearchAction" />
+                        <TextField fx:id="txtClienteSearch" prefWidth="300.0" promptText="Digite o CPF do cliente" onAction="#handleBuscarCliente" />
                         <Button fx:id="btnBuscarCliente" text="Buscar" onAction="#handleBuscarCliente" />
                         <Button fx:id="btnNovoCliente" text="Novo Cliente" onAction="#handleNovoCliente" />
                     </HBox>
@@ -146,7 +146,7 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="15.0" styleClass="button-bar">
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </padding>
             <Button fx:id="btnCancelar" onAction="#handleCancelar" prefWidth="100.0" text="Cancelar" />
             <Button fx:id="btnSalvar" onAction="#handleAgendar" prefWidth="100.0" styleClass="primary-button" text="Salvar" />

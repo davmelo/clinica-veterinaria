@@ -27,6 +27,10 @@ public class CadastroPrincipalController {
     private TextField nomeField;
 
     @FXML
+    private TextField sobrenomeField;
+
+
+    @FXML
     private TextField crmvField;
 
     @FXML
@@ -70,6 +74,7 @@ public class CadastroPrincipalController {
         hideMessages();
 
         String nome = nomeField.getText().trim();
+        String sobrenome = sobrenomeField.getText().trim();
         String crmv = crmvField.getText().trim();
         String email = emailField.getText().trim();
         String password = senhaField.getText(); //Apenas para simulação de UI
@@ -78,12 +83,13 @@ public class CadastroPrincipalController {
 
         // Debug - Remova estas linhas após testar
         System.out.println("Nome: '" + nome + "'");
+        System.out.println("Sobrenome: '" + sobrenome + "'");
         System.out.println("CRMV: '" + crmv + "'");
         System.out.println("Email: '" + email + "'");
         System.out.println("Telefone: '" + telefone + "'");
         System.out.println("Especialidade: '" + especialidade + "'");
 
-        if (!validateInput(nome, crmv, telefone, email, password, especialidade)) {
+        if (!validateInput(nome, sobrenome, crmv, telefone, email, password, especialidade)) {
             return;
         }
 
@@ -96,8 +102,9 @@ public class CadastroPrincipalController {
                 return;
             }
 
-            if (createUserAndVeterinario(nome, crmv, email, password, telefone, especialidade)) { //
+            if (createUserAndVeterinario(nome, sobrenome, crmv, email, password, telefone, especialidade)) {
                 showSuccess();
+                clearFields();
 
                 // Redirecionamento para a tela de Login após 2 segundos
                 new Thread(() -> {
@@ -135,7 +142,7 @@ public class CadastroPrincipalController {
         }
     }
 
-    private boolean validateInput(String name, String crmv, String telefone, String email, String password, String especialidade) {
+    private boolean validateInput(String name, String sobrenome, String crmv, String telefone, String email, String password, String especialidade) {
         if (name.isEmpty()) {
             showError("Nome é obrigatório.");
             nomeField.requestFocus();
@@ -144,6 +151,17 @@ public class CadastroPrincipalController {
         if (name.length() < 3) {
             showError("Nome deve ter pelo menos 3 caracteres.");
             nomeField.requestFocus();
+            return false;
+        }
+
+        if (sobrenome.isEmpty()) {
+            showError("Sobrenome é obrigatório.");
+            sobrenomeField.requestFocus();
+            return false;
+        }
+        if (sobrenome.length() < 3) {
+            showError("Sobrenome deve ter pelo menos 3 caracteres.");
+            sobrenomeField.requestFocus();
             return false;
         }
 
@@ -210,12 +228,12 @@ public class CadastroPrincipalController {
         return CRMV_PATTERN.matcher(crmvFormatado).matches();
     }
 
-    private boolean createUserAndVeterinario(String name, String crmv, String email, String password, String telefone, String especialidade) {
+    private boolean createUserAndVeterinario(String name, String sobrenome, String crmv, String email, String password, String telefone, String especialidade) {
         try {
             VeterinarioRequisicaoDTO veterinarioDTO = new VeterinarioRequisicaoDTO(
                     null, // ID será gerado
                     name,
-                    "Sobrenome Padrão", // Adicionar um campo de sobrenome na UI
+                    sobrenome,
                     crmv,
                     email,
                     password,
@@ -226,7 +244,7 @@ public class CadastroPrincipalController {
             clinica.cadastrarVeterinario(veterinarioDTO);
 
             //Essa linha só vai aparecer se o cadastro for bem-sucedido.
-            System.out.println("Veterinário cadastrado via UI com sucesso! Nome: " + name + ", CRMV: " + crmv + ", Especialidade: " + especialidade);
+            System.out.println("Veterinário cadastrado via UI com sucesso! Nome: " + name + " " + sobrenome + ", CRMV: " + crmv + ", Especialidade: " + especialidade);
 
             return true;
         } catch (Exception e) {
@@ -252,5 +270,15 @@ public class CadastroPrincipalController {
     private void hideMessages() {
         errorLabel.setVisible(false);
         successLabel.setVisible(false);
+    }
+
+    private void clearFields() {
+        nomeField.clear();
+        sobrenomeField.clear();
+        crmvField.clear();
+        emailField.clear();
+        telefoneField.clear();
+        senhaField.clear();
+        especialidadeField.clear();
     }
 }

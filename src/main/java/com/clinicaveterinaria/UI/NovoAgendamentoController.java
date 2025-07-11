@@ -5,11 +5,7 @@ import com.clinicaveterinaria.dtos.AnimalRespostaDTO;
 import com.clinicaveterinaria.dtos.ClienteRespostaDTO;
 import com.clinicaveterinaria.dtos.VeterinarioRespostaDTO;
 import com.clinicaveterinaria.negocio.ServidorClinica;
-import com.clinicaveterinaria.negocio.entidades.AgendamentoStatus;
-import com.clinicaveterinaria.negocio.entidades.Animal;
-import com.clinicaveterinaria.negocio.entidades.Cliente;
-import com.clinicaveterinaria.negocio.entidades.DiaSemana;
-import com.clinicaveterinaria.negocio.entidades.Veterinario;
+import com.clinicaveterinaria.negocio.entidades.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -107,11 +103,12 @@ public class NovoAgendamentoController {
     private ServidorClinica clinica = ServidorClinica.getInstance();
 
     // Listas para armazenar os objetos reais, para obter seus IDs/CPFs/CRMVs
-    private List<Cliente> todosClientesCarregados; // Para buscar o cliente pelo nome exibido
+    //private List<Cliente> todosClientesCarregados; // Para buscar o cliente pelo nome exibido
     private ClienteRespostaDTO clienteAtualmenteExibido; // O cliente encontrado/selecionado
     private List<Animal> animaisDoClienteAtualmenteExibido; // Animais do cliente exibido
     private Animal animalAtualmenteExibido; // O animal selecionado no ComboBox
     private List<Veterinario> todosVeterinariosCarregados; // Para buscar o veterinário pelo nome exibido
+    private Veterinario veterinarioSelecionadoNoCombo;
 
     @FXML
     public void initialize() {
@@ -276,10 +273,7 @@ public class NovoAgendamentoController {
 
     @FXML
     private void handleDateSelected() {
-        // Lógica para atualizar horários disponíveis no cmbHorario
-        // Podemos filtrar os horários aqui com base no veterinário selecionado e data
-        // Exigiria uma chamada ao ControladorVeterinario para obter a DisponibilidadeAgenda do veterinário selecionado.
-        // Por enquanto, cmbHorario é preenchido na inicialização.
+        atualizarHorariosDisponiveis();
     }
 
     @FXML
@@ -289,15 +283,60 @@ public class NovoAgendamentoController {
 
     @FXML
     private void handleVeterinarioSelected() {
-        // Lógica para carregar e talvez filtrar horários disponíveis para este veterinário.
-        // Chamaria um metodo como: clinica.getDisponibilidadeVeterinario(veterinario.getCrmv());
-        // usaria dataPicker.getValue() para ver os horários específicos daquele dia.
-        // Esta lógica ficaria aqui ou em handleDateSelected, ou em um metodo auxiliar.
+        String nomeVeterinarioSelecionado = cmbVeterinario.getSelectionModel().getSelectedItem();
+        if (nomeVeterinarioSelecionado != null && todosVeterinariosCarregados != null) {
+            veterinarioSelecionadoNoCombo = todosVeterinariosCarregados.stream()
+                    .filter(v -> v.getNome().equals(nomeVeterinarioSelecionado))
+                    .findFirst()
+                    .orElse(null);
+            atualizarHorariosDisponiveis(); // Atualiza os horários sempre que o veterinário muda
+        }
     }
 
     @FXML
     private void handleTipoProcedimentoSelected() {
         // Lógica para lidar com a seleção do tipo de procedimento.
+    }
+
+
+    @FXML
+    private void handleStatusSelected() {
+    }
+
+    @FXML
+    private void handlePrioridadeSelected() {
+    }
+
+    private void atualizarHorariosDisponiveis() {
+        if (veterinarioSelecionadoNoCombo == null || datePicker.getValue() == null) {
+            cmbHorario.setItems(FXCollections.emptyObservableList());
+            showStatusMessage("Selecione o veterinário e a data para ver os horários disponíveis.", false);
+            return;
+        }
+
+        LocalDate dataAgendamento = datePicker.getValue();
+        // Converte DayOfWeek do LocalDate para DiaSemana do seu enum
+        DiaSemana diaDaSemana = DiaSemana.valueOf(dataAgendamento.getDayOfWeek().name());
+
+        // Obter a disponibilidade do veterinário
+        DisponibilidadeAgenda disponibilidade = clinica.getDisponibilidadeVeterinario(veterinarioSelecionadoNoCombo.getCrmv());
+
+        if (disponibilidade != null) {
+            List<LocalTime> horariosDoDia = disponibilidade.getHorariosPorDia(diaDaSemana);
+            horariosDoDia.sort(LocalTime::compareTo);
+
+            cmbHorario.setItems(FXCollections.observableArrayList(
+                    horariosDoDia.stream().map(LocalTime::toString).collect(Collectors.toList())
+            ));
+            if (horariosDoDia.isEmpty()) {
+                showStatusMessage("Não há horários disponíveis para este veterinário nesta data.", true);
+            } else {
+                showStatusMessage("", false);
+            }
+        } else {
+            cmbHorario.setItems(FXCollections.emptyObservableList());
+            showStatusMessage("Disponibilidade não encontrada para este veterinário.", true);
+        }
     }
 
     @FXML
@@ -317,15 +356,15 @@ public class NovoAgendamentoController {
             return;
         }
 
-        Veterinario veterinarioSelecionado = todosVeterinariosCarregados.stream()
-                .filter(v -> v.getNome().equals(veterinarioNome))
-                .findFirst()
-                .orElse(null);
-
-        if (veterinarioSelecionado == null) {
-            showStatusMessage("Erro: Veterinário selecionado não encontrado nos dados.", true);
-            return;
-        }
+//        Veterinario veterinarioSelecionado = todosVeterinariosCarregados.stream()
+//                .filter(v -> v.getNome().equals(veterinarioNome))
+//                .findFirst()
+//                .orElse(null);
+//
+//        if (veterinarioSelecionado == null) {
+//            showStatusMessage("Erro: Veterinário selecionado não encontrado nos dados.", true);
+//            return;
+//        }
 
         LocalTime horaSelecionada = LocalTime.parse(horaSelecionadaStr);
         LocalDateTime dataHoraAgendamento = LocalDateTime.of(dataSelecionada, horaSelecionada);
@@ -336,7 +375,7 @@ public class NovoAgendamentoController {
                 null,
                 clienteAtualmenteExibido.cpf(),
                 animalAtualmenteExibido.getId(),
-                veterinarioSelecionado.getCrmv(),
+                veterinarioSelecionadoNoCombo.getCrmv(),
                 dataHoraAgendamento,
                 observacao,
                 statusEnum

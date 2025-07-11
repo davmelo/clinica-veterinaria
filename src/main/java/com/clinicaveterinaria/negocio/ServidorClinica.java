@@ -3,7 +3,9 @@ package com.clinicaveterinaria.negocio;
 import com.clinicaveterinaria.dtos.*;
 import com.clinicaveterinaria.negocio.entidades.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +68,11 @@ public class ServidorClinica {
         Veterinario veterinario = controladorVeterinario.buscarVeterinarioPorCrmv(crmv);
         return veterinario != null ? veterinario.paraDTO() : null;
     }
+
+    public Veterinario buscarVeterinarioEntidade(String crmv) {
+        return controladorVeterinario.buscarVeterinarioPorCrmv(crmv);
+    }
+
     public void atualizarVeterinario(String crmv, VeterinarioRequisicaoDTO veterinarioDTO) {
         controladorVeterinario.atualizarVeterinario(crmv, veterinarioDTO);
     }
@@ -83,6 +90,15 @@ public class ServidorClinica {
     public AgendamentoRespostaDTO buscarAgendamento(Long agendamentoID) {
         Agendamento agendamento = controladorAgendamento.buscarAgendamentoPorId(agendamentoID);
         return agendamento != null ? agendamento.paraDTO() : null;
+    }
+
+
+    public List<Agendamento> listarTodosAgendamentos() {
+        return controladorAgendamento.listarTodosAgendamentos();
+    }
+
+    public List<Agendamento> buscarAgendamentosPorDia(LocalDate data) {
+        return controladorAgendamento.buscarAgendamentoPorDia(data);
     }
 
     public void atualizarAgendamento(Long id, AgendamentoRequisicaoDTO agendamentoDTO) {
@@ -128,5 +144,14 @@ public class ServidorClinica {
 
     public List<Veterinario> listarTodosVeterinarios() {
         return controladorVeterinario.listarTodos();
+    }
+
+    public DisponibilidadeAgenda getDisponibilidadeVeterinario(String crmv) {
+        Veterinario veterinario = controladorVeterinario.buscarVeterinarioPorCrmv(crmv);
+        return veterinario != null ? veterinario.getDisponibilidadeAgenda() : null;
+    }
+
+    public void removerDispoAgenda(String crmv, DiaSemana dia, LocalTime horario) {
+        controladorVeterinario.removerDisponibilidade(crmv, dia, horario);
     }
 }
