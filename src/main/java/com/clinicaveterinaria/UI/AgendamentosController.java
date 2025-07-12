@@ -23,6 +23,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -54,7 +56,7 @@ public class AgendamentosController {
     private TableView<AgendamentoRespostaDTO> appointmentTable;
 
     @FXML
-    private TableColumn<AgendamentoRespostaDTO, String> horaColumn;
+    private TableColumn<AgendamentoRespostaDTO, LocalDateTime> horaColumn;
 
     @FXML
     private TableColumn<AgendamentoRespostaDTO, String> clienteColumn;
@@ -66,7 +68,7 @@ public class AgendamentosController {
     private TableColumn<AgendamentoRespostaDTO, String> veterinarioColumn;
 
     @FXML
-    private TableColumn<AgendamentoRespostaDTO, String> statusColumn;
+    private TableColumn<AgendamentoRespostaDTO, AgendamentoStatus> statusColumn;
 
     // Detalhes do Agendamento
     @FXML
@@ -113,21 +115,22 @@ public class AgendamentosController {
 
     @FXML
     public void initialize() {
-        horaColumn.setCellValueFactory(new PropertyValueFactory<>("dataAgendamento"));
-        clienteColumn.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
-        animalColumn.setCellValueFactory(new PropertyValueFactory<>("nomeAnimal"));
-        veterinarioColumn.setCellValueFactory(new PropertyValueFactory<>("nomeVeterinario"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status")); // O método status() retornará o enum AgendamentoStatus
+        horaColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().dataAgendamento()));
+        clienteColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeCliente()));
+        animalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeAnimal()));
+        veterinarioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeVeterinario()));
+        statusColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().status()));
 
-        horaColumn.setCellFactory(column -> new TableCell<AgendamentoRespostaDTO, String>() {
+        horaColumn.setCellFactory(column -> new TableCell<AgendamentoRespostaDTO, LocalDateTime>() {
+            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
             @Override
-            protected void updateItem(String item, boolean empty) {
+            protected void updateItem(LocalDateTime item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    LocalDateTime dateTime = LocalDateTime.parse(item);
-                    setText(dateTime.format(DateTimeFormatter.ofPattern("HH:mm")));
+                    setText(item.format(formatter));
                 }
             }
         });
@@ -144,6 +147,7 @@ public class AgendamentosController {
                     } else {
                         clearAppointmentDetails();
                     }
+                    //clearAppointmentDetails();
                 });
         loadAppointments(null);
     }
