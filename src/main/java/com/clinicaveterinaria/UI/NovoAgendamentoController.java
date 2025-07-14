@@ -24,6 +24,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -101,6 +102,9 @@ public class NovoAgendamentoController {
     private Button btnSalvar;
 
     private ServidorClinica clinica = ServidorClinica.getInstance();
+
+    @Setter
+    private String perfilUsuario;
 
     // Listas para armazenar os objetos reais, para obter seus IDs/CPFs/CRMVs
     //private List<Cliente> todosClientesCarregados; // Para buscar o cliente pelo nome exibido
@@ -416,6 +420,10 @@ public class NovoAgendamentoController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("agendamentos_gestao.fxml"));
             Parent root = loader.load();
+
+            AgendamentosController controller = loader.getController();
+            controller.configurarPerfil(perfilUsuario);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

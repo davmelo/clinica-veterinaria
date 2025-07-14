@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableCell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +38,8 @@ public class AgendamentosController {
     @FXML
     public Button atenderButton;
 
-    @FXML private Button voltarButton;
+    @FXML
+    private Button voltarButton;
 
     // Filtros
     @FXML
@@ -266,16 +266,29 @@ public class AgendamentosController {
     @FXML
     public void handleVoltar(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("atendente_tela.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Sistema Clínica Veterinária - Menu Principal");
-            stage.show();
+            String fxmlPath = null;
+            String tituloJanela = null;
+
+            if ("ATENDENTE".equals(perfilUsuario)) {
+                fxmlPath = "atendente_tela.fxml";
+                tituloJanela = "Sistema clínica veteriária - Menu Principal";
+            } else if ("VETERINARIO".equals(perfilUsuario)) {
+                fxmlPath = "veterinario_tela.fxml";
+                tituloJanela = "Sistema Clínica Veterinária - Menu Veterinário";
+            }
+
+            if (fxmlPath != null) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle(tituloJanela);
+                stage.show();
+            }
 
         } catch (IOException e) {
-            showErrorAlert("Erro ao carregar tela", "Não foi possível retornar à tela de atendente.");
+            showErrorAlert("Erro ao carregar tela", "Não foi possível retornar à tela de anterior.");
             e.printStackTrace();
         }
     }
@@ -285,6 +298,10 @@ public class AgendamentosController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("novo_agendamento.fxml"));
             Parent root = loader.load();
+
+            NovoAgendamentoController controller = loader.getController();
+            controller.setPerfilUsuario(perfilUsuario);
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
