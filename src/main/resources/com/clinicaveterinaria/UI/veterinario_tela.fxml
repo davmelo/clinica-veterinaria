@@ -29,7 +29,7 @@
          </font>
       </Button>
    </HBox>
-   <Button layoutX="567.0" layoutY="283.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="122.0" style="-fx-background-color: #000000;" text="Agendamentos" textFill="WHITE">
+   <Button layoutX="567.0" onAction="#verAgendamentos" layoutY="283.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="122.0" style="-fx-background-color: #000000;" text="Agendamentos" textFill="WHITE">
       <font>
          <Font name="System Bold" size="12.0" />
       </font>

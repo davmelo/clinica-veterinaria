@@ -36,6 +36,9 @@ import java.util.stream.Collectors;
 
 public class AgendamentosController {
 
+    @FXML
+    public Button atenderButton;
+
     @FXML private Button voltarButton;
 
     // Filtros
@@ -112,6 +115,20 @@ public class AgendamentosController {
     private Button reagendarButton;
 
     private ServidorClinica clinica = ServidorClinica.getInstance();
+
+    private String perfilUsuario;
+
+    public void configurarPerfil(String perfil) {
+        this.perfilUsuario = perfil;
+
+        if ("VETERINARIO".equals(perfil) ) {
+            novoAgendamentoButton.setVisible(false);
+            editarAgendamentoButton.setVisible(false);
+        }
+        if ("ATENDENTE".equals(perfil) ) {
+            atenderButton.setVisible(false);
+        }
+    }
 
     @FXML
     public void initialize() {

@@ -121,4 +121,24 @@ public class VeterinarioController {
             e.printStackTrace();
         }
     }
+
+    public void verAgendamentos(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("agendamentos_gestao.fxml"));
+            Parent root = loader.load();
+
+            AgendamentosController controller = loader.getController();
+            controller.configurarPerfil("VETERINARIO");
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Sistema Clínica Veterinária - Agendamentos");
+            stage.show();
+
+        } catch (IOException e) {
+            showErrorAlert("Erro ao carregar tela", "Não foi possível carregar a tela de agendamentos.");
+            e.printStackTrace();
+        }
+    }
 }
