@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.CadastroPrincipalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.CadastroPrincipalController">
    <VBox alignment="CENTER" layoutY="56.0" prefHeight="63.0" prefWidth="900.0">
       <Label text="CRIAR NOVA">
          <font>
@@ -18,20 +23,20 @@
          </font>
       </Label>
    </VBox>
-   <VBox layoutX="328.0" layoutY="128.0" prefHeight="221.0" prefWidth="245.0" spacing="5.0">
+   <VBox alignment="CENTER" layoutX="328.0" layoutY="128.0" maxWidth="-Infinity" prefWidth="400.0" spacing="10.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="100.0">
       <Label text="NOME:">
          <font>
             <Font size="11.0" />
          </font>
       </Label>
-      <TextField fx:id="nomeField" promptText="Nome" />
+      <TextField fx:id="nomeField" maxWidth="-Infinity" prefWidth="300.0" promptText="Nome" />
 
       <Label text="SOBRENOME:">
          <font>
             <Font size="11.0" />
          </font>
       </Label>
-      <TextField fx:id="sobrenomeField" prefHeight="25.0" prefWidth="211.0" promptText="Sobrenome">
+      <TextField fx:id="sobrenomeField" maxWidth="-Infinity" prefWidth="300.0" promptText="Sobrenome">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -41,7 +46,7 @@
             <Font size="11.0" />
          </font>
       </Label>
-      <TextField fx:id="crmvField" prefHeight="25.0" prefWidth="211.0" promptText="XX 00000">
+      <TextField fx:id="crmvField" maxWidth="-Infinity" prefWidth="300.0" promptText="XX 00000">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -51,25 +56,25 @@
             <Font size="11.0" />
          </font>
       </Label>
-      <TextField fx:id="telefoneField" prefHeight="25.0" prefWidth="211.0" promptText="(00) 0000-0000" />
+      <TextField fx:id="telefoneField" maxWidth="-Infinity" prefWidth="300.0" promptText="(00) 0000-0000" />
       <Label text="EMAIL:">
          <font>
             <Font size="11.0" />
          </font>
       </Label>
-      <TextField prefHeight="25.0" fx:id="emailField" prefWidth="211.0" promptText="Email" />
+      <TextField fx:id="emailField" maxWidth="-Infinity" prefWidth="300.0" promptText="Email" />
       <Label text="SENHA:">
          <font>
             <Font size="11.0" />
          </font>
       </Label>
-      <PasswordField fx:id="senhaField" prefHeight="25.0" prefWidth="211.0" promptText="•••••••••" />
+      <PasswordField fx:id="senhaField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="•••••••••" />
       <Label text="ESPECIALIDADE:">
          <font>
             <Font size="11.0" />
          </font>
       </Label>
-      <TextField fx:id="especialidadeField" prefHeight="25.0" prefWidth="211.0" promptText="Especialidade" />
+      <TextField fx:id="especialidadeField" maxWidth="-Infinity" prefWidth="300.0" promptText="Especialidade" />
       <Label fx:id="errorLabel" prefHeight="17.0" prefWidth="163.0" textFill="RED" visible="false">
          <font>
             <Font size="10.0" />
@@ -80,21 +85,24 @@
             <Font size="10.0" />
          </font>
       </Label>
+      <Button mnemonicParsing="false" onAction="#criarConta" prefWidth="150.0" style="-fx-background-color: #000000;" text="CRIAR CONTA" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label text="Já possui uma conta?">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Hyperlink onAction="#voltarLogin" text="Entrar">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Hyperlink>
+      <padding>
+         <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
+      </padding>
    </VBox>
-   <Button layoutX="401.0" layoutY="456.0" mnemonicParsing="false" onAction="#criarConta" prefHeight="36.0" prefWidth="98.0" style="-fx-background-color: #000000;" text="CRIAR CONTA" textFill="WHITE">
-      <font>
-         <Font name="System Bold" size="12.0" />
-      </font>
-   </Button>
-   <Label layoutX="389.0" layoutY="505.0" text="Já possui uma conta?">
-      <font>
-         <Font size="13.0" />
-      </font>
-   </Label>
-   <Hyperlink layoutX="429.0" layoutY="515.0" onAction="#voltarLogin" text="Entrar">
-      <font>
-         <Font size="13.0" />
-      </font>
-   </Hyperlink>
 
 </AnchorPane>

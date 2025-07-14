@@ -63,7 +63,7 @@ public class CadastrarAnimalController {
 
     public void handleVoltar(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("cliente_tela.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cadastrar_cliente.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) voltarButton.getScene().getWindow();
