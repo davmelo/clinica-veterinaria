@@ -1,9 +1,10 @@
 package com.clinicaveterinaria.negocio.entidades;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.*;
 
-public class DisponibilidadeAgenda {
+public class DisponibilidadeAgenda implements Serializable {
 
     private Map<DiaSemana, List<LocalTime>> horariosDisponiveis;
 
