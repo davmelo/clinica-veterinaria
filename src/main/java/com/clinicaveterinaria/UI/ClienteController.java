@@ -48,6 +48,8 @@ public class ClienteController {
 
     private ServidorClinica clinica = ServidorClinica.getInstance();
 
+    private ClienteRespostaDTO clienteEncontrado;
+
     @FXML
     private void voltarAtendente(ActionEvent event) {
         try {
@@ -86,6 +88,10 @@ public class ClienteController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("editar_cliente.fxml"));
             Parent root = loader.load();
+
+            EditarClienteController editarClienteController = loader.getController();
+            editarClienteController.setCliente(clienteEncontrado);
+
             Stage stage = (Stage) editarClienteButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -117,7 +123,7 @@ public class ClienteController {
         }
 
         try {
-            ClienteRespostaDTO clienteEncontrado = clinica.buscarCliente(termoBuscaCpf);
+            clienteEncontrado = clinica.buscarCliente(termoBuscaCpf);
 
             if (clienteEncontrado != null) {
                 clienteNomeLabel.setText(clienteEncontrado.nome());
@@ -126,6 +132,7 @@ public class ClienteController {
                 clienteTelefoneLabel.setText(clienteEncontrado.telefone());
                 clienteEmailLabel.setText(clienteEncontrado.email());
                 clienteEnderecoLabel.setText(clienteEncontrado.endereco());
+                editarClienteButton.setDisable(false);
                 statusMessageLabel.setText("Cliente encontrado!");
                 statusMessageLabel.setTextFill(javafx.scene.paint.Color.GREEN);
             } else {
