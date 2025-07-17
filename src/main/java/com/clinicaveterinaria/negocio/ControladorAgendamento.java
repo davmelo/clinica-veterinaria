@@ -59,6 +59,8 @@ public class ControladorAgendamento {
 
         Agendamento agendamento = agendamentoDTO.paraEntidade(cliente, animal, veterinario);
 
+        agendamento.setId(repositorio.gerarID());
+
         if (agendamento.getVeterinario() == null || agendamento.getDataAgendamento() == null) {
             System.err.println("Erro (ControladorAgendamento): Agendamento ou dados essenciais (Veterinário ou Data/Hora) são nulos.");
             return false;
