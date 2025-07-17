@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -17,7 +18,7 @@ import java.time.Period;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = {"id"})
-public class Animal {
+public class Animal implements Serializable {
 
     private Long id;
     private Cliente tutor;

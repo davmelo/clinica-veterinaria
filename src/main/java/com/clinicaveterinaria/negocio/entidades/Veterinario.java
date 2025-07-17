@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Setter
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = {"crmv", "email"})
-public class Veterinario {
+public class Veterinario implements Serializable {
     private Long id;
     private String nome;
     private String sobrenome;
@@ -27,17 +28,6 @@ public class Veterinario {
     private ArrayList<String> especialidades;
     private DisponibilidadeAgenda disponibilidadeAgenda;
 
-//    public Veterinario(Long id, String nome, String sobrenome, String crmv, String email, String senha, String telefone) {
-//        this.id = id;
-//        this.nome = nome;
-//        this.sobrenome = sobrenome;
-//        this.crmv = crmv;
-//        this.email = email;
-//        this.senha = senha;
-//        this.telefone = telefone;
-//        this.especialidades = (especialidades != null) ? especialidades : new ArrayList<>();
-//        this.disponibilidadeAgenda = (disponibilidadeAgenda != null) ? disponibilidadeAgenda : new DisponibilidadeAgenda();
-//    }
 
     public void adicionarEspecialidade(String especialidade) {
         if (this.especialidades == null) {

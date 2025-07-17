@@ -8,13 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = {"cpf", "email"})
-public class Cliente {
+public class Cliente implements Serializable {
     private Long id;
     private String nome;
     private String sobrenome;

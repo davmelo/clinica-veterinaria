@@ -16,4 +16,6 @@ public interface IRepositorioVeterinarios {
     void remover(String crmv);
 
     List<Veterinario> listarTodos();
+
+    Long gerarID();
 }

@@ -29,4 +29,5 @@ public interface IRepositorioAgendamentos {
 
     List<Agendamento> listarTodos();
 
+    Long gerarID();
 }

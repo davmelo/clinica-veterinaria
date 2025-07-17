@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = {"id"})
-public class Atendimento {
+public class Atendimento implements Serializable {
     private Long id;
     private Agendamento agendamento;
     private List<ProcedimentoRealizado> procedimentosRealizados;

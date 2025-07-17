@@ -16,4 +16,6 @@ public interface IRepositorioAnimais {
     List<Animal> listarTodos();
 
     List<Animal> buscarPorTutorCpf(String cpf);
+
+    Long gerarID();
 }

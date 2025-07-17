@@ -30,6 +30,7 @@ public class ControladorCliente {
         }
 
         Cliente cliente = clienteDTO.paraEntidade();
+        cliente.setId(repositorio.gerarID());
         repositorio.salvar(cliente);
         System.out.println("Cliente cadastrado no repositório: " + cliente.getNome() + " - " + cliente.getCpf());
     }

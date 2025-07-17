@@ -47,6 +47,7 @@ public class ControladorVeterinario {
         Veterinario veterinario = veterinarioDTO.paraEntidade();
         veterinario.setCrmv(crmvNormalizado);
         veterinario.setEmail(emailNormalizado);
+        veterinario.setId(repositorio.gerarID());
 
         if (veterinario.getEspecialidades() == null) {
             veterinario.setEspecialidades(new ArrayList<>());

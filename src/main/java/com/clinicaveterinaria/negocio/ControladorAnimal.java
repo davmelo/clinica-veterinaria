@@ -15,7 +15,6 @@ public class ControladorAnimal {
     private static ControladorAnimal instance;
     private final ControladorCliente controladorCliente;
     final private IRepositorioAnimais repositorio;
-    private long nextAnimalId = 1L;
 
     private ControladorAnimal() {
         this.repositorio = RepositorioAnimaisArray.getInstance();
@@ -39,7 +38,7 @@ public class ControladorAnimal {
         Animal animal = animalDTO.paraEntidade(tutor);
 
         if (animal.getId() == null) {
-            animal.setId(nextAnimalId++);
+            animal.setId(repositorio.gerarID());
         }
 
         repositorio.salvar(animal);

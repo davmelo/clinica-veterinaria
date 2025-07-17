@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Setter
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Agendamento {
+public class Agendamento implements Serializable {
     private Long id;
     private Cliente cliente;
     private Animal animal;
@@ -27,7 +28,11 @@ public class Agendamento {
     private SolicitacaoProcedimentos procedimentosSolicitados;
     private AgendamentoStatus status;
 
-    public Agendamento(Long id, Cliente cliente, Animal animal, Veterinario veterinario, LocalDateTime dataAgendamento, String obsevacao, AgendamentoStatus status) {
+    public Agendamento(
+            Long id, Cliente cliente, Animal animal,
+            Veterinario veterinario, LocalDateTime dataAgendamento,
+            String obsevacao, AgendamentoStatus status)
+    {
         this.id = id;
         this.cliente = cliente;
         this.animal = animal;

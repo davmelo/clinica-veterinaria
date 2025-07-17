@@ -14,4 +14,6 @@ public interface IRepositorioClientes {
     void remover(String cpf);
 
     List<Cliente> listarTodos();
+
+    Long gerarID();
 }
