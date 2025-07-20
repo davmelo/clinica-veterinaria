@@ -89,6 +89,17 @@ public class ControladorAgendamento {
         return repositorio.buscarPorDia(data);
     }
 
+    public void atualizarStatus(Long id, AgendamentoStatus novoStatus) {
+        Agendamento agendamento = repositorio.buscar(id);
+        if (agendamento != null) {
+            agendamento.setStatus(novoStatus);
+            repositorio.atualizar(id, agendamento); // Persiste a mudança no repositório
+            System.out.println("Agendamento " + id + " status atualizado para: " + novoStatus.name());
+        } else {
+            System.err.println("Erro (ControladorAgendamento): Agendamento com ID " + id + " não encontrado para atualizar status.");
+        }
+    }
+
     public void atualizarAgendamento(Long id, AgendamentoRequisicaoDTO novoAgendamentoDTO) {
         Agendamento agendamentoExistente = repositorio.buscar(id);
         if (agendamentoExistente == null) {
@@ -213,5 +224,9 @@ public class ControladorAgendamento {
 
     public List<Agendamento> listarTodosAgendamentos() {
         return repositorio.listarTodos();
+    }
+
+    public List<Agendamento> buscarPorVeterinario(String crmv) {
+        return repositorio.buscarPorVeterinario(crmv);
     }
 }
