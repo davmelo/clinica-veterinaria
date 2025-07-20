@@ -71,6 +71,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
+                <Label fx:id="statusMessageLabel" text="" textFill="#0000ff" />
             </VBox>
 
             <VBox prefWidth="400.0" spacing="15.0">
@@ -124,13 +125,16 @@
     </center>
 
     <bottom>
-        <HBox alignment="CENTER" spacing="20.0">
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
             </padding>
-            <Button fx:id="atenderButton" mnemonicParsing="false" text="Atender" />
-            <Button fx:id="novoAgendamentoButton" onAction="#handleNovoAgendamento" text="Novo Agendamento" />
-            <Button fx:id="editarAgendamentoButton" text="Editar Agendamento" />
+            <Button fx:id="novoAgendamentoButton" text="Novo Agendamento" onAction="#handleNovoAgendamento" prefWidth="120.0" />
+            <Button fx:id="editarAgendamentoButton" text="Editar Agendamento" onAction="#handleEditarAgendamento" prefWidth="120.0" />
+            <Button fx:id="cancelarAgendamentoButton" text="Cancelar Agendamento" onAction="#handleCancelarAgendamento" prefWidth="130.0" />
+            <Button fx:id="confirmarAgendamentoButton" text="Confirmar Agendamento" onAction="#handleConfirmarAgendamento" prefWidth="130.0" />
+            <Button fx:id="reagendarButton" text="Reagendar" onAction="#handleReagendar" prefWidth="100.0" />
+            <Button fx:id="atenderButton" text="Atender" onAction="#handleAtender" prefWidth="80.0" />
         </HBox>
     </bottom>
 </BorderPane>
