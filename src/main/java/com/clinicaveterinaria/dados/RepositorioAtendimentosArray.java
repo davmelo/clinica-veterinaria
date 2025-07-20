@@ -92,9 +92,10 @@ public class RepositorioAtendimentosArray implements IRepositorioAtendimentos, S
         for (int i = 0; i < atendimentos.size(); i++) {
             if (atendimentos.get(i).getId().equals(id)) {
                 atendimentos.set(i, atendimentoAtualizado);
-                return;
+                i = atendimentos.size();
             }
         }
+        salvarArquivo();
     }
 
     @Override

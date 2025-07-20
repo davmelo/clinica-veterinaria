@@ -95,7 +95,7 @@ public class RepositorioClientesArray implements IRepositorioClientes, Serializa
         for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getCpf().equals(cpf)) {
                 clientes.set(i, novoCliente);
-                return;
+                i = clientes.size();
             }
         }
         salvarArquivo();

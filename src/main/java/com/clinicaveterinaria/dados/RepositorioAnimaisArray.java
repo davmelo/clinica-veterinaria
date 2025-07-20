@@ -93,7 +93,7 @@ public class RepositorioAnimaisArray implements IRepositorioAnimais, Serializabl
         for (int i = 0; i < animais.size(); i++) {
             if (animais.get(i).getId().equals(id)) {
                 animais.set(i, novoAnimal);
-                return;
+                i = animais.size();
             }
         }
         salvarArquivo();

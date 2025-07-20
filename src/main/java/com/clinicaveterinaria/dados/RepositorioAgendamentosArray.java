@@ -96,7 +96,7 @@ public class RepositorioAgendamentosArray implements IRepositorioAgendamentos, S
         for (int i = 0; i < agendamentos.size(); i++) {
             if (agendamentos.get(i).getId().equals(id)) {
                 agendamentos.set(i, agendamentoAtualizado);
-                return;
+                i = agendamentos.size();
             }
         }
         salvarArquivo();
