@@ -4,6 +4,7 @@ import com.clinicaveterinaria.dtos.AgendamentoRespostaDTO;
 import com.clinicaveterinaria.negocio.ServidorClinica;
 import com.clinicaveterinaria.negocio.entidades.Agendamento;
 import com.clinicaveterinaria.negocio.entidades.AgendamentoStatus;
+import com.clinicaveterinaria.negocio.UsuarioVeterinario;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -114,6 +115,9 @@ public class AgendamentosController {
     @FXML
     private Button reagendarButton;
 
+    @FXML
+    private Label statusMessageLabel;
+
     private ServidorClinica clinica = ServidorClinica.getInstance();
 
     private String perfilUsuario;
@@ -121,36 +125,60 @@ public class AgendamentosController {
     public void configurarPerfil(String perfil) {
         this.perfilUsuario = perfil;
 
-        if ("VETERINARIO".equals(perfil) ) {
+        if ("VETERINARIO".equals(perfil)) {
             novoAgendamentoButton.setVisible(false);
+            novoAgendamentoButton.setManaged(false);
             editarAgendamentoButton.setVisible(false);
-        }
-        if ("ATENDENTE".equals(perfil) ) {
+            editarAgendamentoButton.setManaged(false);
+            cancelarAgendamentoButton.setVisible(false);
+            cancelarAgendamentoButton.setManaged(false);
+            confirmarAgendamentoButton.setVisible(false);
+            confirmarAgendamentoButton.setManaged(false);
+            reagendarButton.setVisible(false);
+            reagendarButton.setManaged(false);
+
+        } else if ("ATENDENTE".equals(perfil)) {
             atenderButton.setVisible(false);
+            atenderButton.setManaged(false);
         }
+        loadAppointments(null);
     }
 
     @FXML
     public void initialize() {
-        horaColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().dataAgendamento()));
-        clienteColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeCliente()));
-        animalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeAnimal()));
-        veterinarioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeVeterinario()));
-        statusColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().status()));
+        if (appointmentTable != null) {
+            horaColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().dataAgendamento()));
+            clienteColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeCliente()));
+            animalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeAnimal()));
+            veterinarioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nomeVeterinario()));
+            statusColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().status()));
 
-        horaColumn.setCellFactory(column -> new TableCell<AgendamentoRespostaDTO, LocalDateTime>() {
-            private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            horaColumn.setCellFactory(column -> new TableCell<AgendamentoRespostaDTO, LocalDateTime>() {
+                private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-            @Override
-            protected void updateItem(LocalDateTime item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.format(formatter));
+                @Override
+                protected void updateItem(LocalDateTime item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.format(formatter));
+                    }
                 }
-            }
-        });
+            });
+
+            statusColumn.setCellFactory(column -> new TableCell<AgendamentoRespostaDTO, AgendamentoStatus>() {
+                @Override
+                protected void updateItem(AgendamentoStatus item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item.name());
+                    }
+                }
+            });
+        }
 
         datePicker.setOnAction(this::handleFilterByDate);
         hojeButton.setOnAction(this::handleFilterToday);
@@ -164,20 +192,37 @@ public class AgendamentosController {
                     } else {
                         clearAppointmentDetails();
                     }
-                    //clearAppointmentDetails();
                 });
-        loadAppointments(null);
     }
 
     private void loadAppointments(LocalDate filterDate) {
         List<Agendamento> agendamentosEntidade;
+        String crmvFilter = null;
+
+        if ("VETERINARIO".equals(perfilUsuario) && UsuarioVeterinario.isVeterinarioLogado()) {
+            crmvFilter = UsuarioVeterinario.getVeterinarioLogado().getCrmv();
+        }
 
         try {
-            if (filterDate != null) {
-                agendamentosEntidade = clinica.buscarAgendamentosPorDia(filterDate);
+            if (crmvFilter != null && !crmvFilter.isEmpty()) {
+                if (filterDate != null) {
+                    agendamentosEntidade = clinica.listarAgendamentosPorVeterinario(crmvFilter);
+                    final LocalDate finalFilterDate = filterDate;
+                    agendamentosEntidade = agendamentosEntidade.stream()
+                            .filter(a -> a.getDataAgendamento().toLocalDate().equals(finalFilterDate))
+                            .collect(Collectors.toList());
+
+                } else {
+                    agendamentosEntidade = clinica.listarAgendamentosPorVeterinario(crmvFilter);
+                }
             } else {
-                agendamentosEntidade = clinica.listarTodosAgendamentos();
+                if (filterDate != null) {
+                    agendamentosEntidade = clinica.buscarAgendamentosPorDia(filterDate);
+                } else {
+                    agendamentosEntidade = clinica.listarTodosAgendamentos();
+                }
             }
+
 
             if (agendamentosEntidade != null) {
                 ObservableList<AgendamentoRespostaDTO> agendamentosDTO = FXCollections.observableArrayList(
@@ -186,10 +231,15 @@ public class AgendamentosController {
                                 .collect(Collectors.toList())
                 );
                 appointmentTable.setItems(agendamentosDTO);
+                statusMessageLabel.setText("Agendamentos carregados: " + agendamentosDTO.size());
+                statusMessageLabel.setTextFill(javafx.scene.paint.Color.GREEN);
             } else {
                 appointmentTable.setItems(FXCollections.emptyObservableList());
+                statusMessageLabel.setText("Nenhum agendamento encontrado.");
+                statusMessageLabel.setTextFill(javafx.scene.paint.Color.BLUE);
             }
         } catch (Exception e) {
+            statusMessageLabel.setText("Erro ao carregar agendamentos: " + e.getMessage());
             showErrorAlert("Erro de Carregamento", "Não foi possível carregar os agendamentos: " + e.getMessage());
             e.printStackTrace();
         }
@@ -200,6 +250,7 @@ public class AgendamentosController {
         if (selectedDate != null) {
             loadAppointments(selectedDate);
         } else {
+            statusMessageLabel.setText("Selecione uma data para filtrar.");
         }
     }
 
@@ -216,12 +267,13 @@ public class AgendamentosController {
         if (allAppointments != null) {
             ObservableList<AgendamentoRespostaDTO> weeklyAppointments = FXCollections.observableArrayList(
                     allAppointments.stream()
-                            .filter(app -> app.getDataAgendamento().toLocalDate().isAfter(startOfWeek.minusDays(1)) &&
-                                    app.getDataAgendamento().toLocalDate().isBefore(endOfWeek.plusDays(1)))
+                            .filter(app -> !app.getDataAgendamento().toLocalDate().isBefore(startOfWeek) &&
+                                    !app.getDataAgendamento().toLocalDate().isAfter(endOfWeek))
                             .map(Agendamento::paraDTO)
                             .collect(Collectors.toList())
             );
             appointmentTable.setItems(weeklyAppointments);
+            statusMessageLabel.setText("Agendamentos da semana carregados: " + weeklyAppointments.size());
         }
     }
 
@@ -235,15 +287,16 @@ public class AgendamentosController {
         clienteLabel.setText(appointment.nomeCliente());
         animalLabel.setText(appointment.nomeAnimal());
         veterinarioLabel.setText(appointment.nomeVeterinario());
-        tipoLabel.setText("Funcionalidade Inacabada");
+        tipoLabel.setText(appointment.tipoProcedimento() != null ? appointment.tipoProcedimento() : "N/A");
         statusLabel.setText(appointment.status().name());
-        observacoesTextArea.setText(appointment.observacao());
+        observacoesTextArea.setText(appointment.observacao() != null ? appointment.observacao() : "");
 
         // Habilitar botões de ação se um agendamento for selecionado
         editarAgendamentoButton.setDisable(false);
         cancelarAgendamentoButton.setDisable(false);
         confirmarAgendamentoButton.setDisable(false);
         reagendarButton.setDisable(false);
+        atenderButton.setDisable(false);
     }
 
     private void clearAppointmentDetails() {
@@ -261,6 +314,7 @@ public class AgendamentosController {
         cancelarAgendamentoButton.setDisable(true);
         confirmarAgendamentoButton.setDisable(true);
         reagendarButton.setDisable(true);
+        atenderButton.setDisable(true);
     }
 
     @FXML
@@ -269,9 +323,12 @@ public class AgendamentosController {
             String fxmlPath = null;
             String tituloJanela = null;
 
-            if ("ATENDENTE".equals(perfilUsuario)) {
+            if (perfilUsuario == null) {
+                fxmlPath = "login_tela.fxml";
+                tituloJanela = "Sistema Clínica Veterinária - Login";
+            } else if ("ATENDENTE".equals(perfilUsuario)) {
                 fxmlPath = "atendente_tela.fxml";
-                tituloJanela = "Sistema clínica veteriária - Menu Principal";
+                tituloJanela = "Sistema Clínica Veterinária - Menu Principal";
             } else if ("VETERINARIO".equals(perfilUsuario)) {
                 fxmlPath = "veterinario_tela.fxml";
                 tituloJanela = "Sistema Clínica Veterinária - Menu Veterinário";
@@ -343,6 +400,31 @@ public class AgendamentosController {
         AgendamentoRespostaDTO selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         if (selectedAppointment != null) {
             showErrorAlert("Funcionalidade em desenvolvimento", "Lógica para reagendar (ID: " + selectedAppointment.id() + ")");
+        }
+    }
+
+    @FXML
+    private void handleAtender(ActionEvent event) {
+        AgendamentoRespostaDTO selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
+        if (selectedAppointment == null) {
+            showErrorAlert("Seleção Necessária", "Por favor, selecione um agendamento na lista para atender.");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("atendimento_tela.fxml"));
+            Parent root = loader.load();
+
+            AtendimentoController atendimentoController = loader.getController();
+            atendimentoController.setAgendamentoId(selectedAppointment.id());
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Realizar Atendimento");
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Erro ao carregar tela", "Não foi possível carregar a tela de atendimento.");
+            e.printStackTrace();
         }
     }
 
