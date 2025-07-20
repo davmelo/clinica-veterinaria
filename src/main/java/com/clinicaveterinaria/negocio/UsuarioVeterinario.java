@@ -1,9 +1,11 @@
 package com.clinicaveterinaria.negocio;
 
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
+import lombok.Getter;
 
 public class UsuarioVeterinario {
 
+    @Getter
     private static Veterinario veterinarioLogado;
 
     public static void setVeterinarioLogado(Veterinario veterinario) {

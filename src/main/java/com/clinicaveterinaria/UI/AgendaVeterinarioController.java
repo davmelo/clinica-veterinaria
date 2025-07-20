@@ -2,6 +2,7 @@ package com.clinicaveterinaria.UI;
 
 import com.clinicaveterinaria.dtos.DispoAgendaRequisicaoDTO;
 import com.clinicaveterinaria.negocio.ServidorClinica;
+import com.clinicaveterinaria.negocio.UsuarioVeterinario;
 import com.clinicaveterinaria.negocio.entidades.DiaSemana;
 import com.clinicaveterinaria.negocio.entidades.DisponibilidadeAgenda;
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
@@ -39,28 +40,31 @@ public class AgendaVeterinarioController {
     @FXML private ListView<String> disponibilidadeListView; // Para exibir a agenda atual
     @FXML private Label statusMessageLabel;
 
-    private ServidorClinica clinica = ServidorClinica.getInstance();
+    private final ServidorClinica clinica = ServidorClinica.getInstance();
     private String crmvVeterinarioLogado; // CRMV do veterinário que a agenda está sendo modificada
     private Veterinario veterinarioAtual; // Entidade do veterinário atual
 
     @FXML
     public void initialize() {
-        try {
-            List<Veterinario> vets = clinica.listarTodosVeterinarios();
-            if (vets != null && !vets.isEmpty()) {
-                veterinarioAtual = vets.get(0); // Pega o primeiro veterinário
-                crmvVeterinarioLogado = veterinarioAtual.getCrmv();
-                veterinarioInfoLabel.setText("Veterinário: " + crmvVeterinarioLogado + " - " + veterinarioAtual.getNome() + " " + veterinarioAtual.getSobrenome());
-            } else {
-                showStatusMessage("Nenhum veterinário cadastrado. Não é possível gerenciar agenda.", true);
-                return;
-            }
-        } catch (Exception e) {
-            showStatusMessage("Erro ao carregar informações do veterinário: " + e.getMessage(), true);
-            e.printStackTrace();
-            return;
-        }
+//        try {
+//            List<Veterinario> vets = clinica.listarTodosVeterinarios();
+//            if (vets != null && !vets.isEmpty()) {
+//                veterinarioAtual = vets.get(0); // Pega o primeiro veterinário
+//                crmvVeterinarioLogado = veterinarioAtual.getCrmv();
+//                veterinarioInfoLabel.setText("Veterinário: " + crmvVeterinarioLogado + " - " + veterinarioAtual.getNome() + " " + veterinarioAtual.getSobrenome());
+//            } else {
+//                showStatusMessage("Nenhum veterinário cadastrado. Não é possível gerenciar agenda.", true);
+//                return;
+//            }
+//        } catch (Exception e) {
+//            showStatusMessage("Erro ao carregar informações do veterinário: " + e.getMessage(), true);
+//            e.printStackTrace();
+//            return;
+//        }
 
+        veterinarioAtual = UsuarioVeterinario.getVeterinarioLogado();
+        crmvVeterinarioLogado = veterinarioAtual.getCrmv();
+        veterinarioInfoLabel.setText("Veterinário: " + crmvVeterinarioLogado + " - " + veterinarioAtual.getNome() + " " + veterinarioAtual.getSobrenome());
         //Dias da Semana
         diaSemanaComboBox.setItems(FXCollections.observableArrayList(
                 Arrays.stream(DiaSemana.values()).map(Enum::name).collect(Collectors.toList())

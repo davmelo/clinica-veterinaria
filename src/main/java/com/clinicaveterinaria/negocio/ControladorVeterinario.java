@@ -97,15 +97,12 @@ public class ControladorVeterinario {
             return;
         }
 
-        String novoEmailNormalizado = veterinarioDTO.email().toLowerCase();
-        String novoCrmvNormalizado = veterinarioDTO.crmv().toUpperCase().replaceAll("\\s+", "");
+//        String novoEmailNormalizado = veterinarioDTO.email().toLowerCase();
+//        String novoCrmvNormalizado = veterinarioDTO.crmv().toUpperCase().replaceAll("\\s+", "");
 
-        veterinarioExistente.setNome(veterinarioDTO.nome());
-        veterinarioExistente.setSobrenome(veterinarioDTO.sobrenome());
-        veterinarioExistente.setEmail(novoEmailNormalizado);
-        veterinarioExistente.setCrmv(novoCrmvNormalizado);
         veterinarioExistente.setTelefone(veterinarioDTO.telefone());
-        veterinarioExistente.setEspecialidades(veterinarioDTO.especialidades() != null ? new ArrayList<>(veterinarioDTO.especialidades()) : new ArrayList<>());
+        veterinarioExistente.setSenha(veterinarioDTO.senha());
+        //        veterinarioExistente.setEspecialidades(veterinarioDTO.especialidades() != null ? new ArrayList<>(veterinarioDTO.especialidades()) : new ArrayList<>());
 
         repositorio.atualizar(crmvNormalizado, veterinarioExistente);
         System.out.println("Veterinário atualizado no repositório via DTO: " + veterinarioExistente.getNome() + " - CRMV: " + crmvNormalizado);

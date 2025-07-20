@@ -1,5 +1,6 @@
 package com.clinicaveterinaria.UI;
 
+import com.clinicaveterinaria.dtos.VeterinarioRespostaDTO;
 import com.clinicaveterinaria.negocio.UsuarioVeterinario;
 import com.clinicaveterinaria.negocio.entidades.Veterinario;
 import javafx.event.ActionEvent;
@@ -12,11 +13,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.util.Optional;
 
 public class VeterinarioController {
+
+    @Setter
+    private VeterinarioRespostaDTO vetLogado;
 
     @FXML
     public Button sairButton;
@@ -64,6 +69,7 @@ public class VeterinarioController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("editar_veterinario.fxml"));
             Parent root = loader.load();
+
             Stage stage = (Stage) perfilButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -79,19 +85,6 @@ public class VeterinarioController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("agenda_veterinario.fxml"));
             Parent root = loader.load();
-
-            AgendaVeterinarioController agendaController = loader.getController();
-
-            // Obter CRMV do veterinario logado
-            Veterinario veterinarioLogado = UsuarioVeterinario.getVeterinarioLogado();
-
-            if (veterinarioLogado != null) {
-                String crmvLogado = veterinarioLogado.getCrmv(); // Pega o CRMV do objeto Veterinario
-                agendaController.setCrmvVeterinarioLogado(crmvLogado); // Passa o CRMV para o controlador da agenda
-            } else {
-                showErrorAlert("Erro", "Nenhum veterinário logado. Por favor, faça login.");
-                return;
-            }
 
             Stage stage = (Stage) gerenciarAgendaButton.getScene().getWindow();
             Scene scene = new Scene(root);

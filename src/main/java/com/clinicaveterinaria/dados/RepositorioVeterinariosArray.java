@@ -60,6 +60,7 @@ public class RepositorioVeterinariosArray implements IRepositorioVeterinarios, S
             fos = new FileOutputStream(out);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(instance);
+            System.out.println("Alterações salvas no arquivo");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -103,7 +104,7 @@ public class RepositorioVeterinariosArray implements IRepositorioVeterinarios, S
         for (int i = 0; i < veterinarios.size(); i++) {
             if (veterinarios.get(i).getCrmv().equals(crmv)) {
                 veterinarios.set(i, novoVeterinario);
-                return;
+                i = veterinarios.size();
             }
         }
         salvarArquivo();

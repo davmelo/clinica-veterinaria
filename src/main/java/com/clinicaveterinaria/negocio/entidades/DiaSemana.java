@@ -1,6 +1,8 @@
 package com.clinicaveterinaria.negocio.entidades;
 
-public enum DiaSemana {
+import java.io.Serializable;
+
+public enum DiaSemana implements Serializable {
     MONDAY, //Segunda-feira
     TUESDAY,//Terça-feira
     WEDNESDAY,//Quarta-feira
