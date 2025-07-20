@@ -353,6 +353,7 @@ public class NovoAgendamentoController {
         String observacao = txtObservacoes.getText();
         String statusSelecionado = cmbStatus.getSelectionModel().getSelectedItem();
         String prioridadeSelecionada = cmbPrioridade.getSelectionModel().getSelectedItem();
+        String tipoProcedimentoSelecionado = cmbTipoProcedimento.getSelectionModel().getSelectedItem();
 
         if (clienteAtualmenteExibido == null || animalAtualmenteExibido == null ||
                 veterinarioNome == null || dataSelecionada == null || horaSelecionadaStr == null) {
@@ -382,7 +383,8 @@ public class NovoAgendamentoController {
                 veterinarioSelecionadoNoCombo.getCrmv(),
                 dataHoraAgendamento,
                 observacao,
-                statusEnum
+                statusEnum,
+                tipoProcedimentoSelecionado
         );
 
         try {
