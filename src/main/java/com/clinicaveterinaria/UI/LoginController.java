@@ -98,23 +98,28 @@ public class LoginController {
             String windowTitle;
 
             if ("VETERINARIO".equals(userType)) {
-                fxmlPath = "veterinario_tela.fxml";
-                windowTitle = "Sistema Veterinário - AUMIAU SAUDE";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("veterinario_tela.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Sistema Veterinário - AUMIAU SAUDE");
+                stage.show();
+
             } else if ("ATENDENTE".equals(userType)) {
-                fxmlPath = "atendente_tela.fxml";
-                windowTitle = "Sistema Atendente - AUMIAU SAUDE";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("atendente_tela.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Sistema Atendente - AUMIAU SAUDE");
+                stage.show();
             } else {
                 fxmlPath = "login_tela.fxml";
                 windowTitle = "Erro de Autenticação";
             }
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle(windowTitle);
-            stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
