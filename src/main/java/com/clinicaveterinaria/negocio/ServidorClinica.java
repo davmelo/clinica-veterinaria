@@ -92,6 +92,9 @@ public class ServidorClinica {
         return agendamento != null ? agendamento.paraDTO() : null;
     }
 
+    public Agendamento buscarAgendamentoEntidade(Long agendamentoID) {
+        return controladorAgendamento.buscarAgendamentoPorId(agendamentoID);
+    }
 
     public List<Agendamento> listarTodosAgendamentos() {
         return controladorAgendamento.listarTodosAgendamentos();
@@ -99,6 +102,10 @@ public class ServidorClinica {
 
     public List<Agendamento> buscarAgendamentosPorDia(LocalDate data) {
         return controladorAgendamento.buscarAgendamentoPorDia(data);
+    }
+
+    public void atualizarAgendamentoStatus(Long id, AgendamentoStatus status) {
+        controladorAgendamento.atualizarStatus(id, status);
     }
 
     public void atualizarAgendamento(Long id, AgendamentoRequisicaoDTO agendamentoDTO) {
@@ -114,7 +121,6 @@ public class ServidorClinica {
         controladorAgendamento.removerAgendamento(id);
     }
 
-    // --- CADASTRO/ATUALIZAÇÃO/REMOÇÃO DE ATENDIMENTO ---
     public void cadastrarAtendimento(AtendimentoRequisicaoDTO atendimentoRequisicaoDTO) {
         controladorAtendimento.cadastrarAtendimento(atendimentoRequisicaoDTO);
     }
@@ -132,6 +138,9 @@ public class ServidorClinica {
     public VeterinarioRespostaDTO autenticarVeterinario(String login, String senha) {
         Veterinario veterinario = controladorVeterinario.autenticar(login, senha);
         return veterinario != null ? veterinario.paraDTO() : null;
+    }
+    public List<Agendamento> listarAgendamentosPorVeterinario(String crmv) {
+        return controladorAgendamento.buscarPorVeterinario(crmv);
     }
 
     public List<Cliente> listarTodosClientes() {
