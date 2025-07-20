@@ -130,12 +130,6 @@ public class AgendamentosController {
             novoAgendamentoButton.setManaged(false);
             editarAgendamentoButton.setVisible(false);
             editarAgendamentoButton.setManaged(false);
-            cancelarAgendamentoButton.setVisible(false);
-            cancelarAgendamentoButton.setManaged(false);
-            confirmarAgendamentoButton.setVisible(false);
-            confirmarAgendamentoButton.setManaged(false);
-            reagendarButton.setVisible(false);
-            reagendarButton.setManaged(false);
 
         } else if ("ATENDENTE".equals(perfil)) {
             atenderButton.setVisible(false);

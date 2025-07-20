@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.AnimalController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.AnimalController">
     <top>
         <HBox prefHeight="60.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
@@ -22,11 +22,14 @@
             </padding>
             <Label text="Buscar Animal">
                 <font>
-                    <Font name="System Bold" size="18.0" />
+                    <Font name="Arial Black" size="20.0" />
                 </font>
             </Label>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="voltarButton" minWidth="80.0" mnemonicParsing="false" onAction="#handleVoltar" prefHeight="35.0" prefWidth="80.0" text="Voltar" />
+            <Button fx:id="voltarButton" minWidth="80.0" mnemonicParsing="false" onAction="#handleVoltar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #000000;" text="Voltar" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
         </HBox>
     </top>
     <center>
@@ -39,7 +42,10 @@
                 <Label text="ID do Animal:" />
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <TextField fx:id="animalIdField" maxWidth="150.0" prefWidth="150.0" />
-                    <Button fx:id="buscarButton" mnemonicParsing="false" onAction="#handleBuscar" text="Buscar" />
+                    <Button fx:id="buscarButton" mnemonicParsing="false" onAction="#handleBuscar" style="-fx-background-color: #000000;" text="Buscar" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font></Button>
                 </HBox>
             </VBox>
 

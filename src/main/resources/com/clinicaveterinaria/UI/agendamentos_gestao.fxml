@@ -24,24 +24,35 @@
             </padding>
 
             <!-- Header -->
-            <HBox alignment="CENTER_LEFT" spacing="10.0">
-                <Region HBox.hgrow="ALWAYS" />
-                <Label styleClass="title" text="Gestão de Agendamentos">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="975.0" spacing="10.0">
+                <Label prefHeight="27.0" prefWidth="218.0" styleClass="title" text="Gestão de Agendamentos">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
                 <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="voltarButton" onAction="#handleVoltar" prefHeight="35.0" prefWidth="80.0" text="Voltar" />
+                <Button fx:id="voltarButton" onAction="#handleVoltar" prefHeight="30.0" prefWidth="69.0" style="-fx-background-color: #000000;" text="Voltar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             </HBox>
 
             <!-- Filtros -->
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                 <Label text="Filtrar por data:" />
                 <DatePicker fx:id="datePicker" prefWidth="150.0" />
-                <Button fx:id="hojeButton" text="Hoje" />
-                <Button fx:id="estaSemanaButton" text="Esta Semana" />
-                <Button fx:id="todosButton" text="Todos" />
+                <Button fx:id="hojeButton" style="-fx-background-color: #000000;" text="Hoje" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+                <Button fx:id="estaSemanaButton" style="-fx-background-color: #000000;" text="Esta Semana" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+                <Button fx:id="todosButton" style="-fx-background-color: #000000;" text="Todos" textFill="#fffdfd">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             </HBox>
         </VBox>
     </top>
@@ -74,7 +85,7 @@
                 <Label fx:id="statusMessageLabel" text="" textFill="#0000ff" />
             </VBox>
 
-            <VBox prefWidth="400.0" spacing="15.0">
+            <VBox prefHeight="428.0" prefWidth="400.0" spacing="15.0">
                 <Label text="Detalhes do Agendamento">
                     <font>
                         <Font name="System Bold" size="14.0" />
@@ -125,16 +136,22 @@
     </center>
 
     <bottom>
-        <HBox alignment="CENTER_LEFT" spacing="10.0">
+        <HBox alignment="CENTER_LEFT" spacing="15.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
             </padding>
-            <Button fx:id="novoAgendamentoButton" text="Novo Agendamento" onAction="#handleNovoAgendamento" prefWidth="120.0" />
-            <Button fx:id="editarAgendamentoButton" text="Editar Agendamento" onAction="#handleEditarAgendamento" prefWidth="120.0" />
-            <Button fx:id="cancelarAgendamentoButton" text="Cancelar Agendamento" onAction="#handleCancelarAgendamento" prefWidth="130.0" />
-            <Button fx:id="confirmarAgendamentoButton" text="Confirmar Agendamento" onAction="#handleConfirmarAgendamento" prefWidth="130.0" />
-            <Button fx:id="reagendarButton" text="Reagendar" onAction="#handleReagendar" prefWidth="100.0" />
-            <Button fx:id="atenderButton" text="Atender" onAction="#handleAtender" prefWidth="80.0" />
+            <Button fx:id="novoAgendamentoButton" onAction="#handleNovoAgendamento" prefHeight="25.0" prefWidth="138.0" style="-fx-background-color: #000000;" text="Novo Agendamento" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+            <Button fx:id="editarAgendamentoButton" onAction="#handleEditarAgendamento" prefHeight="25.0" prefWidth="139.0" style="-fx-background-color: #000000;" text="Editar Agendamento" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+            <Button fx:id="atenderButton" onAction="#handleAtender" prefWidth="80.0" style="-fx-background-color: #000000;" text="Atender" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
         </HBox>
     </bottom>
 </BorderPane>

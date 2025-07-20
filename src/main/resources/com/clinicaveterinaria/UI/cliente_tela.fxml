@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.ClienteController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.ClienteController">
     <top>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
@@ -22,11 +22,14 @@
             </padding>
             <Label text="Buscar Cliente">
                 <font>
-                    <Font name="System Bold" size="18.0" />
+                    <Font name="Arial Black" size="20.0" />
                 </font>
             </Label>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="voltarButton" minWidth="80.0" mnemonicParsing="false" onAction="#voltarAtendente" prefHeight="35.0" prefWidth="80.0" text="Voltar" />
+            <Button fx:id="voltarButton" minWidth="80.0" mnemonicParsing="false" onAction="#voltarAtendente" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #000000;" text="Voltar" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
         </HBox>
     </top>
     <center>
@@ -38,7 +41,10 @@
                 <Label text="CPF do Cliente" />
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <TextField fx:id="idClienteSearchField" maxWidth="150.0" prefWidth="150.0" />
-                    <Button fx:id="buscarClienteButton" mnemonicParsing="false" onAction="#handleBuscarCliente" text="Buscar" />
+                    <Button fx:id="buscarClienteButton" mnemonicParsing="false" onAction="#handleBuscarCliente" style="-fx-background-color: #000000;" text="Buscar" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font></Button>
                 </HBox>
             </VBox>
 
@@ -85,8 +91,14 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
-            <Button fx:id="criarClienteButton" mnemonicParsing="false" onAction="#cadastrarCliente" text="Criar Novo Cliente" />
-            <Button fx:id="editarClienteButton" disable="true" mnemonicParsing="false" onAction="#editarCliente" text="Editar Cliente" />
+            <Button fx:id="criarClienteButton" mnemonicParsing="false" onAction="#cadastrarCliente" style="-fx-background-color: #000000;" text="Criar Novo Cliente" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+            <Button fx:id="editarClienteButton" disable="true" mnemonicParsing="false" onAction="#editarCliente" style="-fx-background-color: #000000;" text="Editar Cliente" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
         </HBox>
     </bottom>
 </BorderPane>

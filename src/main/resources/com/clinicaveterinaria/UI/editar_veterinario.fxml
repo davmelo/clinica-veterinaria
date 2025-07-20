@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.EditarVeterinarioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.EditarVeterinarioController">
    <AnchorPane layoutX="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="913.0">
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0">
          <HBox prefHeight="56.0" prefWidth="900.0" spacing="670.0" AnchorPane.topAnchor="0.0">
@@ -27,7 +27,7 @@
                   <Insets left="10.0" top="7.0" />
                </HBox.margin>
             </Label>
-            <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#voltarVet" style="-fx-background-color: #000000;" text="voltar" textFill="WHITE">
+            <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#voltarVet" prefHeight="28.0" prefWidth="55.0" style="-fx-background-color: #000000;" text="Voltar" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" top="7.0" />
                </HBox.margin>
@@ -36,7 +36,7 @@
                </font>
             </Button>
          </HBox>
-         <VBox alignment="CENTER_LEFT" layoutX="325.0" layoutY="144.0" prefHeight="252.0" prefWidth="273.0" spacing="5.0">
+         <VBox alignment="CENTER_LEFT" layoutX="326.0" layoutY="127.0" prefHeight="333.0" prefWidth="273.0" spacing="5.0">
             <Label text="NOME COMPLETO:" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <TextField fx:id="nomeCompletoField" editable="false" opacity="0.65" prefHeight="24.0" prefWidth="274.0" promptText="Nome Completo">
@@ -73,14 +73,19 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </PasswordField>
-                  <TextField fx:id="senhaVisivelField" visible="false" managed="false" />
-                  <RadioButton fx:id="verSenhaButton" mnemonicParsing="false" onAction="#verSenha" text="Ver senha" />
+                  <TextField fx:id="senhaVisivelField" managed="false" visible="false" />
+                  <RadioButton fx:id="verSenhaButton" mnemonicParsing="false" onAction="#verSenha" text="Ver senha">
+                     <padding>
+                        <Insets bottom="8.0" top="2.0" />
+                     </padding></RadioButton>
+                  <Label text="ESPECIALIDADE:" />
+                  <TextField promptText="Especialidade" />
                </children>
             </VBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" />
             <HBox alignment="CENTER" prefHeight="47.0" prefWidth="900.0" spacing="20.0" />
          </VBox>
-         <HBox alignment="CENTER" layoutX="5.0" layoutY="456.0" prefHeight="100.0" prefWidth="914.0">
+         <HBox alignment="CENTER" layoutX="-7.0" layoutY="479.0" prefHeight="100.0" prefWidth="914.0">
             <Button fx:id="salvarButton" mnemonicParsing="false" onAction="#atualizarVeterinario" prefHeight="28.0" prefWidth="83.0" style="-fx-background-color: #000000;" text="SALVAR" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />

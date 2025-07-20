@@ -10,17 +10,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.AgendaVeterinarioController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.AgendaVeterinarioController">
     <children>
         <VBox layoutX="14.0" layoutY="14.0" prefHeight="572.0" prefWidth="772.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="450.0"> <children>
                     <Label text="Gerenciar Agenda do Veterinário">
                         <font>
-                            <Font name="System Bold" size="20.0" />
+                            <Font name="Arial Black" size="20.0" />
                         </font>
                     </Label>
-                    <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#handleVoltar" text="Voltar" />
+                    <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#handleVoltar" style="-fx-background-color: #000000;" text="Voltar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                 </children>
                     <VBox.margin>
                         <Insets bottom="10.0" />
@@ -43,9 +46,18 @@
                         </Label>
                         <ComboBox fx:id="diaSemanaComboBox" prefWidth="120.0" promptText="Dia" />
                         <ComboBox fx:id="horarioComboBox" prefWidth="100.0" promptText="Hora" />
-                        <Button fx:id="adicionarDisponibilidadeButton" mnemonicParsing="false" onAction="#handleAddDisponibilidade" text="Adicionar" />
-                        <Button fx:id="removerDisponibilidadeButton" mnemonicParsing="false" onAction="#handleRemoveDisponibilidade" text="Remover Selecionado" />
-                        <Button fx:id="atualizarButton" mnemonicParsing="false" onAction="#handleAtualizar" text="Atualizar" />
+                        <Button fx:id="adicionarDisponibilidadeButton" mnemonicParsing="false" onAction="#handleAddDisponibilidade" style="-fx-background-color: #000000;" text="Adicionar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                        <Button fx:id="removerDisponibilidadeButton" mnemonicParsing="false" onAction="#handleRemoveDisponibilidade" style="-fx-background-color: #000000;" text="Remover Selecionado" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                        <Button fx:id="atualizarButton" mnemonicParsing="false" onAction="#handleAtualizar" style="-fx-background-color: #000000;" text="Atualizar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                     </children>
                     <VBox.margin>
                         <Insets bottom="20.0" />

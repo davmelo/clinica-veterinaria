@@ -32,7 +32,7 @@
          <Font size="13.0" />
       </font>
    </Hyperlink>
-   <ImageView fitHeight="227.0" fitWidth="219.0" layoutX="172.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fitHeight="294.0" fitWidth="279.0" layoutX="153.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@images/miaumiau.jpg" />
    </ImageView>
    <Label layoutX="172.0" layoutY="342.0" text="AUMIAU SAUDE">

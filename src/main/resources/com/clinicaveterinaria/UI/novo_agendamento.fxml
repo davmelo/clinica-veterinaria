@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.NovoAgendamentoController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.NovoAgendamentoController">
     <top>
         <VBox spacing="10.0" styleClass="header-section">
             <padding>
@@ -13,7 +21,7 @@
             </padding>
             <Label styleClass="title" text="Novo Agendamento">
                 <font>
-                    <Font name="System Bold" size="24.0" />
+                    <Font name="System Bold" size="20.0" />
                 </font>
             </Label>
         </VBox>
@@ -34,9 +42,9 @@
                     </Label>
 
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <TextField fx:id="txtClienteSearch" prefWidth="300.0" promptText="Digite o CPF do cliente" onAction="#handleBuscarCliente" />
-                        <Button fx:id="btnBuscarCliente" text="Buscar" onAction="#handleBuscarCliente" />
-                        <Button fx:id="btnNovoCliente" text="Novo Cliente" onAction="#handleNovoCliente" />
+                        <TextField fx:id="txtClienteSearch" onAction="#handleBuscarCliente" prefWidth="300.0" promptText="Digite o CPF do cliente" />
+                        <Button fx:id="btnBuscarCliente" onAction="#handleBuscarCliente" text="Buscar" />
+                        <Button fx:id="btnNovoCliente" onAction="#handleNovoCliente" text="Novo Cliente" />
                     </HBox>
 
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
@@ -63,8 +71,8 @@
                     </Label>
 
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
-                        <ComboBox fx:id="cmbAnimal" prefWidth="300.0" promptText="Selecione o animal" onAction="#handleAnimalSelected" />
-                        <Button fx:id="btnNovoAnimal" text="Novo Animal" onAction="#handleNovoAnimal" />
+                        <ComboBox fx:id="cmbAnimal" onAction="#handleAnimalSelected" prefWidth="300.0" promptText="Selecione o animal" />
+                        <Button fx:id="btnNovoAnimal" onAction="#handleNovoAnimal" text="Novo Animal" />
                     </HBox>
 
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
@@ -97,21 +105,21 @@
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <VBox spacing="5.0">
                             <Label text="Data:" />
-                            <DatePicker fx:id="datePicker" prefWidth="150.0" onAction="#handleDateSelected" />
+                            <DatePicker fx:id="datePicker" onAction="#handleDateSelected" prefWidth="150.0" />
                         </VBox>
                         <VBox spacing="5.0">
                             <Label text="Horário:" />
-                            <ComboBox fx:id="cmbHorario" prefWidth="120.0" onAction="#handleHorarioSelected" />
+                            <ComboBox fx:id="cmbHorario" onAction="#handleHorarioSelected" prefWidth="120.0" />
                         </VBox>
                         <VBox spacing="5.0">
                             <Label text="Veterinário:" />
-                            <ComboBox fx:id="cmbVeterinario" prefWidth="200.0" onAction="#handleVeterinarioSelected" />
+                            <ComboBox fx:id="cmbVeterinario" onAction="#handleVeterinarioSelected" prefWidth="200.0" />
                         </VBox>
                     </HBox>
 
                     <VBox spacing="5.0">
                         <Label text="Tipo de Procedimento:" />
-                        <ComboBox fx:id="cmbTipoProcedimento" prefWidth="300.0" onAction="#handleTipoProcedimentoSelected" />
+                        <ComboBox fx:id="cmbTipoProcedimento" onAction="#handleTipoProcedimentoSelected" prefWidth="300.0" />
                     </VBox>
 
                     <VBox spacing="5.0">
@@ -130,11 +138,11 @@
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <VBox spacing="5.0">
                             <Label text="Status do Agendamento:" />
-                            <ComboBox fx:id="cmbStatus" prefWidth="150.0" onAction="#handleStatusSelected" />
+                            <ComboBox fx:id="cmbStatus" onAction="#handleStatusSelected" prefWidth="150.0" />
                         </VBox>
                         <VBox spacing="5.0">
                             <Label text="Prioridade:" />
-                            <ComboBox fx:id="cmbPrioridade" prefWidth="120.0" onAction="#handlePrioridadeSelected" />
+                            <ComboBox fx:id="cmbPrioridade" onAction="#handlePrioridadeSelected" prefWidth="120.0" />
                         </VBox>
                     </HBox>
                 </VBox>
@@ -146,10 +154,16 @@
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="15.0" styleClass="button-bar">
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
-            <Button fx:id="btnCancelar" onAction="#handleCancelar" prefWidth="100.0" text="Cancelar" />
-            <Button fx:id="btnSalvar" onAction="#handleAgendar" prefWidth="100.0" styleClass="primary-button" text="Salvar" />
+            <Button fx:id="btnCancelar" onAction="#handleCancelar" prefWidth="100.0" style="-fx-background-color: #000000;" text="Cancelar" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+            <Button fx:id="btnSalvar" onAction="#handleAgendar" prefWidth="100.0" style="-fx-background-color: #000000;" styleClass="primary-button" text="Salvar" textFill="#fcfcfc">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
         </HBox>
     </bottom>
 </BorderPane>

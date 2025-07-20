@@ -6,31 +6,45 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.clinicaveterinaria.UI.AtendenteController">
+<VBox prefHeight="519.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinicaveterinaria.UI.AtendenteController">
     <HBox alignment="CENTER_LEFT" spacing="10">
         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
         </padding>
-        <Label text="Sistema Clínica Veterinária - Atendente"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Label text="Usuário: [Nome do Atendente]"/>
-        <Button onAction="#handleSair" text="Sair"/>
+        <Label prefHeight="27.0" prefWidth="398.0" text="Sistema Clínica Veterinária - Atendente">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font></Label>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button onAction="#handleSair" prefHeight="26.0" prefWidth="60.0" style="-fx-background-color: #000000;" text="Sair" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
     </HBox>
 
-    <VBox alignment="CENTER" spacing="40" VBox.vgrow="ALWAYS">
+    <VBox alignment="CENTER" prefHeight="400.0" prefWidth="713.0" spacing="40.0" VBox.vgrow="ALWAYS">
         <padding>
-            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0"/>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="5.0" />
         </padding>
-        <Label text="Menu Principal"/>
+        <Label text="Menu Principal">
+         <font>
+            <Font name="Arial Black" size="25.0" />
+         </font></Label>
         <HBox alignment="CENTER" spacing="30">
-            <Button onAction="#handleAgendamentos" prefHeight="60" prefWidth="150"
-                    text="Agendamentos"/>
-            <Button onAction="#handleClientes" prefHeight="60" prefWidth="150"
-                    text="Clientes"/>
-            <Button onAction="#handleAnimais" prefHeight="60" prefWidth="150"
-                    text="Animais"/>
+            <Button onAction="#handleAgendamentos" prefHeight="60" prefWidth="150" style="-fx-background-color: #000000;" text="Agendamentos" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+            <Button onAction="#handleClientes" prefHeight="60" prefWidth="150" style="-fx-background-color: #000000;" text="Clientes" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
+            <Button onAction="#handleAnimais" prefHeight="60" prefWidth="150" style="-fx-background-color: #000000;" text="Animais" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
         </HBox>
     </VBox>
 </VBox>
