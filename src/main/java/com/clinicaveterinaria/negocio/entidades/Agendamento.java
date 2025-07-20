@@ -27,11 +27,12 @@ public class Agendamento implements Serializable {
     private String obsevacao;
     private SolicitacaoProcedimentos procedimentosSolicitados;
     private AgendamentoStatus status;
+    private String tipoProcedimentoAgendado;
 
     public Agendamento(
             Long id, Cliente cliente, Animal animal,
             Veterinario veterinario, LocalDateTime dataAgendamento,
-            String obsevacao, AgendamentoStatus status)
+            String obsevacao, AgendamentoStatus status, String tipoProcedimentoAgendado)
     {
         this.id = id;
         this.cliente = cliente;
@@ -40,6 +41,7 @@ public class Agendamento implements Serializable {
         this.dataAgendamento = dataAgendamento;
         this.obsevacao = obsevacao;
         this.status = status;
+        this.tipoProcedimentoAgendado = tipoProcedimentoAgendado;
     }
 
     public void remarcar(LocalDateTime novaData, String motivoRemarcacao) {
@@ -52,6 +54,7 @@ public class Agendamento implements Serializable {
     }
 
     public AgendamentoRespostaDTO paraDTO() {
-        return new AgendamentoRespostaDTO(id, cliente.getNome(), animal.getNome(), veterinario.getNome(), dataAgendamento, status, obsevacao);
+        String tipoParaDTO = (this.tipoProcedimentoAgendado != null && !this.tipoProcedimentoAgendado.isEmpty()) ? this.tipoProcedimentoAgendado : "Não informado";
+        return new AgendamentoRespostaDTO(id, cliente.getNome(), animal.getNome(), veterinario.getNome(), dataAgendamento, status, tipoParaDTO , obsevacao);
     }
 }
