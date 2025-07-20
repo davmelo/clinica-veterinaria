@@ -12,7 +12,8 @@ public record AgendamentoRequisicaoDTO(
         String veterinarioCRMV,
         LocalDateTime dataAgendamento,
         String observacao,
-        AgendamentoStatus status
+        AgendamentoStatus status,
+        String tipoProcedimento
 ) {
     public Agendamento paraEntidade(Cliente cliente, Animal animal, Veterinario veterinario) {
         return new Agendamento(
@@ -22,7 +23,8 @@ public record AgendamentoRequisicaoDTO(
                 veterinario,
                 dataAgendamento,
                 observacao,
-                status
+                status,
+                tipoProcedimento
         );
     }
 }
