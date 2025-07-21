@@ -117,6 +117,7 @@ public class ControladorAgendamento {
         }
         Agendamento agendamentoParaVerificar = novoAgendamentoDTO.paraEntidade(cliente, animal, veterinario);
         agendamentoParaVerificar.setId(id);
+        agendamentoParaVerificar.setTipoProcedimentoAgendado(novoAgendamentoDTO.tipoProcedimento());
 
         // Se a data/hora mudou, verifica a disponibilidade para a nova data/hora
         if (!agendamentoExistente.getDataAgendamento().equals(agendamentoParaVerificar.getDataAgendamento())) {
@@ -130,8 +131,9 @@ public class ControladorAgendamento {
         agendamentoExistente.setAnimal(animal);
         agendamentoExistente.setVeterinario(veterinario);
         agendamentoExistente.setDataAgendamento(agendamentoParaVerificar.getDataAgendamento());
-        agendamentoExistente.setObsevacao(agendamentoParaVerificar.getObsevacao()); // Cuidado com 'obsevacao'
+        agendamentoExistente.setObsevacao(agendamentoParaVerificar.getObsevacao());
         agendamentoExistente.setStatus(agendamentoParaVerificar.getStatus());
+        agendamentoExistente.setTipoProcedimentoAgendado(agendamentoParaVerificar.getTipoProcedimentoAgendado());
 
         repositorio.atualizar(id, agendamentoExistente);
         System.out.println("Agendamento ID " + id + " atualizado.");
@@ -181,13 +183,11 @@ public class ControladorAgendamento {
     }
 
     private boolean verificarDisponibilidade(Agendamento agendamento) {
-        //Verificar se o Veterinário e a Data/Hora do agendamento são válidos
         if (agendamento.getVeterinario() == null || agendamento.getVeterinario().getCrmv() == null || agendamento.getDataAgendamento() == null) {
             System.out.println("Dados essenciais (Veterinário ou Data/Hora) do agendamento são nulos.");
             return false;
         }
 
-        //Verificar a disponibilidade do veterinário
         DisponibilidadeAgenda disponibilidade = agendamento.getVeterinario().getDisponibilidadeAgenda();
         if (disponibilidade == null) {
             System.out.println("Veterinário sem agenda de disponibilidade cadastrada.");
@@ -199,27 +199,23 @@ public class ControladorAgendamento {
 
         if (!disponibilidade.estaDisponivel(dia, hora)) {
             System.out.println("Horário " + hora + " na " + dia + " não está na disponibilidade geral do veterinário.");
-            return false; // Horário fora da disponibilidade do veterinário
+            return false;
         }
 
-        //Verificar se já existe um agendamento que gera conflito na agenda para este veterinário
         Agendamento agendamentoExistenteNoHorario = repositorio.buscarPorVeterinarioEDataHora(
                 agendamento.getVeterinario().getCrmv(), agendamento.getDataAgendamento()
         );
 
-        if (agendamentoExistenteNoHorario != null) {
-            // Se encontrou um agendamento existente, verificar se é o mesmo agendamento que estamos tentando atualizar
-            // Evitar que um agendamento conflita com ele mesmo ao ser atualizado)
+        if (agendamentoExistenteNoHorario != null && agendamentoExistenteNoHorario.getStatus() != AgendamentoStatus.CANCELADO) {
             if (agendamento.getId() != null && agendamentoExistenteNoHorario.getId() != null &&
                     agendamentoExistenteNoHorario.getId().equals(agendamento.getId())) {
-                // É o mesmo agendamento que está sendo atualizado, então não é um conflito
                 return true;
             } else {
-                System.out.println("Err (ControladorAgendamento): Já existe um agendamento ativo para este veterinário neste horário: " + agendamento.getDataAgendamento());
-                return false; // Conflito: horário já ocupado por outro agendamento
+                System.out.println("Erro (ControladorAgendamento): Já existe um agendamento ativo para este veterinário neste horário: " + agendamento.getDataAgendamento());
+                return false;
             }
         }
-        return true; // Se chegou até aqui, o horário está disponível
+        return true;
     }
 
     public List<Agendamento> listarTodosAgendamentos() {
