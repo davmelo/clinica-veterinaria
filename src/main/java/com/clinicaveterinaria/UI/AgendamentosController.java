@@ -107,15 +107,6 @@ public class AgendamentosController {
     private Button editarAgendamentoButton;
 
     @FXML
-    private Button cancelarAgendamentoButton;
-
-    @FXML
-    private Button confirmarAgendamentoButton;
-
-    @FXML
-    private Button reagendarButton;
-
-    @FXML
     private Label statusMessageLabel;
 
     private ServidorClinica clinica = ServidorClinica.getInstance();
@@ -287,9 +278,6 @@ public class AgendamentosController {
 
         // Habilitar botões de ação se um agendamento for selecionado
         editarAgendamentoButton.setDisable(false);
-        cancelarAgendamentoButton.setDisable(false);
-        confirmarAgendamentoButton.setDisable(false);
-        reagendarButton.setDisable(false);
         atenderButton.setDisable(false);
     }
 
@@ -305,9 +293,6 @@ public class AgendamentosController {
 
         // Desabilitar botões de ação
         editarAgendamentoButton.setDisable(true);
-        cancelarAgendamentoButton.setDisable(true);
-        confirmarAgendamentoButton.setDisable(true);
-        reagendarButton.setDisable(true);
         atenderButton.setDisable(true);
     }
 
@@ -368,8 +353,26 @@ public class AgendamentosController {
     @FXML
     private void handleEditarAgendamento(ActionEvent event) {
         AgendamentoRespostaDTO selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
-        if (selectedAppointment != null) {
-            showErrorAlert("Funcionalidade em desenvolvimento", "Lógica para editar agendamento (ID: " + selectedAppointment.id() + ")");
+        if (selectedAppointment == null) {
+            showErrorAlert("Seleção Necessária", "Por favor, selecione um agendamento na lista para editar.");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("editar_agendamento.fxml"));
+            Parent root = loader.load();
+
+            EditarAgendamentoController editarController = loader.getController();
+            editarController.setAgendamentoId(selectedAppointment.id());
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Editar Agendamento");
+            stage.show();
+
+        } catch (IOException e) {
+            showErrorAlert("Erro ao carregar tela", "Não foi possível carregar a tela de edição de agendamento.");
+            e.printStackTrace();
         }
     }
 
