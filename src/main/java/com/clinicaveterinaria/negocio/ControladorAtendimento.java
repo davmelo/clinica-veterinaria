@@ -21,6 +21,7 @@ public class ControladorAtendimento {
     private final ControladorAgendamento controladorAgendamento;
     private final ControladorVeterinario controladorVeterinario;
     private final ControladorAnimal controladorAnimal;
+    private long nextAtendimentoId = 0L;
 
     private ControladorAtendimento() {
         this.repositorio = RepositorioAtendimentosArray.getInstance();
@@ -119,13 +120,17 @@ public class ControladorAtendimento {
         Atendimento atendimento = atendimentoRequisicaoDTO.paraEntidade(agendamento);
         atendimento.setProcedimentosRealizados(listaDeProcedimentosRealizados);
 
-        if (atendimento == null || atendimento.getAgendamento() == null || atendimento.getDataRealizacao() == null) {
+        if (atendimento.getId() == null) {
+            atendimento.setId(nextAtendimentoId++);
+        }
+
+        if (atendimento.getAgendamento() == null || atendimento.getDataRealizacao() == null) {
             System.err.println("Erro (ControladorAtendimento): Atendimento ou dados essenciais incompletos.");
             return;
         }
 
         repositorio.salvar(atendimento);
-        System.out.println("Atendimento salvo no repositório: ID " + atendimento.getId() + " para agendamento " + agendamento.getId());
+        System.out.println("Atendimento salvo no repositório: ID do Atendimento: " + atendimento.getId() + " para ID do Agendamento: " + agendamento.getId());
     }
 
     public Atendimento buscarAtendimento(Long id) {
