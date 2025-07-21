@@ -7,6 +7,7 @@ import com.clinicaveterinaria.dtos.VeterinarioRespostaDTO;
 import com.clinicaveterinaria.negocio.ServidorClinica;
 import com.clinicaveterinaria.negocio.entidades.*;
 
+import com.clinicaveterinaria.negocio.entidades.procedimento.ProcedimentoTipo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -128,9 +129,7 @@ public class NovoAgendamentoController {
         // Preencher ComboBox de Status (se necessário, ou deixe PENDENTE como padrão)
         cmbStatus.setItems(FXCollections.observableArrayList(
                 AgendamentoStatus.PENDENTE.name(),
-                AgendamentoStatus.AGENDADO.name(),
-                AgendamentoStatus.CANCELADO.name(),
-                AgendamentoStatus.CONCLUIDO.name()
+                AgendamentoStatus.AGENDADO.name()
         ));
         cmbStatus.getSelectionModel().select(AgendamentoStatus.PENDENTE.name()); // Define PENDENTE como padrão
 
@@ -140,14 +139,13 @@ public class NovoAgendamentoController {
 
         // Preencher ComboBox de Tipo de Procedimento
         cmbTipoProcedimento.setItems(FXCollections.observableArrayList(
-                "Consulta",
-                "Cirurgia",
-                "Vacina",
-                "Exame"
+                ProcedimentoTipo.NENHUM.name(),
+                ProcedimentoTipo.CIRURGIA.name(),
+                ProcedimentoTipo.VACINA.name(),
+                ProcedimentoTipo.EXAME.name()
 
-                // Grupo, podemos usar : Arrays.stream(ProcedimentoTipo.values()).map(Enum::name).collect(Collectors.toList())
         ));
-        cmbTipoProcedimento.getSelectionModel().select("Consulta"); // Define um padrão
+        cmbTipoProcedimento.getSelectionModel().select(ProcedimentoTipo.NENHUM.name()); // Define um padrão
 
         carregarTodosVeterinariosParaComboBox(); // Carrega os veterinários na inicialização
     }
