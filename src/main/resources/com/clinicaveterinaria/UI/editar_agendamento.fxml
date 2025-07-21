@@ -75,7 +75,7 @@
                                 <Label text="Animal" style="-fx-font-weight: bold; -fx-font-size: 16px;" />
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <ComboBox fx:id="cmbAnimal" prefWidth="300.0" promptText="Selecione o animal" onAction="#handleAnimalSelected" />
+                                        <ComboBox fx:id="cmbAnimal" prefWidth="300.0" promptText="Selecione o animal" onAction="#handleAnimalSelecionado" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="20.0">
@@ -113,7 +113,7 @@
                                         <VBox spacing="5.0">
                                             <children>
                                                 <Label text="Data:" />
-                                                <DatePicker fx:id="datePicker" prefWidth="150.0" onAction="#handleDateSelected" />
+                                                <DatePicker fx:id="datePicker" prefWidth="150.0" onAction="#handleDataSelecionada" />
                                             </children>
                                         </VBox>
                                         <VBox spacing="5.0">
@@ -125,7 +125,7 @@
                                         <VBox spacing="5.0">
                                             <children>
                                                 <Label text="Veterinário:" />
-                                                <ComboBox fx:id="cmbVeterinario" prefWidth="200.0" onAction="#handleVeterinarioSelected" />
+                                                <ComboBox fx:id="cmbVeterinario" prefWidth="200.0" onAction="#handleVeterinarioSelecionado" />
                                             </children>
                                         </VBox>
                                     </children>
