@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -38,8 +39,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EditarAgendamentoController {
-
-
     @FXML
     private Label lblAgendamentoId;
 
@@ -117,7 +116,6 @@ public class EditarAgendamentoController {
     private List<Veterinario> todosVeterinariosCarregados;
     private Veterinario veterinarioSelecionadoNoCombo;
 
-
     public void setAgendamentoId(Long id) {
         this.agendamentoIdParaEdicao = id;
         carregarAgendamentoParaEdicao();
@@ -130,18 +128,18 @@ public class EditarAgendamentoController {
                 Arrays.stream(ProcedimentoTipo.values()).map(Enum::name).collect(Collectors.toList())
         ));
         cmbStatus.setItems(FXCollections.observableArrayList(
-                AgendamentoStatus.AGENDADO.name(),
-                AgendamentoStatus.CANCELADO.name()
+                Arrays.stream(AgendamentoStatus.values()).map(Enum::name).collect(Collectors.toList())
         ));
-
-        cmbStatus.getSelectionModel().select(AgendamentoStatus.PENDENTE.name());
-
         cmbPrioridade.setItems(FXCollections.observableArrayList("NORMAL", "URGENTE"));
 
         datePicker.setOnAction(this::handleDataSelecionada);
         cmbVeterinario.setOnAction(this::handleVeterinarioSelecionado);
         btnBuscarCliente.setOnAction(this::handleBuscarCliente);
         cmbAnimal.setOnAction(this::handleAnimalSelecionado);
+        cmbHorario.setOnAction(this::handleHorarioSelecionado);
+        cmbTipoProcedimento.setOnAction(this::handleTipoProcedimentoSelecionado);
+        cmbStatus.setOnAction(this::handleStatusSelecionado);
+        cmbPrioridade.setOnAction(this::handlePrioridadeSelecionada);
 
         carregarTodosVeterinariosParaComboBox();
     }
@@ -204,6 +202,11 @@ public class EditarAgendamentoController {
     }
 
     @FXML
+    private void handleHorarioSelecionado(ActionEvent event) {
+        // Lógica específica para quando o horário é selecionado
+    }
+
+    @FXML
     private void handleVeterinarioSelecionado(ActionEvent event) {
         String nomeVeterinarioSelecionado = cmbVeterinario.getSelectionModel().getSelectedItem();
         if (nomeVeterinarioSelecionado != null && todosVeterinariosCarregados != null) {
@@ -215,6 +218,21 @@ public class EditarAgendamentoController {
         }
     }
 
+    @FXML
+    private void handleTipoProcedimentoSelecionado(ActionEvent event) {
+        // Lógica para lidar com a seleção do tipo de procedimento
+    }
+
+    @FXML
+    private void handleStatusSelecionado(ActionEvent event) {
+        // Lógica para lidar com a seleção do status
+    }
+
+    @FXML
+    private void handlePrioridadeSelecionada(ActionEvent event) {
+        // Lógica para lidar com a seleção da prioridade
+    }
+
     private void atualizarHorariosDisponiveis() {
         if (veterinarioSelecionadoNoCombo == null || datePicker.getValue() == null) {
             cmbHorario.setItems(FXCollections.emptyObservableList());
@@ -223,12 +241,13 @@ public class EditarAgendamentoController {
         }
 
         LocalDate dataAgendamento = datePicker.getValue();
-        DiaSemana diaDaSemana = DiaSemana.valueOf(dataAgendamento.getDayOfWeek().name());
+        DayOfWeek diaDaSemana = dataAgendamento.getDayOfWeek();
+        DiaSemana diaSemanaEnum = DiaSemana.valueOf(diaDaSemana.name());
 
         DisponibilidadeAgenda disponibilidade = clinica.getDisponibilidadeVeterinario(veterinarioSelecionadoNoCombo.getCrmv());
 
         if (disponibilidade != null) {
-            List<LocalTime> horariosDoDia = disponibilidade.getHorariosPorDia(diaDaSemana);
+            List<LocalTime> horariosDoDia = disponibilidade.getHorariosPorDia(diaSemanaEnum);
             horariosDoDia.sort(LocalTime::compareTo);
 
             cmbHorario.setItems(FXCollections.observableArrayList(
@@ -345,7 +364,6 @@ public class EditarAgendamentoController {
         animalAtualmenteExibido = null;
     }
 
-
     @FXML
     private void handleSalvarEdicao(ActionEvent event) {
         showStatusMessage("", false);
@@ -356,7 +374,7 @@ public class EditarAgendamentoController {
         String tipoProcedimentoSelecionado = cmbTipoProcedimento.getSelectionModel().getSelectedItem();
         String observacao = txtObservacoes.getText();
         String statusSelecionado = cmbStatus.getSelectionModel().getSelectedItem();
-        //String prioridadeSelecionada = cmbPrioridade.getSelectionModel().getSelectedItem();
+        String prioridadeSelecionada = cmbPrioridade.getSelectionModel().getSelectedItem();
 
 
         if (clienteAtualmenteExibido == null || animalAtualmenteExibido == null ||

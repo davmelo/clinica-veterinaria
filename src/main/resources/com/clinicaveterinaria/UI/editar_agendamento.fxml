@@ -119,7 +119,7 @@
                                         <VBox spacing="5.0">
                                             <children>
                                                 <Label text="Horário:" />
-                                                <ComboBox fx:id="cmbHorario" prefWidth="120.0" onAction="#handleHorarioSelected" />
+                                                <ComboBox fx:id="cmbHorario" prefWidth="120.0" onAction="#handleHorarioSelecionado" />
                                             </children>
                                         </VBox>
                                         <VBox spacing="5.0">
@@ -134,7 +134,7 @@
                                 <VBox spacing="5.0">
                                     <children>
                                         <Label text="Tipo de Procedimento:" />
-                                        <ComboBox fx:id="cmbTipoProcedimento" prefWidth="300.0" onAction="#handleTipoProcedimentoSelected" />
+                                        <ComboBox fx:id="cmbTipoProcedimento" prefWidth="300.0" onAction="#handleTipoProcedimentoSelecionado" />
                                     </children>
                                 </VBox>
 
@@ -151,13 +151,13 @@
                                         <VBox spacing="5.0">
                                             <children>
                                                 <Label text="Status do Agendamento:" />
-                                                <ComboBox fx:id="cmbStatus" prefWidth="150.0" onAction="#handleStatusSelected" />
+                                                <ComboBox fx:id="cmbStatus" prefWidth="150.0" onAction="#handleStatusSelecionado" />
                                             </children>
                                         </VBox>
                                         <VBox spacing="5.0">
                                             <children>
                                                 <Label text="Prioridade:" />
-                                                <ComboBox fx:id="cmbPrioridade" prefWidth="120.0" onAction="#handlePrioridadeSelected" />
+                                                <ComboBox fx:id="cmbPrioridade" prefWidth="120.0" onAction="#handlePrioridadeSelecionada" />
                                             </children>
                                         </VBox>
                                     </children>
